@@ -6,13 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <FrameLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/fragment_layout"
+        android:layout_width="match_parent"
+        tools:layout = "@layout/fragment_my_record"
+        android:layout_height="wrap_content"/>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/item_menu"
+        android:id="@+id/bottom_navigation"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
