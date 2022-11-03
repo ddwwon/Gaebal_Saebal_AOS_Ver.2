@@ -1,3 +1,4 @@
+// 검색
 package com.example.gaebal_saebal_aos_ver2
 
 import android.os.Bundle

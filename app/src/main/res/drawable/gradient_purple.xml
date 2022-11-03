@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 하단 메뉴바 선택 시 색상 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle" >
+            <gradient
+                android:angle="-90"
+                android:startColor="#FA00FF"
+                android:endColor="#B20EFF" />
+        </shape>
+    </item>
+</selector>

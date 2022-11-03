@@ -8,10 +8,24 @@
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_record.xml" value="0.1" />
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/menu/item_menu.xml" value="0.1" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/gaebal_saebal_logo.xml" value="0.166" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/log_write_icon.xml" value="0.166" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/my_log.xml" value="0.1" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/my_log_fragment_list_layout.xml" value="0.166" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/my_log_fragment_textview_underline.xml" value="0.166" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/search.xml" value="0.1" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/setting_icon.xml" value="0.1" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/bottom_icon_color.xml" value="0.1225" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/gradient_purple.xml" value="0.1215" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/font/imp.xml" value="0.2838541666666667" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_record.xml" value="0.24537037037037038" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/my_record_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/menu/item_menu.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
