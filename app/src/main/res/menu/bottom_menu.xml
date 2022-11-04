@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group>
-        <item android:id="@+id/my_log"
+        <item android:id="@+id/my_record"
             android:title="내 기록"
             android:icon="@drawable/my_record" />
         <item android:id="@+id/search"

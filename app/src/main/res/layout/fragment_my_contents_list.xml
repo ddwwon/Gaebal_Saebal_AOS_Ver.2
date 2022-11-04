@@ -4,17 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyRecordFragment"
-    android:id="@+id/my_record_fragment_layout">
+    tools:context=".MyContentsListFragment">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/my_record_toolbar"
+            android:id="@+id/category_detail_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -22,40 +23,52 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
             tools:ignore="MissingConstraints">
 
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="25sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginBottom="25sp"
+                android:background="@drawable/left_arrow" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25sp"
                 android:layout_marginTop="25sp"
-                app:drawableStartCompat="@drawable/gaebal_saebal_logo" />
+                android:text="BOJ"
+                android:fontFamily = "@font/imbplexmono_light"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
-            <!-- 기록 버튼 -->
             <ImageButton
-                android:id="@+id/record_write_btn"
+                android:id="@+id/category_detail_write_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="25sp"
                 android:layout_marginEnd="10sp"
                 android:layout_marginBottom="25sp"
-                android:background="@drawable/record_write_icon"/>
+                android:background="@drawable/record_write_icon" />
 
         </androidx.appcompat.widget.Toolbar>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/my_record_recyclerview"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:orientation="vertical"
-                tools:listitem="@layout/my_record_item"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager" />
+                android:layout_height="wrap_content">
 
-        </ScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/my_contents_list_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/my_contents_list_item" />
+
+            </ScrollView>
 
     </LinearLayout>
 

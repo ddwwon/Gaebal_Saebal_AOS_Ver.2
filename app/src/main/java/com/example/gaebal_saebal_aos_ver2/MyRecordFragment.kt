@@ -1,6 +1,7 @@
 // 나의 기록
 package com.example.gaebal_saebal_aos_ver2
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -25,6 +26,19 @@ class MyRecordFragment : Fragment() {
     private val datas = mutableListOf<MyRecordCategoryData>()
     private lateinit var myRecordCategoryAdapter: MyRecordCategoryAdapter
 
+    // 프래그먼트 전환을 위해
+    var activity: MainActivity? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = getActivity() as MainActivity
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        activity = null
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,14 +53,19 @@ class MyRecordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initMyRecordCategoryRecycler()
-        // 데이터 추가
+        // 카테고리 recyclerview에 데이터 추가
         for(i: Int in 0..(storedCategoryData.size - 1)) {
             addData(storedCategoryData[i], storedContentsData[i])
         }
     }
 
+    // recyclerview 세팅
     private fun initMyRecordCategoryRecycler() {
-        myRecordCategoryAdapter = MyRecordCategoryAdapter(requireContext())
+        myRecordCategoryAdapter = MyRecordCategoryAdapter(
+            requireContext(),
+            onClickCategory = {
+                openCategory()
+            })
         //myRecordCategoryAdapter = MyRecordCategoryAdapter(this)
         viewBinding.myRecordRecyclerview.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         viewBinding.myRecordRecyclerview.adapter = myRecordCategoryAdapter
@@ -61,4 +80,10 @@ class MyRecordFragment : Fragment() {
         }
     }
 
+    // 카테고리 세부 페이지(contents list) 열기
+    private fun openCategory() {
+        // 카테고리 세부 페이지로 이동
+        activity?.changeFragment("myContentsList")
+        //Log.d("Test", "-----------------------------")
+    }
 }

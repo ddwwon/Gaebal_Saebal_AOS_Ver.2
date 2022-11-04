@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaebal_saebal_aos_ver2.databinding.MyRecordItemBinding
 
-class MyRecordCategoryAdapter(private val context: Context) :
+class MyRecordCategoryAdapter(
+    private val context: Context,
+    val onClickCategory: () -> Unit // content 클릭 시 onClickCategory 실행
+    ) :
     RecyclerView.Adapter<MyRecordCategoryAdapter.MyRecordCategoryViewHolder>() {
 
     var datas = mutableListOf<MyRecordCategoryData>()
@@ -26,6 +29,10 @@ class MyRecordCategoryAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: MyRecordCategoryViewHolder, position: Int) {
         holder.bind(datas[position])
 
+        // content 클릭 시
+        holder.itemView.setOnClickListener {
+            onClickCategory.invoke() //삭제 함수 호출
+        }
     }
 
     inner class MyRecordCategoryViewHolder(private val binding: MyRecordItemBinding) :

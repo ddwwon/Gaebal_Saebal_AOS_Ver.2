@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         bottomView.setOnItemSelectedListener {
             it.isChecked = true
             when(it.itemId){
-                R.id.my_log -> {
+                R.id.my_record -> {
                     fragmentManager.beginTransaction().replace(binding.fragmentLayout.id, MyRecordFragment()).commit()
                 }
                 R.id.search -> {
@@ -39,6 +39,18 @@ class MainActivity : AppCompatActivity() {
                 else -> Log.d("test", "error") == 0
             }
             Log.d("test", "final") == 0
+        }
+    }
+
+    // fragment 전환
+    fun changeFragment(fragmentKey: String){
+        when(fragmentKey){
+            "myContentsList" -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(binding.fragmentLayout.id, MyContentsListFragment())
+                    .commit()
+            }
         }
     }
 }
