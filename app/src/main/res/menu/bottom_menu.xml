@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item android:id="@+id/my_log"
+            android:title="내 기록"
+            android:icon="@drawable/my_record" />
+        <item android:id="@+id/search"
+            android:title="검색"
+            android:icon="@drawable/search" />
+        <item android:id="@+id/my_information"
+            android:title="내 정보"
+            android:icon="@drawable/setting_icon" />
+    </group>
+
+</menu>

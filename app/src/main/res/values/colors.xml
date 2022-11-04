@@ -7,4 +7,20 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="translucent">#00000000</color>
+
+    <color name="main_purple">#FA00FF</color>
+    <color name="main_blue">#376FFF</color>
+    <color name="underline_gray">#d7d7d7</color>
+    <color name="right_arrow">#767676</color>
+    <color name="default_font">#2F2F2F</color>
+    <color name="red">#B93636</color>
+
+    <color name="default_gray">#767676</color>
+    <color name="default_pink">#FA00FF</color>
+    <color name="default_purple">#B20EFF</color>
+    <color name="git_green">#4DA856</color>
+    <color name="git_blue">#308DB5</color>
+    <color name="git_red">#B93636</color>
+
 </resources>
