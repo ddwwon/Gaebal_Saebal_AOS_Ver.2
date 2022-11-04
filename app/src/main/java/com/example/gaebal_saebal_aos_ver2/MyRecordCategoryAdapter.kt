@@ -1,5 +1,5 @@
 // 메인 페이지에서 카테고리 목록 보이는 거 recyclerview adapter
-package com.example.gaebal_saebal_aos_ver2.MainPage
+package com.example.gaebal_saebal_aos_ver2
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ class MyRecordCategoryAdapter(private val context: Context) :
 
     var datas = mutableListOf<MyRecordCategoryData>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :
-            MyRecordCategoryAdapter.MyRecordCategoryViewHolder {
+            MyRecordCategoryViewHolder {
 
         val view = LayoutInflater.from(context).inflate(R.layout.my_record_item, parent, false)
         //val binding = MyRecordItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -23,12 +23,12 @@ class MyRecordCategoryAdapter(private val context: Context) :
 
     override fun getItemCount(): Int = datas.size
 
-    override fun onBindViewHolder(holder: MyRecordCategoryAdapter.MyRecordCategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyRecordCategoryViewHolder, position: Int) {
         holder.bind(datas[position])
 
     }
 
-    inner class MyRecordCategoryViewHolder(val binding: MyRecordItemBinding) :
+    inner class MyRecordCategoryViewHolder(private val binding: MyRecordItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyRecordCategoryData) {

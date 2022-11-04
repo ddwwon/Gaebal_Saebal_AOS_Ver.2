@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentManager
-import com.example.gaebal_saebal_aos_ver2.MainPage.MyRecordFragment
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
