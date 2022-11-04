@@ -4,6 +4,7 @@ package com.example.gaebal_saebal_aos_ver2
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaebal_saebal_aos_ver2.databinding.MyRecordItemBinding
 
@@ -11,14 +12,13 @@ class MyRecordCategoryAdapter(private val context: Context) :
     RecyclerView.Adapter<MyRecordCategoryAdapter.MyRecordCategoryViewHolder>() {
 
     var datas = mutableListOf<MyRecordCategoryData>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :
             MyRecordCategoryViewHolder {
 
         val view = LayoutInflater.from(context).inflate(R.layout.my_record_item, parent, false)
-        //val binding = MyRecordItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
         return MyRecordCategoryViewHolder(MyRecordItemBinding.bind(view))
-        //return MyRecordCategoryViewHolder(binding)
     }
 
     override fun getItemCount(): Int = datas.size
@@ -33,7 +33,12 @@ class MyRecordCategoryAdapter(private val context: Context) :
 
         fun bind(item: MyRecordCategoryData) {
             binding.myRecordCategory.text = item.category
-            binding.myRecordContent.text = item.content
+            //binding.myRecordContent.text = item.content
+            binding.myRecordContentsRecyclerview.apply {
+                adapter = MyRecordContentsAdapter(context).build(item.contents)
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
         }
     }
 }
