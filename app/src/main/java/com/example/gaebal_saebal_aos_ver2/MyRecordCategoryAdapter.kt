@@ -31,7 +31,7 @@ class MyRecordCategoryAdapter(
 
         // content 클릭 시
         holder.itemView.setOnClickListener {
-            onClickCategory.invoke() //삭제 함수 호출
+            onClickCategory.invoke() //페이지 이동 함수 호출
         }
     }
 
