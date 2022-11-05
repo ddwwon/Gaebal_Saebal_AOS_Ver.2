@@ -13,12 +13,15 @@
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/my_log.xml" value="0.1" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/my_log_fragment_list_layout.xml" value="0.166" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/my_log_fragment_textview_underline.xml" value="0.166" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/my_record_border_layout.xml" value="0.173" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/search.xml" value="0.1" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/setting_icon.xml" value="0.1" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/bottom_icon_color.xml" value="0.1225" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/category_detail_item_textview_border.xml" value="0.1625" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/delete_icon.xml" value="0.173" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/gradient_purple.xml" value="0.1215" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/left_arrow.xml" value="0.1625" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/my_contents_list_btns_background.xml" value="0.173" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/font/imp.xml" value="0.2838541666666667" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_contents_list.xml" value="0.25364583333333335" />
