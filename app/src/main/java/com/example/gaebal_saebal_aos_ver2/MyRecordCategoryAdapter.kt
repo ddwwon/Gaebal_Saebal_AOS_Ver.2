@@ -10,7 +10,7 @@ import com.example.gaebal_saebal_aos_ver2.databinding.MyRecordItemBinding
 
 class MyRecordCategoryAdapter(
     private val context: Context,
-    val onClickCategory: () -> Unit // content 클릭 시 onClickCategory 실행
+    val onClickCategory: (category: String) -> Unit // content 클릭 시 onClickCategory 실행
     ) :
     RecyclerView.Adapter<MyRecordCategoryAdapter.MyRecordCategoryViewHolder>() {
 
@@ -31,7 +31,7 @@ class MyRecordCategoryAdapter(
 
         // content 클릭 시
         holder.itemView.setOnClickListener {
-            onClickCategory.invoke() //페이지 이동 함수 호출
+            onClickCategory.invoke(datas[position].category) //페이지 이동 함수 호출 - category 정보 넘겨줌
         }
     }
 
