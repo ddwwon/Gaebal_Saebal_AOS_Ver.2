@@ -44,10 +44,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     // fragment 전환
-    fun changeFragment(fragmentKey: String){
-        when(fragmentKey){
-
-        }
+    fun changeFragment(fragment: Fragment){
+        // 이전페이지로 돌아가는 기능을 이용할 수 있도록 replace가 아니라 add로
+        supportFragmentManager
+            .beginTransaction()
+            .add(binding.fragmentLayout.id, fragment)
+            .commit()
     }
 
     // 메인페이지에서 카테고리 세부 페이지로 이동할 때 카테고리 제목 데이터 넘겨줌.
@@ -61,9 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         // Contents List 페이지(카테고리 세부 페이지)로 이동
         // 이전페이지로 돌아가는 기능을 이용할 수 있도록 replace가 아니라 add로
-        supportFragmentManager
-            .beginTransaction()
-            .add(binding.fragmentLayout.id, fragment)
-            .commit()
+        changeFragment(fragment)
     }
 }

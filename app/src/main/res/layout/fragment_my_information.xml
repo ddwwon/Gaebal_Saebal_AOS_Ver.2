@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 나의 정보(설정 페이지) -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyInformationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="my information fragment" />
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/category_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+            tools:ignore="MissingConstraints">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="25sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginBottom="25sp"
+                android:src="@drawable/setting_icon"
+                android:background="@color/translucent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25sp"
+                android:layout_marginTop="25sp"
+                android:text="내 정보"
+                android:fontFamily = "@font/imbplexmono_light"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20sp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/setting_category_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/my_record_contents_list_item_border"
+                android:elevation="100dp"
+                android:gravity="left|center"
+                android:paddingLeft="10sp"
+                android:text=" 카테고리 추가/삭제 "
+                android:fontFamily = "@font/imbplexmono_light"
+                android:layout_marginBottom="20sp"
+                android:textColor="@color/black" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/setting_git_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10sp"
+                android:fontFamily = "@font/imbplexmono_light"
+                android:background="@drawable/my_record_contents_list_item_border"
+                android:text=" 깃허브 사용자 설정 "
+                android:gravity="left|center"
+                android:textColor="@color/black"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
