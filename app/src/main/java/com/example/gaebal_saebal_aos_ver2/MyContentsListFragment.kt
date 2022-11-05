@@ -57,8 +57,8 @@ class MyContentsListFragment : Fragment() {
         initMyContentsListRecycler()
         for(i: Int in 0..(storedCategoryData.size - 1)) {
             // 메인페이지에서 선택했던 카테고리에 대한 데이터로
-            Log.d("Test", "---------------------")
-            Log.d("Test", mCategory + "")
+            //Log.d("Test", "---------------------")
+            //Log.d("Test", mCategory + "")
             if(mCategory == storedCategoryData[i]) {
                 for(j: Int in 0..(storedContentsData[i].size - 1)) {
                     addData(storedContentsData[i][j][1], storedContentsData[i][j][0], storedContentsHashTag[i][j])
