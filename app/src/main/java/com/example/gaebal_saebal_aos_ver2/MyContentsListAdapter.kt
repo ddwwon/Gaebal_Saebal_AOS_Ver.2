@@ -4,6 +4,7 @@ package com.example.gaebal_saebal_aos_ver2
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaebal_saebal_aos_ver2.databinding.MyContentsListItemBinding
 
@@ -33,7 +34,12 @@ class MyContentsListAdapter(private val context: Context) :
         fun bind(item: MyContentsListData) {
             binding.contentsListDate.text = item.contentWriteDate
             binding.contentsListTitle.text = item.contentTitle
-            binding.contentsListTag.text = item.contentHashtag
+            //binding.contentsListTag.text = item.contentHashtag
+            binding.myContentsHashtagRecyclerview.apply {
+                adapter = MyContentsHashTagAdapter(context).build(item.contentHashtag)
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            }
         }
     }
 }

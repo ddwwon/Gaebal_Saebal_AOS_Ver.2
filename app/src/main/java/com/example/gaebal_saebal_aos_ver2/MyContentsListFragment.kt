@@ -17,9 +17,14 @@ class MyContentsListFragment : Fragment() {
     // 임시 데이터 - 나중에 기기에 저장된 데이터 불러와서 사용할 것
     private val storedCategoryData = arrayListOf("자료구조", "알고리즘", "인공지능")
     private val storedContentsData = arrayListOf(
-        arrayListOf(arrayListOf("스택", "22/11/05 02:22 AM", "#C"), arrayListOf("큐", "22/11/05 02:22 AM", "#C"), arrayListOf("그래프", "22/11/05 02:22 AM", "#C"), arrayListOf("트리", "22/11/05 02:22 AM", "#C")),
-        arrayListOf(arrayListOf("dp", "22/11/05 02:22 AM", "#C"), arrayListOf("분할정복이란 무엇인가", "22/11/05 02:22 AM", "#C")),
-        arrayListOf(arrayListOf("비지도학습이란 무엇인가", "22/11/05 02:22 AM", "#C"), arrayListOf("지도학습", "22/11/05 02:22 AM", "#C"), arrayListOf("기계학습", "22/11/05 02:22 AM", "#C")))
+        arrayListOf(arrayListOf("스택", "22/11/05 02:22 AM"), arrayListOf("큐", "22/11/05 02:22 AM"), arrayListOf("그래프", "22/11/05 02:22 AM"), arrayListOf("트리", "22/11/05 02:22 AM")),
+        arrayListOf(arrayListOf("dp", "22/11/05 02:22 AM"), arrayListOf("분할정복이란 무엇인가", "22/11/05 02:22 AM")),
+        arrayListOf(arrayListOf("비지도학습이란 무엇인가", "22/11/05 02:22 AM"), arrayListOf("지도학습", "22/11/05 02:22 AM"), arrayListOf("기계학습", "22/11/05 02:22 AM")))
+    private val storedContentsHashTag = arrayListOf(
+        arrayListOf(arrayListOf("C", "Test"), arrayListOf("C"), arrayListOf("C", "Test"), arrayListOf("Test")),
+        arrayListOf(arrayListOf("Java", "Test"), arrayListOf("Test")),
+        arrayListOf(arrayListOf("C", "Test", "jm"), arrayListOf("C"), arrayListOf("C", "Test"))
+    )
 
     // 카테고리
     private var mCategory: String? = null
@@ -56,7 +61,7 @@ class MyContentsListFragment : Fragment() {
             Log.d("Test", mCategory + "")
             if(mCategory == storedCategoryData[i]) {
                 for(j: Int in 0..(storedContentsData[i].size - 1)) {
-                    addData(storedContentsData[i][j][1], storedContentsData[i][j][0], storedContentsData[i][j][2])
+                    addData(storedContentsData[i][j][1], storedContentsData[i][j][0], storedContentsHashTag[i][j])
                 }
                 break
             }
@@ -81,7 +86,7 @@ class MyContentsListFragment : Fragment() {
     // 데이터 추가
     // tag도 recyclerview로 바꿔야 함 -> 여러 개 나올 수 있으므로
     // date: String, title: String, tag: String
-    private fun addData(date: String, title: String, tag: String) {
+    private fun addData(date: String, title: String, tag: ArrayList<String>) {
         datas.apply {
             //add(MyContentsListData(category, contents))
             add(MyContentsListData(date, title, tag))
