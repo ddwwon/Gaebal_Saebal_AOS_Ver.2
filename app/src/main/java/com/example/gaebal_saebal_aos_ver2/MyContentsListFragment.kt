@@ -31,6 +31,7 @@ class MyContentsListFragment : Fragment() {
 
     // 카테고리 세부 recyclerview adapter
     private val datas = mutableListOf<MyContentsListData>()
+    private val checkData = mutableListOf<CheckBoxListData>()
     private lateinit var myContentsListAdapter: MyContentsListAdapter
 
     override fun onCreateView(
@@ -73,6 +74,12 @@ class MyContentsListFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        // 체크박스 전체 선택/해제
+        viewBinding.contentsListCheckboxAll.setOnCheckedChangeListener { _, isChecked ->
+            myContentsListAdapter.setAllCheck(isChecked)
+            myContentsListAdapter.notifyDataSetChanged()
+        }
     }
 
     // recyclerview 세팅
@@ -81,6 +88,7 @@ class MyContentsListFragment : Fragment() {
         viewBinding.myContentsListRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.myContentsListRecyclerview.adapter = myContentsListAdapter
         myContentsListAdapter.datas = datas
+        myContentsListAdapter.checkboxList = checkData
     }
 
     // 데이터 추가
@@ -90,7 +98,10 @@ class MyContentsListFragment : Fragment() {
         datas.apply {
             //add(MyContentsListData(category, contents))
             add(MyContentsListData(date, title, tag))
-            myContentsListAdapter.notifyDataSetChanged()
         }
+        checkData.apply {
+            add(CheckBoxListData(title, false))
+        }
+        myContentsListAdapter.notifyDataSetChanged()
     }
 }

@@ -17,6 +17,7 @@ class MyInfoCategoryFragment : Fragment() {
 
     // 카테고리 세부 recyclerview adapter
     private val datas = mutableListOf<MyInfoCategoryData>()
+    private val checkData = mutableListOf<CheckBoxListData>()
     private lateinit var myInfoCategoryAdapter: MyInfoCategoryAdapter
 
     override fun onCreateView(
@@ -45,6 +46,12 @@ class MyInfoCategoryFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             requireActivity().supportFragmentManager.popBackStack()
         }
+        
+        // 체크박스 전체 선택/해제
+        viewBinding.categorySetCheckboxAll.setOnCheckedChangeListener { _, isChecked ->
+            myInfoCategoryAdapter.setAllCheck(isChecked)
+            myInfoCategoryAdapter.notifyDataSetChanged()
+        }
     }
 
     // recyclerview 세팅
@@ -53,13 +60,17 @@ class MyInfoCategoryFragment : Fragment() {
         viewBinding.myInfoCategoryRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.myInfoCategoryRecyclerview.adapter = myInfoCategoryAdapter
         myInfoCategoryAdapter.datas = datas
+        myInfoCategoryAdapter.checkboxList = checkData
     }
 
     // 데이터 추가
     private fun addData(category: String) {
         datas.apply {
             add(MyInfoCategoryData(category))
-            myInfoCategoryAdapter.notifyDataSetChanged()
         }
+        checkData.apply {
+            add(CheckBoxListData(category, false))
+        }
+        myInfoCategoryAdapter.notifyDataSetChanged()
     }
 }
