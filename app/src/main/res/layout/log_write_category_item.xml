@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <RadioButton
+        android:id="@+id/select_category_btn"
+        android:layout_width="80sp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:background="@drawable/category_choice_btn_outline_selector"
+        android:button="@null"
+        android:checked="false"
+        android:elevation="10sp"
+        android:fontFamily = "@font/imbplexmono_light"
+        android:textAlignment="center"
+        android:textColor="@drawable/category_choice_btn_text_selector" />
+</androidx.appcompat.widget.LinearLayoutCompat>
