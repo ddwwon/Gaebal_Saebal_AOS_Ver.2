@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10sp"
     android:padding="30sp"
     android:background="@drawable/my_record_border_layout"
-    android:elevation="10sp">
+    android:elevation="10sp"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/my_record_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily = "@font/imbplexmono_light"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:layout_width="25sp"
-        android:layout_height="25sp"
-        android:textColor="@color/right_arrow"
-        android:text=">"
-        android:textAlignment="center"
-        app:layout_constraintLeft_toRightOf="@id/my_record_category"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/my_record_content"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
-        android:fontFamily = "@font/imbplexmono_light"
-        app:layout_constraintTop_toBottomOf="@id/my_record_category"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@drawable/my_record_textview_underline"
-        tools:ignore="MissingConstraints" />
+        android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/my_record_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/imbplexmono_light"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:textColor="@color/right_arrow"
+            android:text=">"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_record_contents_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:listitem="@layout/my_record_contents_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</LinearLayout>
