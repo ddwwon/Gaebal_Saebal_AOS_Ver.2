@@ -46,11 +46,19 @@ class MyInfoCategoryFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             requireActivity().supportFragmentManager.popBackStack()
         }
-        
+
         // 체크박스 전체 선택/해제
         viewBinding.categorySetCheckboxAll.setOnCheckedChangeListener { _, isChecked ->
             myInfoCategoryAdapter.setAllCheck(isChecked)
             myInfoCategoryAdapter.notifyDataSetChanged()
+        }
+
+        // 카테고리 추가 버튼 클릭 시
+        viewBinding.addCategoryBtn.setOnClickListener {
+            if(viewBinding.addCategoryInput.visibility == View.GONE)
+                viewBinding.addCategoryInput.setVisibility(View.VISIBLE)
+            else
+                viewBinding.addCategoryInput.setVisibility(View.GONE)
         }
     }
 
