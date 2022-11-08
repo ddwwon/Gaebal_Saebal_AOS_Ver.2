@@ -3,6 +3,9 @@ package com.example.gaebal_saebal_aos_ver2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
@@ -65,4 +68,5 @@ class MainActivity : AppCompatActivity() {
         // 이전페이지로 돌아가는 기능을 이용할 수 있도록 replace가 아니라 add로
         changeFragment(fragment)
     }
+
 }

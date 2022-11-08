@@ -29,14 +29,14 @@ class BojDialog (context: Context) {
         dialog.show()
 //        activity?.onFragmentChange(14)
 
-        dialog.boj_cancel_btn.setOnClickListener{
-            dialog.dismiss()
-        }
-
-        dialog.boj_ok_btn.setOnClickListener{
-            dialog.dismiss()
-            MainActivity.getInstance()?.onFragmentChange("BojNumInput")
-        }
+//        dialog.boj_cancel_btn.setOnClickListener{
+//            dialog.dismiss()
+//        }
+//
+//        dialog.boj_ok_btn.setOnClickListener{
+//            dialog.dismiss()
+//            MainActivity.getInstance()?.onFragmentChange("BojNumInput")
+//        }
     }
     interface OnDialogClickListener {
         fun onClicked(num: Int)

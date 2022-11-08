@@ -73,6 +73,15 @@ class MyContentsListFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        myContentsListAdapter.setItemClickListener(object : MyContentsListAdapter.ItemClickListener{
+            override fun onClick(view: View, position: Int) {
+                val fragment = LogDetailFragment()
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.add(R.id.fragment_layout, fragment)
+                    transaction.commit()
+            }
+        })
     }
 
     // recyclerview 세팅
