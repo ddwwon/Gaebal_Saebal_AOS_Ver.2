@@ -2,21 +2,25 @@
 package com.example.gaebal_saebal_aos_ver2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentMyInfoCategoryBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 
 class MyInfoCategoryFragment : Fragment() {
     private lateinit var viewBinding: FragmentMyInfoCategoryBinding // viewBinding
 
-    // 임시 데이터 - 나중에 기기에 저장된 데이터 불러와서 사용할 것
-    private val storedCategoryData = arrayListOf("자료구조", "알고리즘", "인공지능")
+    // Category DB 세팅
+    private var db: AppDatabase? = null
 
     // 카테고리 세부 recyclerview adapter
-    private val datas = mutableListOf<MyInfoCategoryData>()
+    private val datas = mutableListOf<CategoryDataEntity>()
     private val checkData = mutableListOf<CheckBoxListData>()
     private lateinit var myInfoCategoryAdapter: MyInfoCategoryAdapter
 
@@ -32,12 +36,23 @@ class MyInfoCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // db 세팅
+        db = AppDatabase.getInstance(requireActivity())
+
         // recyclerview 세팅
         initMyInfoCategoryRecycler()
 
-        //데이터 추가
-        for(i: Int in 0..(storedCategoryData.size - 1)) {
-            addData(storedCategoryData[i])
+        // 저장된 카테고리 데이터 불러와서 추가
+        val categoryDatas = db!!.categoryDataDao().getAllCategoryData()
+        if(categoryDatas.isNotEmpty()) {
+            /*datas.apply{
+                addAll(categoryDatas)
+            }*/
+            for(i: Int in 0..(categoryDatas.size - 1)) {
+                addData(categoryDatas[i])
+            }
+            //Log.d("Test", "--------------------------------")
+            //Log.d("Test", categoryDatas[0].toString())
         }
 
         // 이전 버튼 클릭 시
@@ -53,13 +68,49 @@ class MyInfoCategoryFragment : Fragment() {
             myInfoCategoryAdapter.notifyDataSetChanged()
         }
 
-        // 카테고리 추가 버튼 클릭 시
+        // 카테고리 추가 버튼 클릭 시 - 입력창 열기/닫기
         viewBinding.addCategoryBtn.setOnClickListener {
             if(viewBinding.addCategoryInput.visibility == View.GONE)
                 viewBinding.addCategoryInput.setVisibility(View.VISIBLE)
-            else
+            else {
+                viewBinding.myInfoCategoryEdittext.text = null
                 viewBinding.addCategoryInput.setVisibility(View.GONE)
+            }
         }
+        
+        // 카테고리 이름 입력 후 엔터 -> 카테고리 생성
+        viewBinding.myInfoCategoryEdittext.setOnEditorActionListener(
+            TextView.OnEditorActionListener { textView, actionId, keyEvent ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val newCategory = viewBinding.myInfoCategoryEdittext.text.toString()
+                    viewBinding.myInfoCategoryEdittext.text = null
+
+                    val mCategory = CategoryDataEntity(0, newCategory) // CategoryDataEntity 생성
+                    db?.categoryDataDao()?.insertCategoryData(mCategory)          // DB에 추가
+
+                    addData(mCategory)
+                }
+                false
+        })
+
+        // 카테고리 삭제 버튼 클릭
+        /*viewBinding.deleteCategoryBtn.setOnClickListener {
+            var dataSize = checkData.size - 1
+            for(i: Int in 0..dataSize) {
+                // 체크된 카테고리
+                if(checkData[i].checked) {
+                    db?.categoryDataDao()?.deleteCategoryData(datas[i])
+                    datas.removeAt(i)
+                    checkData.removeAt(i)
+                    myInfoCategoryAdapter.notifyDataSetChanged()
+                    //i--
+                    //dataSize--
+                }
+            }
+            Log.d("Test", "--------------------------------")
+            Log.d("Test", categoryDatas.toString())
+        }*/
+
     }
 
     // recyclerview 세팅
@@ -72,9 +123,9 @@ class MyInfoCategoryFragment : Fragment() {
     }
 
     // 데이터 추가
-    private fun addData(category: String) {
+    private fun addData(category: CategoryDataEntity) {
         datas.apply {
-            add(MyInfoCategoryData(category))
+            add(category)
         }
         checkData.apply {
             add(CheckBoxListData(category, false))

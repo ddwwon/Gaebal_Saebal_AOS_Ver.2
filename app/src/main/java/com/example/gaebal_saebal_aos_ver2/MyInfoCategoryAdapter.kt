@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaebal_saebal_aos_ver2.databinding.MyInfoCategoryItemBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 
 class MyInfoCategoryAdapter(private val context: Context) :
     RecyclerView.Adapter<MyInfoCategoryAdapter.MyInfoCategoryViewHolder>() {
 
     private lateinit var viewBinding: MyInfoCategoryItemBinding
 
-    var datas = mutableListOf<MyInfoCategoryData>()
+    var datas = mutableListOf<CategoryDataEntity>()
     var checkboxList = mutableListOf<CheckBoxListData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :
@@ -35,8 +36,8 @@ class MyInfoCategoryAdapter(private val context: Context) :
     inner class MyInfoCategoryViewHolder(private val binding: MyInfoCategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: MyInfoCategoryData, check: CheckBoxListData) {
-            binding.myInfoCategoryTitle.text = item.category
+        fun bind(item: CategoryDataEntity, check: CheckBoxListData) {
+            binding.myInfoCategoryTitle.text = item.category_name
             binding.myInfoCategoryCheckbox.isChecked = check.checked
 
             binding.myInfoCategoryCheckbox.setOnClickListener {

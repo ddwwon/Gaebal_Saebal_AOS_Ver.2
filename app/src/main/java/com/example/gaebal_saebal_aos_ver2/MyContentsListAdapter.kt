@@ -12,7 +12,7 @@ class MyContentsListAdapter(private val context: Context) :
     RecyclerView.Adapter<MyContentsListAdapter.MyContentsListViewHolder>() {
 
     var datas = mutableListOf<MyContentsListData>()
-    var checkboxList = mutableListOf<CheckBoxListData>()
+    var checkboxList = mutableListOf<CheckBoxListData2>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :
             MyContentsListViewHolder {
@@ -32,7 +32,7 @@ class MyContentsListAdapter(private val context: Context) :
     inner class MyContentsListViewHolder(private val binding: MyContentsListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: MyContentsListData, check: CheckBoxListData) {
+        fun bind(item: MyContentsListData, check: CheckBoxListData2) {
             binding.contentsListDate.text = item.contentWriteDate
             binding.contentsListTitle.text = item.contentTitle
             //binding.contentsListTag.text = item.contentHashtag
