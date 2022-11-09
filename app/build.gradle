@@ -50,6 +50,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+<<<<<<< Updated upstream
 
     // Room 라이브러리 사용을 위한 설정 - 데이터 디바이스 저장
     def room_version = "2.4.3"
@@ -71,4 +72,16 @@ dependencies {
 
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+=======
+    // Github api 사용하기 위한 Rxkotlin, Retrofit2 의존성 추가
+    // Retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+
+    // RxKotlin
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+>>>>>>> Stashed changes
 }
