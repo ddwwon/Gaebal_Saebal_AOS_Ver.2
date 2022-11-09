@@ -4,9 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_contents_list.xml" value="0.2765625" />
+        <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_info_category.xml" value="0.2765625" />
+        <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_info_git.xml" value="0.2765625" />
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_information.xml" value="0.1" />
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_record.xml" value="0.1" />
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_search.xml" value="0.1" />
+        <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/my_record_contents_item.xml" value="0.1344984802431611" />
+        <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/my_record_item.xml" value="0.20885416666666667" />
         <entry key="..\:/Users/Dowon/Documents/GitHub/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/menu/item_menu.xml" value="0.1" />
         <entry key="..\:/Users/sumin/Desktop/gbsb/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/category_choice_btn_outline_selector.xml" value="0.2385" />
         <entry key="..\:/Users/sumin/Desktop/gbsb/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable-v24/category_choice_btn_text_selector.xml" value="0.2385" />

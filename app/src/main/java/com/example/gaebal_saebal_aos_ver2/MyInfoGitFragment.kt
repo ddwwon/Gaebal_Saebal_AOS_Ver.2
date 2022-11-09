@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentMyInfoGitBinding
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MyInfoGitFragment : Fragment() {
     private lateinit var viewBinding: FragmentMyInfoGitBinding // viewBinding
@@ -16,7 +18,6 @@ class MyInfoGitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewBinding = FragmentMyInfoGitBinding.inflate(layoutInflater)
-
         return viewBinding.root
     }
 
@@ -29,5 +30,61 @@ class MyInfoGitFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        viewBinding.saveToken.setOnClickListener{
+            gitHubClient()
+        }
+    }
+
+    fun gitHubClient() {
+        var auth = "token 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"
+//        var auth = "token " + viewBinding.inputToken.text.toString()
+        var selectedRepoOwner = "ddwwon"
+        var selectedRepo = "GAEBAL_SAEBAL_AOS"
+        var test = arrayListOf<String>()
+
+        MyInfoGitClient.getApi().getRepos(auth)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({items ->
+                items.forEach {println("getRepos: " + it)}
+                items.forEach {test.add(it.toString())}
+            }, {e ->
+                println("getReposerror: " + e.toString())
+            })
+        test.forEach {"test pritn: "+ println(it)}
+
+        MyInfoGitClient.getApi().getIssues(auth,
+            selectedRepoOwner,
+            selectedRepo)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({items ->
+                items.forEach {println("getIssues: " + it)}
+            }, {e ->
+                println("getIssueserror: " + e.toString())
+            })
+
+        MyInfoGitClient.getApi().getPRs(auth,
+            selectedRepoOwner,
+            selectedRepo)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({items ->
+                items.forEach {println("getPRs: " + it)}
+            }, {e ->
+                println("getPRserror: " +e.toString())
+            })
+
+        MyInfoGitClient.getApi().getCommits(auth,
+            selectedRepoOwner,
+            selectedRepo)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({items ->
+                items.forEach {println("getCommits: " + it)}
+            }, {e ->
+                println("getCommitserror: " + e.toString())
+            })
     }
 }

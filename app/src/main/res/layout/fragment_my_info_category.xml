@@ -55,28 +55,56 @@
         android:id="@+id/add_category_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20sp"
+        android:layout_below="@+id/category_set_checkbox_all"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="5dp"
         android:background="@drawable/my_info_add_category_border"
-        android:layout_below="@+id/category_set_checkbox_all">
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="30dp">
 
         <TextView
             android:id="@+id/my_info_category_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/imbplexmono_light"
+            android:text="추가하기"
+            android:textSize="16sp"
             android:textColor="#2F2F2F"
-            android:fontFamily = "@font/imbplexmono_light"
-            android:textStyle="bold"
-            android:text="추가하기"/>
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- 카테고리 입력 -->
+    <LinearLayout
+        android:id="@+id/add_category_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_category_btn"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="5dp"
+        android:background="@drawable/my_record_contents_list_item_border"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="30dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/my_info_category_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fontFamily="@font/imbplexmono_light"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:hint="카테고리명을 입력하세요."
+            android:imeOptions="actionDone"
+            android:inputType="text"/>
 
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/add_category_btn">
+        android:layout_below="@+id/add_category_input">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_info_category_recyclerview"
@@ -91,6 +119,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/delete_category_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="10dp"
@@ -100,7 +129,7 @@
         android:gravity="center">
 
         <ImageButton
-            android:id="@+id/delete_category_btn"
+            android:id="@+id/delete_category_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/delete_icon" />
