@@ -3,6 +3,7 @@ package com.example.gaebal_saebal_aos_ver2
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,6 @@ class MyInfoCategoryFragment : Fragment() {
             for(i: Int in 0..(categoryDatas.size - 1)) {
                 addData(categoryDatas[i].category_name)
             }
-            myInfoCategoryAdapter.notifyDataSetChanged()
             //Log.d("Test", "--------------------------------")
             //Log.d("Test", categoryDatas[0].toString())
         }
@@ -74,14 +74,16 @@ class MyInfoCategoryFragment : Fragment() {
         viewBinding.addCategoryBtn.setOnClickListener {
             if(viewBinding.addCategoryInput.visibility == View.GONE)
                 viewBinding.addCategoryInput.setVisibility(View.VISIBLE)
-            else
+            else {
+                viewBinding.myInfoCategoryEdittext.text = null
                 viewBinding.addCategoryInput.setVisibility(View.GONE)
+            }
         }
         
         // 카테고리 이름 입력 후 엔터 -> 카테고리 생성
         viewBinding.myInfoCategoryEdittext.setOnEditorActionListener(
             TextView.OnEditorActionListener { textView, actionId, keyEvent ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == KeyEvent.KEYCODE_ENTER) {
                     val newCategory = viewBinding.myInfoCategoryEdittext.text.toString()
                     viewBinding.myInfoCategoryEdittext.text = null
 
@@ -92,6 +94,7 @@ class MyInfoCategoryFragment : Fragment() {
                 }
                 false
         })
+
     }
 
     // recyclerview 세팅
