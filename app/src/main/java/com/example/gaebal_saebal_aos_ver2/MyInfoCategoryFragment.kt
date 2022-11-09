@@ -45,12 +45,16 @@ class MyInfoCategoryFragment : Fragment() {
         // 저장된 카테고리 데이터 불러와서 추가
         val categoryDatas = db!!.categoryDataDao().getAllCategoryData()
         if(categoryDatas.isNotEmpty()) {
+            //db?.categoryDataDao()?.deleteAllCategoryData()
             /*datas.apply{
                 addAll(categoryDatas)
+            }*/
+            for(i: Int in 0..(categoryDatas.size - 1)) {
+                addData(categoryDatas[i].category_name)
             }
-            myInfoCategoryAdapter.notifyDataSetChanged()*/
-            Log.d("Test", "--------------------------------")
-            Log.d("Test", categoryDatas[0].toString())
+            myInfoCategoryAdapter.notifyDataSetChanged()
+            //Log.d("Test", "--------------------------------")
+            //Log.d("Test", categoryDatas[0].toString())
         }
 
         // 이전 버튼 클릭 시
@@ -81,7 +85,6 @@ class MyInfoCategoryFragment : Fragment() {
                     val newCategory = viewBinding.myInfoCategoryEdittext.text.toString()
                     viewBinding.myInfoCategoryEdittext.text = null
 
-                    //db?.categoryDataDao()?.deleteAllCategoryData()
                     val mCategory = CategoryDataEntity(0, newCategory) // CategoryDataEntity 생성
                     db?.categoryDataDao()?.insertCategoryData(mCategory)          // DB에 추가
 

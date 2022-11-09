@@ -6,7 +6,8 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(indices = [Index(value = ["category_name"], unique = true)])
+// (indices = [Index(value = ["category_name"], unique = true)])
+@Entity
 data class CategoryDataEntity (
     @PrimaryKey(autoGenerate = true)
     val category_uid: Int,    // id = key

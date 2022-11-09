@@ -5,10 +5,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.gaebal_saebal_aos_ver2.dao.CategoryDataDao
 import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 
-@Database(entities = [CategoryDataEntity::class], version = 1, exportSchema = false)
+// 스키마 파일 수정하면 version 증가해야 함
+@Database(entities = [CategoryDataEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun categoryDataDao(): CategoryDataDao
 
@@ -24,9 +27,15 @@ abstract class AppDatabase: RoomDatabase() {
                     "database-category"
                 )
                     .allowMainThreadQueries()
+                    //.addMigrations(MIGRATION_1_2)
                     .build()
             }
             return instance
         }
+        /*private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database : SupportSQLiteDatabase) {
+                database.execSQL("DROP INDEX category_name")
+            }
+        }*/
     }
 }
