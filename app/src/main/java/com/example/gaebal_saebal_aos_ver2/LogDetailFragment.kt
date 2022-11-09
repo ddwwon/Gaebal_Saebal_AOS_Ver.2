@@ -11,7 +11,7 @@ import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogDetailBinding
 
 //import kotlinx.android.synthetic.main.fragment_log_detail.*
 
-data class logDetailItem(logCategory: )
+//data class logDetailItem(logCategory: )
 class LogDetailFragment : Fragment() {
     private lateinit var viewBinding: FragmentLogDetailBinding
 
@@ -53,9 +53,15 @@ class LogDetailFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        viewBinding.floatingBtn.setOnClickListener{
-            activity?.onFragmentChange("FloatingBtn")
+        viewBinding.floatingBtn.setOnClickListener(){
+            activity?.onFloatingChange("FloatingBtn", this)
         }
+
+
     }
+//    public fun removeLogDetail(){
+//        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//        requireActivity().supportFragmentManager.popBackStack()
+//    }
 
 }

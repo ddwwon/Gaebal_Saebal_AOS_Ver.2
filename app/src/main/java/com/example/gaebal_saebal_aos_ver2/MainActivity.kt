@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -82,20 +83,40 @@ class MainActivity : AppCompatActivity() {
 
     fun onFragmentChange(index: String) {
         when (index) {
+//            "FloatingBtn" -> {
+//                // 기록 상세 뷰에서 플로팅 버튼 누르면 모달창 뜨게
+//                val dialog = FloatingBtn(this)
+//                dialog.showDialog()
+////                dialog.setOnClickListener(object: FloatingBtn.OnDialogClickListener{
+////                    override fun onClicked(num: Int) {
+////                    }
+////                })
+//            }
+            "MyContentsListFragment" -> {
+                // 기록 프레그먼트로 전환
+                println("hiiiii")
+                supportFragmentManager.beginTransaction().remove(LogDetailFragment()).commit()
+                supportFragmentManager.popBackStack()
+//                supportFragmentManager.beginTransaction().replace(R.id.fragment_layout, MyContentsListFragment()).commit()
+            }
+        }
+    }
+    fun onFloatingChange(index: String, fragment: Fragment){
+        when (index) {
             "FloatingBtn" -> {
                 // 기록 상세 뷰에서 플로팅 버튼 누르면 모달창 뜨게
-                val dialog = FloatingBtn(this)
+                val dialog = FloatingBtn(this, fragment)
                 dialog.showDialog()
 //                dialog.setOnClickListener(object: FloatingBtn.OnDialogClickListener{
 //                    override fun onClicked(num: Int) {
 //                    }
 //                })
             }
-            "MyContentsListFragment" -> {
-                // 기록 프레그먼트로 전환
-
-//                supportFragmentManager.beginTransaction().replace(R.id.fragment_layout, MyContentsListFragment()).commit()
-            }
         }
+    }
+    fun onRemoveDetail(fragment: Fragment) {
+        println("hiiiii")
+        supportFragmentManager.beginTransaction().remove(fragment).commit()
+        supportFragmentManager.popBackStack()
     }
 }
