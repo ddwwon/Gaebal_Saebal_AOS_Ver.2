@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="20sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text_over_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily = "@font/imbplexmono_light"
+        android:text="글자 수가 1000자가 넘었습니다.\n1000자 이하로 작성해주세요!"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_over_dialog_ok_btn"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/text_over_dialog_ok_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/main_blue"
+        app:layout_constraintTop_toBottomOf="@id/text_over_dialog"
+        android:fontFamily = "@font/imbplexmono_light"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="확인" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

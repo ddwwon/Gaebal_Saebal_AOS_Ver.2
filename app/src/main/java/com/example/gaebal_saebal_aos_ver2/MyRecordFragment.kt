@@ -2,6 +2,7 @@
 package com.example.gaebal_saebal_aos_ver2
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -49,6 +50,8 @@ class MyRecordFragment : Fragment() {
         return viewBinding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -71,6 +74,12 @@ class MyRecordFragment : Fragment() {
 
             // 데이터 추가
             addData(storedCategoryData[i], mContentsData)
+
+            viewBinding.recordWriteBtn.setOnClickListener {
+                val intent = Intent(getActivity(), LogWriteActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
         }
     }
 
@@ -104,4 +113,7 @@ class MyRecordFragment : Fragment() {
         // 카테고리 세부 페이지로 카테고리 정보 넘겨주기
         activity?.sendCategoryFromMyRecord(category)
     }
+
+
+
 }

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LogWriteFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/category_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+            tools:ignore="MissingConstraints">
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="25sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginBottom="25sp"
+                android:background="@drawable/left_arrow"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25sp"
+                android:layout_marginTop="25sp"
+                android:text="기록 작성"
+                android:fontFamily = "@font/imbplexmono_light"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <android.widget.Button
+                android:id="@+id/log_write_register_btn"
+                android:layout_width="70sp"
+                android:layout_height="50sp"
+                android:layout_gravity="right"
+                android:layout_marginTop="25sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginBottom="25sp"
+                android:background="@drawable/register_icon" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/log_write_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10sp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/log_write_category_recyclerview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/log_write_category_item">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+                <EditText
+                    android:id="@+id/log_write_main_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="300sp"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/category_detail_item_textview_border"
+                    android:elevation="10sp"
+                    android:fontFamily="@font/imbplexmono_light"
+                    android:gravity="left"
+                    android:hint="본문을 작성해주세요."
+                    android:maxLength="1000"
+                    android:padding="20sp" />
+
+                <TextView
+                    android:id="@+id/char_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_margin="10sp"
+                    android:text="0/1000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:fontFamily="@font/imbplexmono_light"
+                    android:text="Tag"
+                    android:textColor="@color/right_arrow"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/tag_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/category_detail_item_textview_border"
+                    android:elevation="10sp"
+                    android:fontFamily="@font/imbplexmono_light"
+                    android:hint="태그는 ;으로 구분해서 적어주세요. ex) 백준;"
+                    android:padding="10sp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:fontFamily="@font/imbplexmono_light"
+                    android:text="백준"
+                    android:textColor="@color/right_arrow"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/baekjoon_btn_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/category_detail_item_textview_border"
+                    android:elevation="10sp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/baekjoon_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/translucent"
+                        android:elevation="20sp"
+                        android:text="+"
+                        android:textColor="@color/right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:fontFamily="@font/imbplexmono_light"
+                    android:text="깃허브"
+                    android:textColor="@color/right_arrow"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/github_btn_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/category_detail_item_textview_border"
+                    android:elevation="10sp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/github_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/translucent"
+                        android:elevation="20sp"
+                        android:text="+"
+                        android:textColor="@color/right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:fontFamily="@font/imbplexmono_light"
+                    android:text="사진"
+                    android:textColor="@color/right_arrow"
+                    android:textStyle="bold" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/image_btn_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/category_detail_item_textview_border"
+                    android:elevation="10sp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/image_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/translucent"
+                        android:elevation="20sp"
+                        android:text="+"
+                        android:textColor="@color/right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:fontFamily="@font/imbplexmono_light"
+                    android:text="코드"
+                    android:textColor="@color/right_arrow"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/log_write_code_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="200sp"
+                        android:layout_margin="10sp"
+                        android:background="@drawable/category_detail_item_textview_border"
+                        android:backgroundTint="@color/underline_gray"
+                        android:elevation="10sp"
+                        android:fontFamily="@font/imbplexmono_light"
+                        android:gravity="left"
+                        android:hint="코드를 입력해주세요."
+                        android:padding="20sp"
+                        android:textSize="15sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/code_char_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_margin="10sp"
+                    android:text="0/1000" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

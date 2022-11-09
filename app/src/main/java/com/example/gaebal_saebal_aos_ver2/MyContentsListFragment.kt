@@ -2,6 +2,7 @@
 package com.example.gaebal_saebal_aos_ver2
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -75,11 +76,28 @@ class MyContentsListFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
+
+        viewBinding.categoryDetailWriteBtn.setOnClickListener{
+            val intent = Intent(activity, LogWriteActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+
+        myContentsListAdapter.setItemClickListener(object : MyContentsListAdapter.ItemClickListener{
+            override fun onClick(view: View, position: Int) {
+                val fragment = LogDetailFragment()
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.add(R.id.fragment_layout, fragment)
+                    transaction.commit()
+            }
+        })
+
         // 체크박스 전체 선택/해제
         viewBinding.contentsListCheckboxAll.setOnCheckedChangeListener { _, isChecked ->
             myContentsListAdapter.setAllCheck(isChecked)
             myContentsListAdapter.notifyDataSetChanged()
         }
+
     }
 
     // recyclerview 세팅

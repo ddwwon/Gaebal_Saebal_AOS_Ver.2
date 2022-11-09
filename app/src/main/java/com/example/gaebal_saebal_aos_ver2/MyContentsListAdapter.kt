@@ -3,6 +3,7 @@ package com.example.gaebal_saebal_aos_ver2
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,18 @@ class MyContentsListAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: MyContentsListViewHolder, position: Int) {
         holder.bind(datas[position], checkboxList[position])
 
+        holder.itemView.setOnClickListener{
+            itemClickListener.onClick(it, position)
+        }
+
+    }
+    interface ItemClickListener {
+        fun onClick(view: View, position: Int)
+    }
+
+    private lateinit var itemClickListener: ItemClickListener
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListener = itemClickListener
     }
 
     inner class MyContentsListViewHolder(private val binding: MyContentsListItemBinding) :
