@@ -11,8 +11,11 @@ import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogDetailBinding
 
 //import kotlinx.android.synthetic.main.fragment_log_detail.*
 
+data class logDetailItem(logCategory: )
 class LogDetailFragment : Fragment() {
     private lateinit var viewBinding: FragmentLogDetailBinding
+
+
 
     var activity: MainActivity? = null
 
@@ -36,20 +39,9 @@ class LogDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val view = inflater.inflate(R.layout.fragment_log_detail, container, false)
-//        val log_detail_back_btn = view.findViewById<AppCompatButton>(R.id.log_detail_back_btn)
-//        val floting_btn = view.findViewById<AppCompatButton>(R.id.floating_btn)
         viewBinding = FragmentLogDetailBinding.inflate(layoutInflater)
 
         return viewBinding.root
-
-//        log_detail_back_btn.setOnClickListener {
-//
-//        }
-//
-//        floting_btn.setOnClickListener {
-//
-//        }
 
     }
 
@@ -59,6 +51,10 @@ class LogDetailFragment : Fragment() {
         viewBinding.logDetailBackBtn.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        viewBinding.floatingBtn.setOnClickListener{
+            activity?.onFragmentChange("FloatingBtn")
         }
     }
 

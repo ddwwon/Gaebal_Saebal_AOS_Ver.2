@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/translucent"
+    >
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/log_detail_modify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10sp"
+        android:text="수정하기"
+        android:textColor="@color/main_blue"
+        android:background="@color/translucent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/division"/>
+
+    <View
+        android:id="@+id/division"
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/underline_gray"
+        app:layout_constraintTop_toBottomOf="@id/log_detail_modify"
+        app:layout_constraintBottom_toTopOf="@id/log_detail_delete"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/log_detail_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10sp"
+        android:text="삭제하기"
+        android:background="@color/translucent"
+        app:layout_constraintTop_toBottomOf="@id/division"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/red"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

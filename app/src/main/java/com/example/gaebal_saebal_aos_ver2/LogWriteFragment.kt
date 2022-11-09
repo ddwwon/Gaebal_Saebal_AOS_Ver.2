@@ -68,8 +68,9 @@ class LogWriteFragment : Fragment() {
 
             }
         })
+
         viewBinding.backBtn.setOnClickListener{
-//            activity?.finish()
+            activity?.finish()
         }
 
 
@@ -99,9 +100,52 @@ class LogWriteFragment : Fragment() {
             activity?.onFragmentChange("GitHubFragment")
         }
 
-        viewBinding.backBtn.setOnClickListener {
-//            finish()
-        }
+        viewBinding.logWriteMainText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewBinding.charCnt.text = "0/1000"
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var userinput = viewBinding.logWriteMainText.text.toString()
+                viewBinding.charCnt.text = userinput.length.toString() + "/1000"
+                if (userinput.length >= 1000) {
+                    activity?.onFragmentChange("TextOverDialog")
+                }
+                if (userinput.length == 0) {
+                    activity?.onFragmentChange("TextZeroDialog")
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                var userinput = viewBinding.logWriteMainText.text.toString()
+                viewBinding.charCnt.text = userinput.length.toString() + "/1000"
+
+            }
+        })
+
+        viewBinding.logWriteCodeText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewBinding.codeCharCnt.text = "0/1000"
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var userinput = viewBinding.logWriteCodeText.text.toString()
+                viewBinding.codeCharCnt.text = userinput.length.toString() + "/1000"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                var userinput = viewBinding.logWriteCodeText.text.toString()
+                viewBinding.codeCharCnt.text = userinput.length.toString() + "/1000"
+                if (userinput.length >= 1000) {
+                    activity?.onFragmentChange("TextOverDialog")
+                }
+                if (userinput.length == 0) {
+                    activity?.onFragmentChange("TextZeroDialog")
+                }
+            }
+        })
+
+
     }
 
 }

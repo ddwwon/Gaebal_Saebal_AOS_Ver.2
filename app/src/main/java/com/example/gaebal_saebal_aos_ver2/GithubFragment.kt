@@ -67,6 +67,9 @@ class GithubFragment : BottomSheetDialogFragment() {
         })
 
         viewBinding.githubListRecyclerview.adapter = GithubItemAdapter
+
+
+
     }
 
     override fun dismiss() {

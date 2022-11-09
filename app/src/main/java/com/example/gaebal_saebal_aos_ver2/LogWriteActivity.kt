@@ -79,6 +79,24 @@ class LogWriteActivity : AppCompatActivity() {
                 val githubfragment = GithubFragment()
                 githubfragment.show(supportFragmentManager, githubfragment.tag)
             }
+            "TextOverDialog" -> {
+                // 기록 작성 프레그먼트의 본문에서 500자가 넘으면 글자 수를 줄이라는 다이얼로그 출력
+                val dialog = TextOverDialog(this)
+                dialog.showDialog()
+                dialog.setOnClickListener(object: TextOverDialog.OnDialogClickListener {
+                    override fun onClicked(num: Int) {
+                    }
+                })
+            }
+            "TextZeroDialog" -> {
+                // 기록 작성 프레그먼트의 본문에서 500자가 넘으면 글자 수를 줄이라는 다이얼로그 출력
+                val dialog = TextZeroDialog(this)
+                dialog.showDialog()
+                dialog.setOnClickListener(object: TextZeroDialog.OnDialogClickListener {
+                    override fun onClicked(num: Int) {
+                    }
+                })
+            }
         }
 
     }

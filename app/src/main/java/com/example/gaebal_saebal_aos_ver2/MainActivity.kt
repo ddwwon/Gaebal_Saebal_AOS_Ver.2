@@ -14,6 +14,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding // viewBinding
 
+    init {
+        instance = this
+    }
+
+    companion object {
+        private var instance:MainActivity?=null
+        fun getInstance():MainActivity? {
+            return instance
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,4 +80,22 @@ class MainActivity : AppCompatActivity() {
         changeFragment(fragment)
     }
 
+    fun onFragmentChange(index: String) {
+        when (index) {
+            "FloatingBtn" -> {
+                // 기록 상세 뷰에서 플로팅 버튼 누르면 모달창 뜨게
+                val dialog = FloatingBtn(this)
+                dialog.showDialog()
+//                dialog.setOnClickListener(object: FloatingBtn.OnDialogClickListener{
+//                    override fun onClicked(num: Int) {
+//                    }
+//                })
+            }
+            "MyContentsListFragment" -> {
+                // 기록 프레그먼트로 전환
+
+//                supportFragmentManager.beginTransaction().replace(R.id.fragment_layout, MyContentsListFragment()).commit()
+            }
+        }
+    }
 }
