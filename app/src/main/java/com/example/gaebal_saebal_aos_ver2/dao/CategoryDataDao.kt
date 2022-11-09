@@ -10,7 +10,10 @@ import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 @Dao
 interface CategoryDataDao {
     @Query("SELECT * FROM CategoryDataEntity")
-    fun getAllCategoryData(): List<CategoryDataEntity>
+    fun getAllCategoryData(): MutableList<CategoryDataEntity>
+
+    @Query("SELECT COUNT(*) FROM CategoryDataEntity")
+    fun getSizeCategoryData(): Int
 
     @Insert
     fun insertCategoryData(category: CategoryDataEntity)

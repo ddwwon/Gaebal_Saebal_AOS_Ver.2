@@ -95,7 +95,9 @@
             android:fontFamily="@font/imbplexmono_light"
             android:textSize="16sp"
             android:textColor="@color/black"
-            android:hint="카테고리명을 입력하세요."/>
+            android:hint="카테고리명을 입력하세요."
+            android:imeOptions="actionDone"
+            android:inputType="text"/>
 
     </LinearLayout>
 
