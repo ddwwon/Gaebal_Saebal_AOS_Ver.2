@@ -31,7 +31,7 @@ class MyContentsListFragment : Fragment() {
 
     // 카테고리 세부 recyclerview adapter
     private val datas = mutableListOf<MyContentsListData>()
-    private val checkData = mutableListOf<CheckBoxListData>()
+    private val checkData = mutableListOf<CheckBoxListData2>()
     private lateinit var myContentsListAdapter: MyContentsListAdapter
 
     override fun onCreateView(
@@ -100,7 +100,7 @@ class MyContentsListFragment : Fragment() {
             add(MyContentsListData(date, title, tag))
         }
         checkData.apply {
-            add(CheckBoxListData(title, false))
+            add(CheckBoxListData2(title, false))
         }
         myContentsListAdapter.notifyDataSetChanged()
     }

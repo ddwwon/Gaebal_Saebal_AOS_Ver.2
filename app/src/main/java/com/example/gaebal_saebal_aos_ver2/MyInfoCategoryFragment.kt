@@ -3,7 +3,6 @@ package com.example.gaebal_saebal_aos_ver2
 
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,12 +45,11 @@ class MyInfoCategoryFragment : Fragment() {
         // 저장된 카테고리 데이터 불러와서 추가
         val categoryDatas = db!!.categoryDataDao().getAllCategoryData()
         if(categoryDatas.isNotEmpty()) {
-            //db?.categoryDataDao()?.deleteAllCategoryData()
             /*datas.apply{
                 addAll(categoryDatas)
             }*/
             for(i: Int in 0..(categoryDatas.size - 1)) {
-                addData(categoryDatas[i].category_name)
+                addData(categoryDatas[i])
             }
             //Log.d("Test", "--------------------------------")
             //Log.d("Test", categoryDatas[0].toString())
@@ -83,17 +81,35 @@ class MyInfoCategoryFragment : Fragment() {
         // 카테고리 이름 입력 후 엔터 -> 카테고리 생성
         viewBinding.myInfoCategoryEdittext.setOnEditorActionListener(
             TextView.OnEditorActionListener { textView, actionId, keyEvent ->
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == KeyEvent.KEYCODE_ENTER) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     val newCategory = viewBinding.myInfoCategoryEdittext.text.toString()
                     viewBinding.myInfoCategoryEdittext.text = null
 
                     val mCategory = CategoryDataEntity(0, newCategory) // CategoryDataEntity 생성
                     db?.categoryDataDao()?.insertCategoryData(mCategory)          // DB에 추가
 
-                    addData(newCategory)
+                    addData(mCategory)
                 }
                 false
         })
+
+        // 카테고리 삭제 버튼 클릭
+        /*viewBinding.deleteCategoryBtn.setOnClickListener {
+            var dataSize = checkData.size - 1
+            for(i: Int in 0..dataSize) {
+                // 체크된 카테고리
+                if(checkData[i].checked) {
+                    db?.categoryDataDao()?.deleteCategoryData(datas[i])
+                    datas.removeAt(i)
+                    checkData.removeAt(i)
+                    myInfoCategoryAdapter.notifyDataSetChanged()
+                    //i--
+                    //dataSize--
+                }
+            }
+            Log.d("Test", "--------------------------------")
+            Log.d("Test", categoryDatas.toString())
+        }*/
 
     }
 
@@ -107,9 +123,9 @@ class MyInfoCategoryFragment : Fragment() {
     }
 
     // 데이터 추가
-    private fun addData(category: String) {
+    private fun addData(category: CategoryDataEntity) {
         datas.apply {
-            add(CategoryDataEntity(0, category))
+            add(category)
         }
         checkData.apply {
             add(CheckBoxListData(category, false))
