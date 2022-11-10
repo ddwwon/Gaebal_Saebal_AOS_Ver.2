@@ -9,18 +9,21 @@ import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 
 @Dao
 interface CategoryDataDao {
-    @Query("SELECT * FROM CategoryDataEntity")
+    @Query("SELECT * FROM CategoryDataEntity") // 전체 데이터
     fun getAllCategoryData(): MutableList<CategoryDataEntity>
 
-    @Query("SELECT COUNT(*) FROM CategoryDataEntity")
-    fun getSizeCategoryData(): Int
-
     @Insert
-    fun insertCategoryData(category: CategoryDataEntity)
+    fun insertCategoryData(category: CategoryDataEntity) // 데이터 추가
 
     @Delete
-    fun deleteCategoryData(category: CategoryDataEntity)
+    fun deleteCategoryData(category: CategoryDataEntity) // 데이터 삭제
 
-    @Query("DELETE FROM CategoryDataEntity")
+    @Query("DELETE FROM CategoryDataEntity") // 데이터 전체 삭제
     fun deleteAllCategoryData()
+
+    @Query("SELECT COUNT(*) FROM CategoryDataEntity") // 데이터 갯수
+    fun getSizeCategoryData(): Int
+
+    @Query("SELECT COUNT(*) FROM CategoryDataEntity WHERE category_name LIKE :categoryName") // 데이터 존재유무
+    fun checkExistCategoryData(categoryName: String): Int
 }
