@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaebal_saebal_aos_ver2.databinding.MyContentsListItemBinding
 
-class MyContentsListAdapter(private val context: Context) :
+class MyContentsListAdapter(
+    private val context: Context,
+    val onClickContent: (id: Int) -> Unit
+    ) :
     RecyclerView.Adapter<MyContentsListAdapter.MyContentsListViewHolder>() {
 
     var datas = mutableListOf<MyContentsListData>()
@@ -29,17 +32,9 @@ class MyContentsListAdapter(private val context: Context) :
         holder.bind(datas[position], checkboxList[position])
 
         holder.itemView.setOnClickListener{
-            itemClickListener.onClick(it, position)
+            onClickContent.invoke(datas[position].contentId) // 기록 세부 페이지 이동 함수 호출 - 기록 id 정보 넘겨줌
         }
 
-    }
-    interface ItemClickListener {
-        fun onClick(view: View, position: Int)
-    }
-
-    private lateinit var itemClickListener: ItemClickListener
-    fun setItemClickListener(itemClickListener: ItemClickListener) {
-        this.itemClickListener = itemClickListener
     }
 
     inner class MyContentsListViewHolder(private val binding: MyContentsListItemBinding) :

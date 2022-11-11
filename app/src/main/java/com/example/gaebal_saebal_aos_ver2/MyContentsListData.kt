@@ -2,6 +2,7 @@
 package com.example.gaebal_saebal_aos_ver2
 
 class MyContentsListData (
+    val contentId: Int,
     val contentWriteDate: String,
     val contentTitle: String,
     val contentHashtag: MutableList<String>

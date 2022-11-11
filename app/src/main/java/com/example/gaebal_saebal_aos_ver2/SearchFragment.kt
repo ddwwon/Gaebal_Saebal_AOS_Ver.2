@@ -20,7 +20,7 @@ class SearchFragment : Fragment() {
     private var db: AppDatabase? = null
 
     // 검색 결과 recyclerview adapter
-    private val datas = mutableListOf<SearchResultData>()
+    private var datas = mutableListOf<SearchResultData>()
     private lateinit var searchResultAdapter: SearchResultAdapter
 
     override fun onCreateView(
@@ -41,12 +41,17 @@ class SearchFragment : Fragment() {
         // recyclerview 세팅 및 데이터 추가
         initSearchResultRecycler()
 
-
         // 검색창 입력 후 엔터
         viewBinding.searchEditText.setOnEditorActionListener(
             TextView.OnEditorActionListener { textView, actionId, keyEvent ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     val mSearchWord = viewBinding.searchEditText.text.toString() // 검색어
+
+                    // 검색 결과 리스트 초기화
+                    datas = mutableListOf<SearchResultData>()
+
+                    // recyclerview 세팅 및 데이터 추가
+                    initSearchResultRecycler()
 
                     // 검색 결과
                     val searchResults: MutableList<RecordDataEntity> = db!!.recordDataDao().searchResult(mSearchWord)
@@ -56,8 +61,8 @@ class SearchFragment : Fragment() {
                         val mCategory = db!!.categoryDataDao().getCategoryName(searchResults[i].record_category_uid)
                         // 컨텐츠 내용 - 줄바꿈 제거
                         var mContent: String = searchResults[i].record_contents.replace("\\r\\n|\\r|\\n|\\n\\r".toRegex()," ")
-                        if(mContent.length > 6) {
-                            mContent = mContent.substring(0 until 6) + "..."// 6글자까지 자르기
+                        if(mContent.length > 15) {
+                            mContent = mContent.substring(0 until 15) + "..."// 15글자까지 자르기
                         }
                         var hashTags: MutableList<String> = searchResults[i].record_tags?.split(";")!!.toMutableList()
                         addData(mCategory, searchResults[i].record_date.toString(), mContent, hashTags)

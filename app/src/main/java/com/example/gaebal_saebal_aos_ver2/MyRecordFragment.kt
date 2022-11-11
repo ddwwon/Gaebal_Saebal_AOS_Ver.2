@@ -126,9 +126,6 @@ class MyRecordFragment : Fragment() {
 
     // 카테고리 세부 페이지(contents list) 열기
     private fun openCategory(category: String) {
-        //Log.d("Test", "-----------------------------")
-        //Log.d("Test", category)
-
         // 카테고리 세부 페이지로 이동
         // 카테고리 세부 페이지로 카테고리 정보 넘겨주기
         activity?.sendCategoryFromMyRecord(category)

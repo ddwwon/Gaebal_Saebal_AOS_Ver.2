@@ -34,6 +34,8 @@ data class RecordDataEntity (
 
     @ColumnInfo
     var record_baekjoon_num: Int?, // 백준 문제번호
+    @ColumnInfo
+    var record_baekjoon_name: String?, // 백준 문제이름
 
     // github
     @ColumnInfo

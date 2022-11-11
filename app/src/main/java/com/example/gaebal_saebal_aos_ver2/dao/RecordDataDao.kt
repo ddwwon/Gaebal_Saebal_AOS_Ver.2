@@ -21,6 +21,9 @@ interface RecordDataDao {
     @Query("DELETE FROM RecordDataEntity") // 데이터 전체 삭제
     fun deleteAllRecordData()
 
+    @Query("SELECT * FROM RecordDataEntity WHERE record_uid = :recordUid") // id 이용해서 record 불러오기
+    fun getRecordContent(recordUid: Int): RecordDataEntity
+
     @Query("SELECT * FROM RecordDataEntity WHERE record_category_uid = :categoryUid") // 해당 카테고리의 record 불러오기
     fun getRecordFromCategory(categoryUid: Int): MutableList<RecordDataEntity>
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogDetailBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 
 //import kotlinx.android.synthetic.main.fragment_log_detail.*
 
@@ -15,7 +16,11 @@ import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogDetailBinding
 class LogDetailFragment : Fragment() {
     private lateinit var viewBinding: FragmentLogDetailBinding
 
+    // Room DB 세팅
+    private var db: AppDatabase? = null
 
+    // 기록 id
+    private var mRecordId: Int =  -1
 
     var activity: MainActivity? = null
 
@@ -30,11 +35,6 @@ class LogDetailFragment : Fragment() {
         activity = null
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +47,18 @@ class LogDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // 메인 페이지에서 넘어온 기록 id 데이터 받아오기
+        arguments?.let {
+            mRecordId = it.getInt("contentId").toInt()
+        }
+
+        // db 세팅
+        db = AppDatabase.getInstance(this.requireContext())
+
+        val mContent: RecordDataEntity = db!!.recordDataDao().getRecordContent(mRecordId)
+
+
 
         viewBinding.logDetailBackBtn.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()

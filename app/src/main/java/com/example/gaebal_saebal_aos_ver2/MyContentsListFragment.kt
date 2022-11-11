@@ -72,7 +72,12 @@ class MyContentsListFragment : Fragment() {
         for(i: Int in 0..(storedContentsData.size - 1)) {
             var hashTags: MutableList<String> = storedContentsData[i].record_tags?.split(";")!!.toMutableList()
 
-            addData(storedContentsData[i].record_date.toString(), storedContentsData[i].record_contents, hashTags)
+            addData(
+                storedContentsData[i].record_uid,
+                storedContentsData[i].record_date.toString(),
+                storedContentsData[i].record_contents,
+                hashTags
+            )
         }
     }
 
@@ -106,21 +111,12 @@ class MyContentsListFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-
+        // 기록 작성 버튼 클릭
         viewBinding.categoryDetailWriteBtn.setOnClickListener{
             val intent = Intent(activity, LogWriteActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
         }
-
-        myContentsListAdapter.setItemClickListener(object : MyContentsListAdapter.ItemClickListener{
-            override fun onClick(view: View, position: Int) {
-                val fragment = LogDetailFragment()
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                    transaction.add(R.id.fragment_layout, fragment)
-                    transaction.commit()
-            }
-        })
 
         // 체크박스 전체 선택/해제
         viewBinding.contentsListCheckboxAll.setOnCheckedChangeListener { _, isChecked ->
@@ -132,7 +128,12 @@ class MyContentsListFragment : Fragment() {
 
     // recyclerview 세팅
     private fun initMyContentsListRecycler() {
-        myContentsListAdapter = MyContentsListAdapter(requireContext())
+        myContentsListAdapter = MyContentsListAdapter(
+            requireContext(),
+            onClickContent = {
+                goLogDetail(it)
+            }
+        )
         viewBinding.myContentsListRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.myContentsListRecyclerview.adapter = myContentsListAdapter
         myContentsListAdapter.datas = datas
@@ -142,14 +143,21 @@ class MyContentsListFragment : Fragment() {
     // 데이터 추가
     // tag도 recyclerview로 바꿔야 함 -> 여러 개 나올 수 있으므로
     // date: String, title: String, tag: String
-    private fun addData(date: String, title: String, tag: MutableList<String>) {
+    private fun addData(id: Int, date: String, title: String, tag: MutableList<String>) {
         datas.apply {
             //add(MyContentsListData(category, contents))
-            add(MyContentsListData(date, title, tag))
+            add(MyContentsListData(id, date, title, tag))
         }
         checkData.apply {
             add(CheckBoxListData2(title, false))
         }
         myContentsListAdapter.notifyDataSetChanged()
+    }
+
+    // 기록 세부 페이지(LogDetail) 열기
+    fun goLogDetail(id: Int) {
+        // 기록 세부 페이지로 이동
+        // 기록 세부 페이지로 기록 id 정보 넘겨주기
+        activity?.sendContentIdFromMyLogDetail(id)
     }
 }

@@ -98,6 +98,7 @@ class LogWriteFragment : Fragment() {
             var recordContent: String? = null // 기록 내용
             var recordTag: String = "" // 태그
             var recordBeakjoonNum: Int = -1; // 백준 문제 번호
+            var recordBeakjoonName: String = ""; // 백준 문제 이름
             var recordGithubType: String = "" // 깃허브 타입: issue, commit, Pull request
             var recordGithubDate: Date = Date() // 깃허브 날짜
             var recordGithubTitle: String = "" // 깃허브 제목
@@ -123,6 +124,7 @@ class LogWriteFragment : Fragment() {
                     recordContent,
                     recordTag,
                     recordBeakjoonNum,
+                    recordBeakjoonName,
                     recordGithubType,
                     recordGithubDate,
                     recordGithubTitle,
