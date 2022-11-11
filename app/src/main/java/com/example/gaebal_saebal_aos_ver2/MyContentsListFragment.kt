@@ -11,29 +11,70 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentMyContentsListBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
+import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 
 class MyContentsListFragment : Fragment() {
     private lateinit var viewBinding: FragmentMyContentsListBinding // viewBinding
 
-    // 임시 데이터 - 나중에 기기에 저장된 데이터 불러와서 사용할 것
-    private val storedCategoryData = arrayListOf("자료구조", "알고리즘", "인공지능")
-    private val storedContentsData = arrayListOf(
-        arrayListOf(arrayListOf("스택", "22/11/05 02:22 AM"), arrayListOf("큐", "22/11/05 02:22 AM"), arrayListOf("그래프", "22/11/05 02:22 AM"), arrayListOf("트리", "22/11/05 02:22 AM")),
-        arrayListOf(arrayListOf("dp", "22/11/05 02:22 AM"), arrayListOf("분할정복이란 무엇인가", "22/11/05 02:22 AM")),
-        arrayListOf(arrayListOf("비지도학습이란 무엇인가", "22/11/05 02:22 AM"), arrayListOf("지도학습", "22/11/05 02:22 AM"), arrayListOf("기계학습", "22/11/05 02:22 AM")))
-    private val storedContentsHashTag = arrayListOf(
-        arrayListOf(arrayListOf("C", "Test"), arrayListOf("C"), arrayListOf("C", "Test"), arrayListOf("Test")),
-        arrayListOf(arrayListOf("Java", "Test"), arrayListOf("Test")),
-        arrayListOf(arrayListOf("C", "Test", "jm"), arrayListOf("C"), arrayListOf("C", "Test"))
-    )
+    // Room DB 세팅
+    private var db: AppDatabase? = null
 
     // 카테고리
-    private var mCategory: String? = null
+    private var mCategory: String = ""
 
     // 카테고리 세부 recyclerview adapter
-    private val datas = mutableListOf<MyContentsListData>()
+    private var datas = mutableListOf<MyContentsListData>()
     private val checkData = mutableListOf<CheckBoxListData2>()
     private lateinit var myContentsListAdapter: MyContentsListAdapter
+
+    // 프래그먼트 전환을 위해
+    var activity: MainActivity? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = getActivity() as MainActivity
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        activity = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // refresh
+        activity?.refreshFragment(this)
+
+        // 메인 페이지에서 넘어온 카테고리 데이터 받아오기
+        arguments?.let {
+            mCategory = it.getString("category").toString()
+        }
+
+        // 페이지에 보이는 카테고리
+        viewBinding.contentsListCategory.text = mCategory
+
+        // db 세팅
+        db = AppDatabase.getInstance(this.requireContext())
+
+        // 데이터 초기화
+        datas = mutableListOf<MyContentsListData>()
+
+        // recyclerview 세팅 및 데이터 추가
+        initMyContentsListRecycler()
+
+        // db에서 해당 카테고리의 contents 데이터 불러오기
+        val mCategoryUid: Int = db!!.categoryDataDao().getCategoryUid(mCategory)
+        val storedContentsData: MutableList<RecordDataEntity>
+                = db!!.recordDataDao().getRecordFromCategory(mCategoryUid)
+
+        for(i: Int in 0..(storedContentsData.size - 1)) {
+            var hashTags: MutableList<String> = storedContentsData[i].record_tags?.split(";")!!.toMutableList()
+
+            addData(storedContentsData[i].record_date.toString(), storedContentsData[i].record_contents, hashTags)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,10 +87,10 @@ class MyContentsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         // 메인 페이지에서 넘어온 카테고리 데이터 받아오기
         arguments?.let {
-            mCategory = it.getString("category")
+            mCategory = it.getString("category").toString()
         }
 
         // 페이지에 보이는 카테고리
@@ -57,17 +98,6 @@ class MyContentsListFragment : Fragment() {
 
         // recyclerview 세팅 및 데이터 추가
         initMyContentsListRecycler()
-        for(i: Int in 0..(storedCategoryData.size - 1)) {
-            // 메인페이지에서 선택했던 카테고리에 대한 데이터로
-            //Log.d("Test", "---------------------")
-            //Log.d("Test", mCategory + "")
-            if(mCategory == storedCategoryData[i]) {
-                for(j: Int in 0..(storedContentsData[i].size - 1)) {
-                    addData(storedContentsData[i][j][1], storedContentsData[i][j][0], storedContentsHashTag[i][j])
-                }
-                break
-            }
-        }
 
         // 이전 버튼 클릭 시
         viewBinding.contentsListBackBtn.setOnClickListener {
@@ -112,7 +142,7 @@ class MyContentsListFragment : Fragment() {
     // 데이터 추가
     // tag도 recyclerview로 바꿔야 함 -> 여러 개 나올 수 있으므로
     // date: String, title: String, tag: String
-    private fun addData(date: String, title: String, tag: ArrayList<String>) {
+    private fun addData(date: String, title: String, tag: MutableList<String>) {
         datas.apply {
             //add(MyContentsListData(category, contents))
             add(MyContentsListData(date, title, tag))

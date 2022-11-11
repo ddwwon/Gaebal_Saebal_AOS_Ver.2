@@ -112,7 +112,7 @@ class LogWriteFragment : Fragment() {
             recordTag = viewBinding.tagInput.text.toString() // 태그
             recordCode = viewBinding.logWriteCodeText.text.toString() // 코드
 
-            db?.recordDataDao()?.deleteAllRecordData()
+            //db?.recordDataDao()?.deleteAllRecordData()
             recordCategoryUid = 1
 
             if(recordCategoryUid != null && recordContent != "") {

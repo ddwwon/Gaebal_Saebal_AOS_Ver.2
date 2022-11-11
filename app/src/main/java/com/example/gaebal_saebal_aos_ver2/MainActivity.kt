@@ -1,15 +1,13 @@
 package com.example.gaebal_saebal_aos_ver2
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.appcompat.widget.AppCompatButton
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding // viewBindingz
@@ -24,7 +22,6 @@ class MainActivity : AppCompatActivity() {
             return instance
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +61,17 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .add(binding.fragmentLayout.id, fragment)
+            .commit()
+    }
+
+    // 프래그먼트 refresh
+    fun refreshFragment(fragment: Fragment) {
+        Log.d("Refresh", "-----------------------------")
+
+        supportFragmentManager
+            .beginTransaction()
+            .detach(fragment)
+            .attach(fragment)
             .commit()
     }
 

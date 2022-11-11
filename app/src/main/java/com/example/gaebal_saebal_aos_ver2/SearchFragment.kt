@@ -7,20 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentSearchBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 
 class SearchFragment : Fragment() {
     private lateinit var viewBinding: FragmentSearchBinding // viewBinding
 
-    // 임시 데이터 - 나중에 기기에 저장된 데이터 불러와서 사용할 것
-    private val storedCategoryData = arrayListOf("자료구조", "알고리즘")
-    private val storedContentsData = arrayListOf(
-        arrayListOf(arrayListOf("스택", "22/11/05 02:22 AM")),
-        arrayListOf(arrayListOf("dp", "22/11/05 02:22 AM"), arrayListOf("분할정복이란 무엇인가", "22/11/05 02:22 AM")))
-    private val storedContentsHashTag = arrayListOf(
-        arrayListOf(arrayListOf("C", "Test")),
-        arrayListOf(arrayListOf("Java", "Test"), arrayListOf("Test")))
+    // Room DB 세팅
+    private var db: AppDatabase? = null
 
     // 검색 결과 recyclerview adapter
     private val datas = mutableListOf<SearchResultData>()
@@ -38,13 +35,36 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // db 세팅
+        db = AppDatabase.getInstance(this.requireContext())
+
         // recyclerview 세팅 및 데이터 추가
         initSearchResultRecycler()
-        for(i: Int in 0..(storedCategoryData.size - 1)) {
-            for(j: Int in 0..(storedContentsData[i].size - 1)) {
-                addData(storedCategoryData[i], storedContentsData[i][j][1], storedContentsData[i][j][0], storedContentsHashTag[i][j])
-            }
-        }
+
+
+        // 검색창 입력 후 엔터
+        viewBinding.searchEditText.setOnEditorActionListener(
+            TextView.OnEditorActionListener { textView, actionId, keyEvent ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val mSearchWord = viewBinding.searchEditText.text.toString() // 검색어
+
+                    // 검색 결과
+                    val searchResults: MutableList<RecordDataEntity> = db!!.recordDataDao().searchResult(mSearchWord)
+
+                    // 검색 결과 데이터 삽입
+                    for(i: Int in 0..(searchResults.size - 1)) {
+                        val mCategory = db!!.categoryDataDao().getCategoryName(searchResults[i].record_category_uid)
+                        // 컨텐츠 내용 - 줄바꿈 제거
+                        var mContent: String = searchResults[i].record_contents.replace("\\r\\n|\\r|\\n|\\n\\r".toRegex()," ")
+                        if(mContent.length > 6) {
+                            mContent = mContent.substring(0 until 6) + "..."// 6글자까지 자르기
+                        }
+                        var hashTags: MutableList<String> = searchResults[i].record_tags?.split(";")!!.toMutableList()
+                        addData(mCategory, searchResults[i].record_date.toString(), mContent, hashTags)
+                    }
+                }
+                false
+        })
     }
 
     // recyclerview 세팅
@@ -56,14 +76,13 @@ class SearchFragment : Fragment() {
     }
 
     // 데이터 추가
-    // tag도 recyclerview로 바꿔야 함 -> 여러 개 나올 수 있으므로
+    // tag도 recyclerview로
     // date: String, title: String, tag: String
-    private fun addData(category: String, date: String, title: String, tag: ArrayList<String>) {
+    private fun addData(category: String, date: String, title: String, tag: MutableList<String>) {
         datas.apply {
             //add(MyContentsListData(category, contents))
             add(SearchResultData(category, date, title, tag))
             searchResultAdapter.notifyDataSetChanged()
         }
     }
-
 }

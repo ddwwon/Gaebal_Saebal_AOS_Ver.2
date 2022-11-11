@@ -21,5 +21,11 @@ interface RecordDataDao {
     @Query("DELETE FROM RecordDataEntity") // 데이터 전체 삭제
     fun deleteAllRecordData()
 
+    @Query("SELECT * FROM RecordDataEntity WHERE record_category_uid = :categoryUid") // 해당 카테고리의 record 불러오기
+    fun getRecordFromCategory(categoryUid: Int): MutableList<RecordDataEntity>
+
+    // 검색
+    @Query("SELECT * FROM RecordDataEntity WHERE record_contents LIKE '%'||:searchWord||'%' OR record_tags LIKE '%'||:searchWord||'%'")
+    fun searchResult(searchWord: String): MutableList<RecordDataEntity>
 }
 // 데이터 수정 쿼리도 추가

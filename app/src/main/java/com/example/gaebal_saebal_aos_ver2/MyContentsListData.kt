@@ -4,5 +4,5 @@ package com.example.gaebal_saebal_aos_ver2
 class MyContentsListData (
     val contentWriteDate: String,
     val contentTitle: String,
-    val contentHashtag: ArrayList<String>
+    val contentHashtag: MutableList<String>
 )

@@ -27,7 +27,9 @@
             android:hint="검색어를 입력하세요"
             android:textSize="14sp"
             android:paddingHorizontal="10dp"
-            android:layout_marginHorizontal="10dp"/>
+            android:layout_marginHorizontal="10dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"/>
 
         <ImageButton
             android:id="@+id/search_btn"
