@@ -26,4 +26,7 @@ interface CategoryDataDao {
 
     @Query("SELECT COUNT(*) FROM CategoryDataEntity WHERE category_name LIKE :categoryName") // 데이터 존재유무
     fun checkExistCategoryData(categoryName: String): Int
+
+    @Query("SELECT category_name FROM CategoryDataEntity WHERE category_uid == :key") // id 값으로 카테고리명 가져오기
+    fun getCategoryName(key: Int): String
 }

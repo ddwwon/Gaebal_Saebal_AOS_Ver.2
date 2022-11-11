@@ -52,8 +52,8 @@ class MyInfoCategoryFragment : Fragment() {
             for(i: Int in 0..(categoryDatas.size - 1)) {
                 addData(categoryDatas[i])
             }
-            //Log.d("Test", "--------------------------------")
-            //Log.d("Test", categoryDatas[0].toString())
+            Log.d("Test", "--------------------------------")
+            Log.d("Test", categoryDatas.toString())
         }
 
         // 이전 버튼 클릭 시
@@ -86,7 +86,10 @@ class MyInfoCategoryFragment : Fragment() {
                     val newCategory = viewBinding.myInfoCategoryEdittext.text.toString()
                     viewBinding.myInfoCategoryEdittext.text = null
 
-                    if(db?.categoryDataDao()?.checkExistCategoryData(newCategory).toString().toInt() == 0) {
+                    if(newCategory == "") {
+                        Toast.makeText(requireActivity(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(db?.categoryDataDao()?.checkExistCategoryData(newCategory).toString().toInt() == 0) {
                         val mCategory = CategoryDataEntity(0, newCategory) // CategoryDataEntity 생성
                         db?.categoryDataDao()?.insertCategoryData(mCategory)          // DB에 추가
 
@@ -102,8 +105,8 @@ class MyInfoCategoryFragment : Fragment() {
         // 카테고리 삭제 버튼 클릭
         viewBinding.deleteCategoryBtn.setOnClickListener {
             var index = 0
-            var size = datas.size - 1
-            while(index <= size) {
+            var size = datas.size
+            while(index < size) {
                 // 체크된 카테고리
                 if(checkData[index].checked) {
                     db?.categoryDataDao()?.deleteCategoryData(datas[index])

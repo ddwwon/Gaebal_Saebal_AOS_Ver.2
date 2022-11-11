@@ -12,7 +12,7 @@ import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding // viewBinding
+    private lateinit var binding : ActivityMainBinding // viewBindingz
 
     init {
         instance = this

@@ -2,11 +2,15 @@ package com.example.gaebal_saebal_aos_ver2
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -19,12 +23,18 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogWriteBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class LogWriteFragment : Fragment() {
     private lateinit var viewBinding: FragmentLogWriteBinding
     var activity: LogWriteActivity? = null
     private lateinit var LogWriteCategoryAdapter: LogWriteCategoryAdapter
+
+    // Category DB 세팅
+    private var db: AppDatabase? = null
 
     var category = ArrayList<Category>()
 
@@ -56,6 +66,14 @@ class LogWriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // db 세팅
+        db = AppDatabase.getInstance(this.requireContext())
+
+        // 빈 이미지 세팅
+        val resources: Resources = this.resources
+        val nullImage: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_image)
+
         category.add(Category("미정"))
         category.add(Category("자료구조"))
         category.add(Category("백준"))
@@ -73,6 +91,61 @@ class LogWriteFragment : Fragment() {
             activity?.finish()
         }
 
+        // 등록 버튼 클릭 시 DB에 내용 저장
+        viewBinding.logWriteRegisterBtn.setOnClickListener {
+            // 기본값
+            var recordCategoryUid: Int? = null // 카테고리 id
+            var recordContent: String? = null // 기록 내용
+            var recordTag: String = "" // 태그
+            var recordBeakjoonNum: Int = -1; // 백준 문제 번호
+            var recordGithubType: String = "" // 깃허브 타입: issue, commit, Pull request
+            var recordGithubDate: Date = Date() // 깃허브 날짜
+            var recordGithubTitle: String = "" // 깃허브 제목
+            var recordGithubRepo: String = "" // 깃허브 레포지토리
+            var recordImage: Bitmap = nullImage // 이미지
+            var recordImageExist: Boolean = false // 이미지 존재 유무
+            var recordCode: String = "" // 코드
+            val currentDate: Date = Date() // 현재 날짜
+
+            // 사용자 입력값
+            recordContent = viewBinding.logWriteMainText.text.toString() // 본문 내용
+            recordTag = viewBinding.tagInput.text.toString() // 태그
+            recordCode = viewBinding.logWriteCodeText.text.toString() // 코드
+
+            db?.recordDataDao()?.deleteAllRecordData()
+            recordCategoryUid = 1
+
+            if(recordCategoryUid != null && recordContent != "") {
+                // RecordDataEntity 생성
+                val mRecord = RecordDataEntity(
+                    0,
+                    recordCategoryUid,
+                    recordContent,
+                    recordTag,
+                    recordBeakjoonNum,
+                    recordGithubType,
+                    recordGithubDate,
+                    recordGithubTitle,
+                    recordGithubRepo,
+                    recordImage,
+                    recordImageExist,
+                    recordCode,
+                    currentDate
+                )
+                db?.recordDataDao()?.insertRecordData(mRecord) // DB에 추가
+
+                val recordDatas = db!!.recordDataDao().getAllRecordData()
+                if(recordDatas.isNotEmpty()) {
+                    Log.d("Test", "--------------------------------")
+                    Log.d("Test", recordDatas.toString())
+                }
+
+                activity?.finish()
+            }
+            else {
+                Toast.makeText(requireActivity(), "본문을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         viewBinding.logWriteCategoryRecyclerview.adapter = LogWriteCategoryAdapter
 
