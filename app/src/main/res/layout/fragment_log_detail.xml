@@ -23,7 +23,7 @@
         android:textSize="25sp"
         android:gravity="center"
         android:layout_marginTop="30sp"
-        android:fontFamily = "@font/imbplexmono_light"
+        android:fontFamily = "@font/imp"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,7 +59,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="10sp"
-            android:fontFamily = "@font/imbplexmono_light"
+            android:fontFamily = "@font/imp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -67,7 +67,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily = "@font/imbplexmono_light"
+        android:fontFamily = "@font/imp"
         android:text="기초부터 탄탄히 하자!\n아자아자 화이자\n빨리 백준 골드 되고 싶다,,😢😢"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
@@ -77,7 +77,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily = "@font/imbplexmono_light"
+        android:fontFamily = "@font/imp"
         android:text="JAVA;스택;10828"
         android:layout_marginLeft="40sp"
         android:textStyle="bold"
@@ -99,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2022/01/22 17:19"
-        android:fontFamily = "@font/imbplexmono_light"
+        android:fontFamily = "@font/imp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"/>
 

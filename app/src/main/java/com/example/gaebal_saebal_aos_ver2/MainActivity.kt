@@ -1,9 +1,15 @@
 package com.example.gaebal_saebal_aos_ver2
 
+import android.app.Activity
+import android.content.Intent
+import android.media.Image
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -13,6 +19,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding // viewBinding
+    var imageUriList = arrayListOf<Uri>()
+    var imageViewList = arrayListOf<ImageView>()
 
     init {
         instance = this
@@ -99,6 +107,15 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.popBackStack()
 //                supportFragmentManager.beginTransaction().replace(R.id.fragment_layout, MyContentsListFragment()).commit()
             }
+
+            "BojNumInput" -> {
+                val dialog = BojDialog(this)
+                dialog.showDialog()
+                dialog.setOnClickListener(object: BojDialog.OnDialogClickListener {
+                    override fun onClicked(num: Int) {
+                    }
+                })
+            }
         }
     }
     fun onFloatingChange(index: String, fragment: Fragment){
@@ -119,4 +136,33 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().remove(fragment).commit()
         supportFragmentManager.popBackStack()
     }
+//    private fun navigatePhotos() {
+//        val intent = Intent(Intent.ACTION_GET_CONTENT)
+//        intent.type = "image/*"
+//        startActivityForResult(intent,2000)
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if(resultCode != Activity.RESULT_OK) {
+//            Toast.makeText(this,"잘못된 접근입니다",Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//        when(requestCode){
+//            2000 -> {
+//                val selectedImageURI : Uri? = data?.data
+//                if( selectedImageURI != null ) {
+////                    val imageView = findViewById<ImageView>(R.id.addImageView)
+////                    binding.
+////                    binding..setImageURI(selectedImageURI)
+////                    imageURI = selectedImageURI
+//                }else {
+//                    Toast.makeText(this,"이미지를 가져오지 못했습니다1",Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//            else -> {
+//                Toast.makeText(this,"이미지를 가져오지 못했습니다2",Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 }

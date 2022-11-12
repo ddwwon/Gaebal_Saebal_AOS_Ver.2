@@ -1,5 +1,6 @@
 package com.example.gaebal_saebal_aos_ver2
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -28,10 +29,6 @@ class LogWriteFragment : Fragment() {
 
     var category = ArrayList<Category>()
 
-    private val pickImage = 100
-    private var imageUri: Uri? = null
-
-    // onAttach, onDetach: clicklistener를 사용하기 위해서 필요요요요
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = getActivity() as LogWriteActivity
@@ -145,7 +142,44 @@ class LogWriteFragment : Fragment() {
             }
         })
 
+        // ImageView 숨김(공간까지!)
+        viewBinding.addImageView.visibility = View.GONE
 
+        // 사진에서 + 버튼을 누르면
+        viewBinding.imageBtn.setOnClickListener {
+            activity?.onFragmentChange("GalleryAccess")
+            navigatePhotos()
+            // ImageView 보임
+            viewBinding.addImageView.visibility = View.VISIBLE
+        }
+    }
+
+    //
+    private fun navigatePhotos() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent,2000)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode != Activity.RESULT_OK) {
+            println("wrong")
+            return
+        }
+        when(requestCode){
+            2000 -> {
+                val selectedImageURI : Uri? = data?.data
+                if( selectedImageURI != null ) {
+                    viewBinding.addImageView.setImageURI(selectedImageURI)
+                }else {
+                    println("wrong")
+                }
+            }
+            else -> {
+                println("wrong")
+            }
+        }
     }
 
 }

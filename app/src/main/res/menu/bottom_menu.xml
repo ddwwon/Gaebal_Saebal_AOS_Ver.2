@@ -4,13 +4,16 @@
     <group>
         <item android:id="@+id/my_record"
             android:title="내 기록"
-            android:icon="@drawable/my_record" />
+            android:icon="@drawable/my_record"
+            />
         <item android:id="@+id/search"
             android:title="검색"
-            android:icon="@drawable/search" />
+            android:icon="@drawable/search"
+            />
         <item android:id="@+id/my_information"
             android:title="내 정보"
-            android:icon="@drawable/setting_icon" />
+            android:icon="@drawable/setting_icon"
+            />
     </group>
 
 </menu>
