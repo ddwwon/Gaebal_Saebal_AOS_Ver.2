@@ -37,7 +37,7 @@ class MyInfoGitFragment : Fragment() {
     }
 
     fun gitHubClient() {
-        var auth = "token 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"
+        var auth = "token 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"
 //        var auth = "token " + viewBinding.inputToken.text.toString()
         var selectedRepoOwner = "ddwwon"
         var selectedRepo = "GAEBAL_SAEBAL_AOS"
@@ -48,11 +48,11 @@ class MyInfoGitFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({items ->
                 items.forEach {println("getRepos: " + it)}
-                items.forEach {test.add(it.toString())}
+//                items.forEach {test.add(it.toString())}
             }, {e ->
                 println("getReposerror: " + e.toString())
             })
-        test.forEach {"test pritn: "+ println(it)}
+//        test.forEach {"test pritn: "+ println(it)}
 
         MyInfoGitClient.getApi().getIssues(auth,
             selectedRepoOwner,
