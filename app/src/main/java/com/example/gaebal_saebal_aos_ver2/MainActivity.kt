@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding // viewBinding
     var imageUriList = arrayListOf<Uri>()
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
             return instance
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +75,17 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
+    // 프래그먼트 refresh
+    fun refreshFragment(fragment: Fragment) {
+        Log.d("Refresh", "-----------------------------")
+
+        supportFragmentManager
+            .beginTransaction()
+            .detach(fragment)
+            .attach(fragment)
+            .commit()
+    }
+
     // 메인페이지에서 카테고리 세부 페이지로 이동할 때 카테고리 제목 데이터 넘겨줌.
     fun sendCategoryFromMyRecord(mCategory: String) {
         val fragment: Fragment = MyContentsListFragment()
@@ -85,6 +96,20 @@ class MainActivity : AppCompatActivity() {
         fragment.arguments = bundle
 
         // Contents List 페이지(카테고리 세부 페이지)로 이동
+        // 이전페이지로 돌아가는 기능을 이용할 수 있도록 replace가 아니라 add로
+        changeFragment(fragment)
+    }
+
+    // 기록 리스트 페이지에서 기록 세부페이지로 이동할 때 기록 id 데이터 넘겨줌
+    fun sendContentIdFromMyLogDetail(mContentId: Int) {
+        val fragment: Fragment = LogDetailFragment()
+
+        // 기록 id 데이터 넘겨줌.
+        val bundle = Bundle()
+        bundle.putInt("contentId", mContentId)
+        fragment.arguments = bundle
+
+        // Log Detail 페이지(기록 세부 페이지)로 이동
         // 이전페이지로 돌아가는 기능을 이용할 수 있도록 replace가 아니라 add로
         changeFragment(fragment)
     }

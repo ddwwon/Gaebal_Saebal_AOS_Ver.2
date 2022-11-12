@@ -10,9 +10,9 @@ import com.example.gaebal_saebal_aos_ver2.databinding.MyContentsHashtagItemBindi
 class MyContentsHashTagAdapter(private val context: Context) :
     RecyclerView.Adapter<MyContentsHashTagAdapter.MyContentsHashTagViewHolder>() {
 
-    var datas = ArrayList<String>()
+    var datas = mutableListOf<String>()
 
-    fun build(i: ArrayList<String>): MyContentsHashTagAdapter{
+    fun build(i: MutableList<String>): MyContentsHashTagAdapter{
         datas = i
         return this
     }
@@ -36,7 +36,8 @@ class MyContentsHashTagAdapter(private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: String) {
-            binding.contentsListTag.text = "#" + item
+            if(item != "")
+                binding.contentsListTag.text = "#" + item
         }
     }
 }

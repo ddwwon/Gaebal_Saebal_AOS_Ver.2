@@ -12,19 +12,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentMyRecordBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
+import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 
 
 class MyRecordFragment : Fragment() {
     private lateinit var viewBinding: FragmentMyRecordBinding // viewBinding
 
-    // 임시 데이터 - 나중에 기기에 저장된 데이터 불러와서 사용할 것
-    private val storedCategoryData = arrayListOf("자료구조", "알고리즘", "인공지능")
-    private val storedContentsData = arrayListOf(arrayListOf("스택", "큐", "그래프", "트리"),
-                                                arrayListOf("dp", "분할정복이란 무엇인가"),
-                                                arrayListOf("비지도학습이란 무엇인가", "지도학습", "기계학습"))
+    // Room DB 세팅
+    private var db: AppDatabase? = null
 
     // 카테고리 recyclerview adapter
-    private val datas = mutableListOf<MyRecordCategoryData>()
+    private var datas = mutableListOf<MyRecordCategoryData>()
     private lateinit var myRecordCategoryAdapter: MyRecordCategoryAdapter
 
     // 프래그먼트 전환을 위해
@@ -40,6 +39,49 @@ class MyRecordFragment : Fragment() {
         activity = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("Resume", "-----------------------------")
+
+        // refresh
+        activity?.refreshFragment(this)
+
+        // db 세팅
+        db = AppDatabase.getInstance(this.requireContext())
+
+        // db에서 카테고리 데이터 불러오기
+        val storedCategoryData: MutableList<CategoryDataEntity> = db!!.categoryDataDao().getAllCategoryData()
+
+        // recyclerview data 리셋(초기화)
+        datas = mutableListOf<MyRecordCategoryData>()
+
+        // recyclerview 세팅
+        initMyRecordCategoryRecycler()
+
+        // 카테고리 recyclerview에 데이터 추가
+        for(i: Int in 0..(storedCategoryData.size - 1)) {
+            val storedContentsData: MutableList<RecordDataEntity>
+                    = db!!.recordDataDao().getRecordFromCategory(storedCategoryData[i].category_uid)
+
+            // contents는 최대 5개 보이고, 내용의 길이가 6자 이상일 경우 +...으로 축약
+            var mContentsData: ArrayList<String> = ArrayList<String>()
+            for(j: Int in 0..(storedContentsData.size - 1)) {
+                if(j === 5) break // contents는 최대 5개
+
+                // 줄바꿈 제거
+                var mContent: String = storedContentsData[j].record_contents.replace("\\r\\n|\\r|\\n|\\n\\r".toRegex()," ")
+                if(mContent.length > 6) {
+                    mContent = mContent.substring(0 until 6) + "..."// 6글자까지 자르기
+                }
+                mContentsData.add(mContent)
+            }
+
+            // 데이터 추가
+            addData(storedCategoryData[i].category_name, mContentsData)
+        }
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,36 +92,14 @@ class MyRecordFragment : Fragment() {
         return viewBinding.root
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // recyclerview 세팅
-        initMyRecordCategoryRecycler()
-
-        // 카테고리 recyclerview에 데이터 추가
-        for(i: Int in 0..(storedCategoryData.size - 1)) {
-            // contents는 최대 5개 보이고, 내용의 길이가 6자 이상일 경우 +...으로 축약
-            var mContentsData: ArrayList<String> = ArrayList<String>()
-            for(j: Int in 0..(storedContentsData[i].size - 1)) {
-                if(j === 5) break // contents는 최대 5개
-
-                var mContent: String = storedContentsData[i][j]
-                if(mContent.length > 6) {
-                    mContent = mContent.substring(0 until 6) + "..."// 6글자까지 자르기
-                }
-                mContentsData.add(mContent)
-            }
-
-            // 데이터 추가
-            addData(storedCategoryData[i], mContentsData)
-
-            viewBinding.recordWriteBtn.setOnClickListener {
-                val intent = Intent(getActivity(), LogWriteActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-            }
+        // 기록 작성 버튼 클릭
+        viewBinding.recordWriteBtn.setOnClickListener {
+            val intent = Intent(getActivity(), LogWriteActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
         }
     }
 
@@ -106,14 +126,8 @@ class MyRecordFragment : Fragment() {
 
     // 카테고리 세부 페이지(contents list) 열기
     private fun openCategory(category: String) {
-        //Log.d("Test", "-----------------------------")
-        //Log.d("Test", category)
-
         // 카테고리 세부 페이지로 이동
         // 카테고리 세부 페이지로 카테고리 정보 넘겨주기
         activity?.sendCategoryFromMyRecord(category)
     }
-
-
-
 }

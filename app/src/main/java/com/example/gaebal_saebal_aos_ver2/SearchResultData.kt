@@ -5,5 +5,5 @@ class SearchResultData (
     val contentCategory: String,
     val contentWriteDate: String,
     val contentTitle: String,
-    val contentHashtag: ArrayList<String>
+    val contentHashtag: MutableList<String>
 )

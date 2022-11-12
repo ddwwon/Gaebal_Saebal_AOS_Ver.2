@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentMyInfoCategoryBinding
 import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
@@ -51,8 +52,8 @@ class MyInfoCategoryFragment : Fragment() {
             for(i: Int in 0..(categoryDatas.size - 1)) {
                 addData(categoryDatas[i])
             }
-            //Log.d("Test", "--------------------------------")
-            //Log.d("Test", categoryDatas[0].toString())
+            Log.d("Test", "--------------------------------")
+            Log.d("Test", categoryDatas.toString())
         }
 
         // 이전 버튼 클릭 시
@@ -85,31 +86,42 @@ class MyInfoCategoryFragment : Fragment() {
                     val newCategory = viewBinding.myInfoCategoryEdittext.text.toString()
                     viewBinding.myInfoCategoryEdittext.text = null
 
-                    val mCategory = CategoryDataEntity(0, newCategory) // CategoryDataEntity 생성
-                    db?.categoryDataDao()?.insertCategoryData(mCategory)          // DB에 추가
+                    if(newCategory == "") {
+                        Toast.makeText(requireActivity(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(db?.categoryDataDao()?.checkExistCategoryData(newCategory).toString().toInt() == 0) {
+                        val mCategory = CategoryDataEntity(0, newCategory) // CategoryDataEntity 생성
+                        db?.categoryDataDao()?.insertCategoryData(mCategory)          // DB에 추가
 
-                    addData(mCategory)
+                        addData(mCategory)
+                    }
+                    else {
+                        Toast.makeText(requireActivity(), "카테고리명은 중복될 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 false
         })
 
         // 카테고리 삭제 버튼 클릭
-        /*viewBinding.deleteCategoryBtn.setOnClickListener {
-            var dataSize = checkData.size - 1
-            for(i: Int in 0..dataSize) {
+        viewBinding.deleteCategoryBtn.setOnClickListener {
+            var index = 0
+            var size = datas.size
+            while(index < size) {
                 // 체크된 카테고리
-                if(checkData[i].checked) {
-                    db?.categoryDataDao()?.deleteCategoryData(datas[i])
-                    datas.removeAt(i)
-                    checkData.removeAt(i)
+                if(checkData[index].checked) {
+                    db?.categoryDataDao()?.deleteCategoryData(datas[index])
+                    datas.removeAt(index)
+                    checkData.removeAt(index)
                     myInfoCategoryAdapter.notifyDataSetChanged()
-                    //i--
-                    //dataSize--
+                    index--
+                    size--
                 }
+                index++
             }
-            Log.d("Test", "--------------------------------")
-            Log.d("Test", categoryDatas.toString())
-        }*/
+
+            // 카테고리 삭제 이후에는 항상 모두 선택 체크박스 선택 해제
+            viewBinding.categorySetCheckboxAll.isChecked = false
+        }
 
     }
 
