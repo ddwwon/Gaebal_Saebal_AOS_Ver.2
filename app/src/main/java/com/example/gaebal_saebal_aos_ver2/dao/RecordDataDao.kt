@@ -1,10 +1,7 @@
 // 기록 내용 DB DAO(쿼리) 정의
 package com.example.gaebal_saebal_aos_ver2.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 
 @Dao
@@ -14,6 +11,9 @@ interface RecordDataDao {
 
     @Insert
     fun insertRecordData(category: RecordDataEntity) // 데이터 추가
+
+    @Update
+    fun updateRecordData(record: RecordDataEntity) // 데이터 수정
 
     @Delete
     fun deleteRecordData(category: RecordDataEntity) // 데이터 삭제

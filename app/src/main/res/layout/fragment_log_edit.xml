@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LogWriteFragment">
+    tools:context=".LogEditFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,8 +69,8 @@
                     android:id="@+id/log_write_category_recyclerview"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
                     tools:listitem="@layout/log_write_category_item">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -222,9 +222,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
+                    app:layout_constraintTop_toBottomOf="@id/image_btn"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/image_btn" />
+                    app:layout_constraintRight_toRightOf="parent"/>
 
 
                 <TextView
@@ -251,7 +251,6 @@
                         android:fontFamily="@font/imbplexmono_light"
                         android:gravity="left"
                         android:hint="코드를 입력해주세요."
-                        android:maxLength="1000"
                         android:padding="20sp"
                         android:textSize="15sp" />
                 </FrameLayout>

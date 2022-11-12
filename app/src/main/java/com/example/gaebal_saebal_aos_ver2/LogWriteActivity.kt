@@ -3,6 +3,7 @@ package com.example.gaebal_saebal_aos_ver2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityLogWriteBinding
 
 
@@ -22,46 +23,28 @@ class LogWriteActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportFragmentManager.beginTransaction().replace(binding.logWriteFrame.id, LogWriteFragment()).commit()
-//        category.add(Category("미정"))
-//        category.add(Category("자료구조"))
-//        category.add(Category("백준"))
-//        category.add(Category("PBL"))
-//
-//        LogWriteCategoryAdapter = LogWriteCategoryAdapter(this.category)
-//        LogWriteCategoryAdapter.setItemClickListener(object : LogWriteCategoryAdapter.OnItemClickListener{
-//            override fun onClick(v: View, position: Int) {
-//
-//            }
-//        })
-//
-//
-//        binding.logWriteCategoryRecyclerview.adapter = LogWriteCategoryAdapter
-//
-//        binding.baekjoonBtn.setOnClickListener{
-////            val Dialog = BojDialog(this)
-////            supportFragmentManager
-////                .beginTransaction()
-////                .add(R.id.boj_dialog, Dialog)
-////                .commit()
-//            val dialog = BojDialog(this)
-//            dialog.showDialog()
-//            dialog.setOnClickListener(object: BojDialog.OnDialogClickListener {
-//                override fun onClicked(num: Int) {
-//
-//                }
-//            })
-//        }
-//
-//        binding.githubBtn.setOnClickListener{
-//            val transaction = supportFragmentManager.beginTransaction()
-//            transaction.add(R.id.log_write_frame, GithubFragment()).commit()
-//        }
-//
-//        binding.backBtn.setOnClickListener{
-//            finish()
-//        }
+        val mFragment = intent.getStringExtra("mFragment") // 어떤 페이지로 전환할지에 대한 값
+
+        // 기록 작성
+        if(mFragment == "Write") {
+            supportFragmentManager.beginTransaction().replace(binding.logWriteFrame.id, LogWriteFragment()).commit()
+        }
+        // 기록 수정
+        else if(mFragment == "Edit") {
+            val logEditFragment: Fragment = LogEditFragment()
+
+            // 기록 id - 수정할 기록이 무엇인지 알기 위해
+            val mRecordId = intent.getIntExtra("mRecordId", 0) // 어떤 페이지로 전환할지에 대한 값
+
+            // 기록 수정 페이지로 이동할 때 기록 id 넘겨줌
+            val bundle = Bundle()
+            bundle.putInt("recordId", mRecordId)
+            logEditFragment.arguments = bundle
+
+            supportFragmentManager.beginTransaction().replace(binding.logWriteFrame.id, logEditFragment).commit()
+        }
     }
+
     fun onFragmentChange(index: String) {
         when(index) {
             "BojDialog" -> {

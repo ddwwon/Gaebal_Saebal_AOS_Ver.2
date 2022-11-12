@@ -34,6 +34,7 @@
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/boj_problem_dialog.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_github.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_log_detail.xml" value="0.25364583333333335" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_log_edit.xml" value="0.13177083333333334" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_log_write.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_contents_list.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_info_category.xml" value="0.264" />
@@ -42,6 +43,7 @@
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_my_record.xml" value="0.1897156213478769" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_search.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/github_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/log_write_category_item.xml" value="0.13177083333333334" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/my_contents_hashtag_item.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/my_contents_list_item.xml" value="0.2526041666666667" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/my_info_category_item.xml" value="0.25364583333333335" />

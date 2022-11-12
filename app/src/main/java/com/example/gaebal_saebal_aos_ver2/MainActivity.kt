@@ -2,6 +2,7 @@ package com.example.gaebal_saebal_aos_ver2
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.internal.ContextUtils
 
 
 class MainActivity : AppCompatActivity() {
@@ -160,6 +162,14 @@ class MainActivity : AppCompatActivity() {
         changeFragment(fragment)
     }
 
+    fun goLogEditPage(mRecordId: Int) {
+        val intent = Intent(this, LogWriteActivity::class.java)
+        intent.putExtra("mFragment", "Edit") // 어떤 페이지로 전환할지에 대한 값
+        intent.putExtra("mRecordId", mRecordId) // 기록 Id
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+
     fun onFragmentChange(index: String) {
         when (index) {
 //            "FloatingBtn" -> {
@@ -190,23 +200,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onRemoveDetail(fragment: Fragment) {
+    fun onRemoveOrEditDetail(fragment: Fragment) {
         supportFragmentManager.beginTransaction().remove(fragment).commit()
         supportFragmentManager.popBackStack()
-
-        var currentFragment: MutableList<Fragment> = mutableListOf<Fragment>()
-
-        // 현재 프래그먼트 찾기
-        for (fragment: Fragment in supportFragmentManager.fragments) {
-            if (fragment.isVisible) {
-                currentFragment.add(fragment)
-            }
-        }
-
-        val size: Int = currentFragment.size
-        Log.d("Test current", currentFragment[size - 2].toString())
-
-        refreshFragment(currentFragment[size - 2])
     }
 //    private fun navigatePhotos() {
 //        val intent = Intent(Intent.ACTION_GET_CONTENT)
