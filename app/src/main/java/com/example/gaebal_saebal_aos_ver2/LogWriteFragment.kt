@@ -8,25 +8,18 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.drawToBitmap
+import androidx.fragment.app.Fragment
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogWriteBinding
 import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class LogWriteFragment : Fragment() {
@@ -109,6 +102,12 @@ class LogWriteFragment : Fragment() {
             recordContent = viewBinding.logWriteMainText.text.toString() // 본문 내용
             recordTag = viewBinding.tagInput.text.toString() // 태그
             recordCode = viewBinding.logWriteCodeText.text.toString() // 코드
+
+            // 이미지 존재 시
+            if(viewBinding.addImageView.visibility == View.VISIBLE) {
+                recordImageExist = true
+                recordImage = viewBinding.addImageView.drawToBitmap()
+            }
 
             //db?.recordDataDao()?.deleteAllRecordData()
             recordCategoryUid = 1

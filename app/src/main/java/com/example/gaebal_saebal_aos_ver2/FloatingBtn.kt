@@ -11,12 +11,16 @@ import kotlinx.android.synthetic.main.boj_problem_dialog.*
 import kotlinx.android.synthetic.main.floating_btn_dialog.*
 import java.util.Calendar.getInstance
 
-class FloatingBtn (context: Context, fragment: Fragment){
+class FloatingBtn (context: Context, fragment: Fragment, recordId: Int, db: AppDatabase){
 
     private val fragment = fragment
     private val dialog = Dialog(context)
     private lateinit var onClickListener: OnDialogClickListener
     var activity: MainActivity? = null
+
+    // Room DB 세팅
+    private var db: AppDatabase = db
+    private var recordId: Int = recordId
 
     fun setOnClickListener(listener: OnDialogClickListener)
     {
@@ -31,23 +35,15 @@ class FloatingBtn (context: Context, fragment: Fragment){
         dialog.setCanceledOnTouchOutside(true)
         dialog.setCancelable(true)
         dialog.show()
-//        activity?.onFragmentChange(14)
 
         dialog.log_detail_modify.setOnClickListener{
             dialog.dismiss()
-//            MainActivity.getInstance()?.onFragmentChange("LogModifyFragment")
         }
 
         dialog.log_detail_delete.setOnClickListener{
+            db?.recordDataDao().deleteRecordFromUid(recordId)
             dialog.dismiss()
-            println("fkkfgjkdfgj")
-//            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-//            requireActivity().supportFragmentManager.popBackStack()
-//            activity?.onFragmentChange("MyContentsListFragment")
-
-
             MainActivity.getInstance()?.onRemoveDetail(fragment)
-
         }
     }
     interface OnDialogClickListener {

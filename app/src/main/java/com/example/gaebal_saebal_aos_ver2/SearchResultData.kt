@@ -2,6 +2,7 @@
 package com.example.gaebal_saebal_aos_ver2
 
 class SearchResultData (
+    val contentId: Int,
     val contentCategory: String,
     val contentWriteDate: String,
     val contentTitle: String,

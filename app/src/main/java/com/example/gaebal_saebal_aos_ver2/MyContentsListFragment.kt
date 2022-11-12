@@ -72,9 +72,12 @@ class MyContentsListFragment : Fragment() {
         for(i: Int in 0..(storedContentsData.size - 1)) {
             var hashTags: MutableList<String> = storedContentsData[i].record_tags?.split(";")!!.toMutableList()
 
+            var recordDates: MutableList<String> = storedContentsData[i].record_date.toString().split(" ")!!.toMutableList()
+            var setRecordDate:String = recordDates[5] + " " + recordDates[1] + " " + recordDates[2]  + " " + recordDates[0] + " " + recordDates[3]
+
             addData(
                 storedContentsData[i].record_uid,
-                storedContentsData[i].record_date.toString(),
+                setRecordDate,
                 storedContentsData[i].record_contents,
                 hashTags
             )
@@ -122,6 +125,27 @@ class MyContentsListFragment : Fragment() {
         viewBinding.contentsListCheckboxAll.setOnCheckedChangeListener { _, isChecked ->
             myContentsListAdapter.setAllCheck(isChecked)
             myContentsListAdapter.notifyDataSetChanged()
+        }
+
+        // 삭제 버튼 클릭
+        viewBinding.contentsListDeleteBtn.setOnClickListener {
+            var index = 0
+            var size = datas.size
+            while(index < size) {
+                // 체크된 카테고리
+                if(checkData[index].checked) {
+                    db?.recordDataDao()?.deleteRecordFromUid(datas[index].contentId)
+                    datas.removeAt(index)
+                    checkData.removeAt(index)
+                    myContentsListAdapter.notifyDataSetChanged()
+                    index--
+                    size--
+                }
+                index++
+            }
+
+            // 카테고리 삭제 이후에는 항상 모두 선택 체크박스 선택 해제
+            viewBinding.contentsListCheckboxAll.isChecked = false
         }
 
     }

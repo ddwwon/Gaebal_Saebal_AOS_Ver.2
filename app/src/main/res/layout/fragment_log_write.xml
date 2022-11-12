@@ -221,6 +221,7 @@
                     android:id="@+id/addImageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     app:layout_constraintTop_toBottomOf="@id/image_btn"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"/>
