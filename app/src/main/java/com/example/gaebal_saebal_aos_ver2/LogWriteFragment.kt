@@ -18,6 +18,7 @@ import android.widget.*
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogWriteBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 import java.util.*
 
@@ -27,15 +28,16 @@ class LogWriteFragment : Fragment() {
     var activity: LogWriteActivity? = null
     private lateinit var LogWriteCategoryAdapter: LogWriteCategoryAdapter
 
-    // Category DB 세팅
+    // Room DB 세팅
     private var db: AppDatabase? = null
 
-    var category = ArrayList<Category>()
+    // 카테고리
+    var category: MutableList<CategoryDataEntity> = mutableListOf<CategoryDataEntity>()
+    var categorySelectCheck: MutableList<Boolean> = mutableListOf<Boolean>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = getActivity() as LogWriteActivity
-
     }
 
     override fun onDetach() {
@@ -64,18 +66,22 @@ class LogWriteFragment : Fragment() {
         val resources: Resources = this.resources
         val nullImage: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_image)
 
-        category.add(Category("미정"))
-        category.add(Category("자료구조"))
-        category.add(Category("백준"))
-        category.add(Category("PBL"))
+        // 카테고리 데이터
+        var mCategory = db!!.categoryDataDao().getAllCategoryData()
+        category.addAll(mCategory)
 
-        LogWriteCategoryAdapter = LogWriteCategoryAdapter(this.category)
-        LogWriteCategoryAdapter.setItemClickListener(object :
-            LogWriteCategoryAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
+        // 기본 선택된 카테고리
+        for(i: Int in (0..category.size - 1)){
+            if(category[i].category_uid == mCategory[0].category_uid)
+                categorySelectCheck.add(true)
+            else
+                categorySelectCheck.add(false)
+        }
 
-            }
-        })
+        LogWriteCategoryAdapter = LogWriteCategoryAdapter(
+            this.category,
+            categorySelectCheck
+        )
 
         viewBinding.backBtn.setOnClickListener{
             activity?.finish()
@@ -110,7 +116,12 @@ class LogWriteFragment : Fragment() {
             }
 
             //db?.recordDataDao()?.deleteAllRecordData()
-            recordCategoryUid = 1
+            // 카테고리
+            for(i: Int in (0..category.size - 1)){
+                if(categorySelectCheck[i]) {
+                    recordCategoryUid = category[i].category_uid
+                }
+            }
 
             if(recordCategoryUid != null && recordContent != "") {
                 // RecordDataEntity 생성

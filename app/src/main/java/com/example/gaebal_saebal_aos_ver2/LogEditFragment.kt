@@ -19,6 +19,7 @@ import android.widget.*
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogEditBinding
+import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
 import java.util.*
 
@@ -31,7 +32,8 @@ class LogEditFragment : Fragment() {
     // Category DB 세팅
     private var db: AppDatabase? = null
 
-    var category = ArrayList<Category>()
+    var category: MutableList<CategoryDataEntity> = mutableListOf<CategoryDataEntity>()
+    var categorySelectCheck: MutableList<Boolean> = mutableListOf<Boolean>()
 
     // 내용
     var recordUid: Int? = null // 기록 id
@@ -115,18 +117,21 @@ class LogEditFragment : Fragment() {
         }
         viewBinding.logWriteCodeText.setText(recordCode) // 코드
 
-        category.add(Category("미정"))
-        category.add(Category("자료구조"))
-        category.add(Category("백준"))
-        category.add(Category("PBL"))
+        // 카테고리 recyclerview
+        category.addAll(db!!.categoryDataDao().getAllCategoryData())
 
-        LogWriteCategoryAdapter = LogWriteCategoryAdapter(this.category)
-        LogWriteCategoryAdapter.setItemClickListener(object :
-            LogWriteCategoryAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
+        // 기본 선택된 카테고리
+        for(i: Int in (0..category.size - 1)){
+            if(category[i].category_uid == recordCategoryUid)
+                categorySelectCheck.add(true)
+            else
+                categorySelectCheck.add(false)
+        }
 
-            }
-        })
+        LogWriteCategoryAdapter = LogWriteCategoryAdapter(
+            this.category,
+            categorySelectCheck
+        )
 
         viewBinding.backBtn.setOnClickListener{
             activity?.finish()
@@ -146,7 +151,12 @@ class LogEditFragment : Fragment() {
             }
 
             //db?.recordDataDao()?.deleteAllRecordData()
-            recordCategoryUid = 1
+            // 카테고리
+            for(i: Int in (0..category.size - 1)){
+                if(categorySelectCheck[i]) {
+                    recordCategoryUid = category[i].category_uid
+                }
+            }
 
             if(recordCategoryUid != null && recordContent != "") {
                 // RecordDataEntity 생성
