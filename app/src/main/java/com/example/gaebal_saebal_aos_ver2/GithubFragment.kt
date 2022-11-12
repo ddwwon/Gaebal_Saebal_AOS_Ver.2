@@ -24,11 +24,6 @@ class GithubFragment : BottomSheetDialogFragment() {
     var activity: MainActivity? = null
     var githubItemArray = ArrayList<githubItem>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,9 +62,6 @@ class GithubFragment : BottomSheetDialogFragment() {
         })
 
         viewBinding.githubListRecyclerview.adapter = GithubItemAdapter
-
-
-
     }
 
     override fun dismiss() {

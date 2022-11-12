@@ -15,6 +15,9 @@ interface RecordDataDao {
     @Update
     fun updateRecordData(record: RecordDataEntity) // 데이터 수정
 
+    @Query("UPDATE RecordDataEntity SET record_category_uid = :categoryUid WHERE record_uid = :recordUid") // 카테고리 변경
+    fun changeCategory(recordUid: Int, categoryUid: Int)
+
     @Delete
     fun deleteRecordData(category: RecordDataEntity) // 데이터 삭제
 
