@@ -200,9 +200,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onRemoveOrEditDetail(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().remove(fragment).commit()
+    fun onRemoveOrEditDetail(mFragment: Fragment) {
+        supportFragmentManager.beginTransaction().remove(mFragment).commit()
         supportFragmentManager.popBackStack()
+
+        var currentFragment: MutableList<Fragment> = mutableListOf<Fragment>()
+
+        // 현재 프래그먼트 찾기
+        for (fragment: Fragment in supportFragmentManager.fragments) {
+            if (fragment.isVisible) {
+                currentFragment.add(fragment)
+            }
+        }
+        currentFragment[currentFragment.size - 2]!!.onResume()
     }
 //    private fun navigatePhotos() {
 //        val intent = Intent(Intent.ACTION_GET_CONTENT)

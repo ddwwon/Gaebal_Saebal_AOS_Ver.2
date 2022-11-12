@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.boj_problem_dialog.*
 import kotlinx.android.synthetic.main.floating_btn_dialog.*
 import java.util.Calendar.getInstance
 
-class FloatingBtn (context: Context, fragment: Fragment, recordId: Int, db: AppDatabase){
+class FloatingBtn(context: Context, fragment: Fragment, recordId: Int, db: AppDatabase){
 
     private val fragment = fragment
     private val dialog = Dialog(context)

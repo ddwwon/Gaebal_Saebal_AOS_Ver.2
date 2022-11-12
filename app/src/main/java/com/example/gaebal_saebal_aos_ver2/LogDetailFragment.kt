@@ -48,7 +48,6 @@ class LogDetailFragment : Fragment() {
         viewBinding = FragmentLogDetailBinding.inflate(layoutInflater)
 
         return viewBinding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
