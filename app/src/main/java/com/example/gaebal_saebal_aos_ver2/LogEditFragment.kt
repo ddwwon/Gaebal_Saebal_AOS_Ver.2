@@ -40,10 +40,10 @@ class LogEditFragment : Fragment() {
     var recordCategoryUid: Int? = null // 카테고리 id
     var recordContent: String? = null // 기록 내용
     var recordTag: String? = null  // 태그
-    var recordBeakjoonNum: Int? = null  // 백준 문제 번호
-    var recordBeakjoonName: String? = null  // 백준 문제 이름
+    var recordBaekjoonNum: Int? = null  // 백준 문제 번호
+    var recordBaekjoonName: String? = null  // 백준 문제 이름
     var recordGithubType: String? = null  // 깃허브 타입: issue, commit, Pull request
-    var recordGithubDate: Date? = null  // 깃허브 날짜
+    var recordGithubDate: String? = null  // 깃허브 날짜
     var recordGithubTitle: String? = null  // 깃허브 제목
     var recordGithubRepo: String? = null  // 깃허브 레포지토리
     var recordImage: Bitmap? = null  // 이미지
@@ -89,8 +89,8 @@ class LogEditFragment : Fragment() {
         recordCategoryUid = mRecord.record_category_uid // 카테고리 id
         recordContent = mRecord.record_contents // 기록 내용
         recordTag = mRecord.record_tags  // 태그
-        recordBeakjoonNum = mRecord.record_baekjoon_num  // 백준 문제 번호
-        recordBeakjoonName = mRecord.record_baekjoon_name // 백준 문제 이름
+        recordBaekjoonNum = mRecord.record_baekjoon_num  // 백준 문제 번호
+        recordBaekjoonName = mRecord.record_baekjoon_name // 백준 문제 이름
         recordGithubType = mRecord.record_github_type  // 깃허브 타입: issue, commit, Pull request
         recordGithubDate = mRecord.record_github_date  // 깃허브 날짜
         recordGithubTitle = mRecord.record_github_title  // 깃허브 제목
@@ -165,8 +165,8 @@ class LogEditFragment : Fragment() {
                     recordCategoryUid!!,
                     recordContent!!,
                     recordTag!!,
-                    recordBeakjoonNum!!,
-                    recordBeakjoonName!!,
+                    recordBaekjoonNum!!,
+                    recordBaekjoonName!!,
                     recordGithubType!!,
                     recordGithubDate!!,
                     recordGithubTitle!!,
