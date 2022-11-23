@@ -58,7 +58,9 @@ class LogDetailFragment : Fragment() {
 
         val mContent: RecordDataEntity = db!!.recordDataDao().getRecordContent(mRecordId)
 
-
+        // boj name을 data에서 불러옴(테스트 필요)
+        var bojNumAndTitle = mContent.record_baekjoon_num.toString() + " - " + mContent.record_baekjoon_name
+        viewBinding.logDetailBeakjoonNumber.setText(bojNumAndTitle)
 
         viewBinding.logDetailBackBtn.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()

@@ -7,7 +7,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.gaebal_saebal_aos_ver2.githubItem
+//import com.example.gaebal_saebal_aos_ver2.
 import java.util.*
 
 // key, 카테고리(외래키), 본문, 태그, 백준(문제번호), 깃허브(?), 사진, 코드, 날짜
@@ -41,7 +41,7 @@ data class RecordDataEntity (
     @ColumnInfo
     var record_github_type: String?, // 깃허브 타입: issue, commit, Pull request
     @ColumnInfo
-    var record_github_date: Date?, // 깃허브 날짜
+    var record_github_date: String?, // 깃허브 날짜
     @ColumnInfo
     var record_github_title: String?, // 깃허브 제목
     @ColumnInfo
