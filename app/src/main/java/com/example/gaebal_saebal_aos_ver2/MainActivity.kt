@@ -209,7 +209,7 @@ class MainActivity : AppCompatActivity() {
         currentFragment[currentFragment.size - 2]!!.onResume()
     }
     
-    fun onFloatingChange(index: String, fragment: Fragment){
+    /*fun onFloatingChange(index: String, fragment: Fragment){
         when (index) {
             "FloatingBtn" -> {
                 // 기록 상세 뷰에서 플로팅 버튼 누르면 모달창 뜨게
@@ -217,7 +217,7 @@ class MainActivity : AppCompatActivity() {
                 dialog.showDialog()
             }
         }
-    }
+    }*/
     
     fun onRemoveDetail(fragment: Fragment) {
         supportFragmentManager.beginTransaction().remove(fragment).commit()

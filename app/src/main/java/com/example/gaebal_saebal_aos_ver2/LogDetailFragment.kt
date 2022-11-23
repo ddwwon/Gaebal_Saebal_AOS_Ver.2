@@ -149,8 +149,8 @@ class LogDetailFragment : Fragment() {
         }
 
         // boj name을 data에서 불러옴(테스트 필요)
-        var bojNumAndTitle = mContent.record_baekjoon_num.toString() + " - " + mContent.record_baekjoon_name
-        viewBinding.logDetailBeakjoonNumber.setText(bojNumAndTitle)
+        //var bojNumAndTitle = mContent.record_baekjoon_num.toString() + " - " + mContent.record_baekjoon_name
+        //viewBinding.logDetailBeakjoonNumber.setText(bojNumAndTitle)
 
         // 닫기 버튼
         viewBinding.logDetailBackBtn.setOnClickListener{
@@ -163,8 +163,6 @@ class LogDetailFragment : Fragment() {
             val dialog = FloatingBtn(requireActivity(), this, mRecordId!!, db!!)
             dialog.showDialog()
         }
-
-
     }
 
     // recyclerview 세팅
