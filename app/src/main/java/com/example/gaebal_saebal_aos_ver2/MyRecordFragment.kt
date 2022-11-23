@@ -98,6 +98,7 @@ class MyRecordFragment : Fragment() {
         // 기록 작성 버튼 클릭
         viewBinding.recordWriteBtn.setOnClickListener {
             val intent = Intent(getActivity(), LogWriteActivity::class.java)
+            intent.putExtra("mFragment", "Write") // 어떤 페이지로 전환할지에 대한 값
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
         }

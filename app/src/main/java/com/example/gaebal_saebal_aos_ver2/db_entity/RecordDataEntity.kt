@@ -30,30 +30,30 @@ data class RecordDataEntity (
     var record_contents: String,  // 본문
 
     @ColumnInfo
-    var record_tags: String?, // 태그 -> 보여줄 때 ;; 단위로 분리 필요
+    var record_tags: String, // 태그 -> 보여줄 때 ;; 단위로 분리 필요
 
     @ColumnInfo
-    var record_baekjoon_num: Int?, // 백준 문제번호
+    var record_baekjoon_num: Int, // 백준 문제번호
     @ColumnInfo
-    var record_baekjoon_name: String?, // 백준 문제이름
+    var record_baekjoon_name: String, // 백준 문제이름
 
     // github
     @ColumnInfo
-    var record_github_type: String?, // 깃허브 타입: issue, commit, Pull request
+    var record_github_type: String, // 깃허브 타입: issue, commit, Pull request
     @ColumnInfo
     var record_github_date: String?, // 깃허브 날짜
     @ColumnInfo
-    var record_github_title: String?, // 깃허브 제목
+    var record_github_title: String, // 깃허브 제목
     @ColumnInfo
-    var record_github_repo: String?,  // 깃허브 레포지토리
+    var record_github_repo: String,  // 깃허브 레포지토리
 
     @ColumnInfo
-    var record_image: Bitmap?,     // 이미지 Bitmap
+    var record_image: Bitmap,     // 이미지 Bitmap
     @ColumnInfo
-    var record_image_exist: Boolean?,     // 이미지 유무
+    var record_image_exist: Boolean,     // 이미지 유무
 
     @ColumnInfo
-    var record_code: String?,      // code 내용
+    var record_code: String,      // code 내용
 
     @ColumnInfo
     var record_date: Date         // 작성 날짜

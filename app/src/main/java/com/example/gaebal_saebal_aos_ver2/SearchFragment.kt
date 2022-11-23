@@ -1,6 +1,7 @@
 // 검색 페이지
 package com.example.gaebal_saebal_aos_ver2
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -22,6 +23,19 @@ class SearchFragment : Fragment() {
     // 검색 결과 recyclerview adapter
     private var datas = mutableListOf<SearchResultData>()
     private lateinit var searchResultAdapter: SearchResultAdapter
+
+    // 프래그먼트 전환을 위해
+    var activity: MainActivity? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = getActivity() as MainActivity
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        activity = null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +79,11 @@ class SearchFragment : Fragment() {
                             mContent = mContent.substring(0 until 15) + "..."// 15글자까지 자르기
                         }
                         var hashTags: MutableList<String> = searchResults[i].record_tags?.split(";")!!.toMutableList()
-                        addData(mCategory, searchResults[i].record_date.toString(), mContent, hashTags)
+
+                        var recordDates: MutableList<String> = searchResults[i].record_date.toString().split(" ")!!.toMutableList()
+                        var setRecordDate:String = recordDates[5] + " " + recordDates[1] + " " + recordDates[2]  + " " + recordDates[0] + " " + recordDates[3]
+
+                        addData(searchResults[i].record_uid, mCategory, setRecordDate, mContent, hashTags)
                     }
                 }
                 false
@@ -74,7 +92,12 @@ class SearchFragment : Fragment() {
 
     // recyclerview 세팅
     private fun initSearchResultRecycler() {
-        searchResultAdapter = SearchResultAdapter(requireContext())
+        searchResultAdapter = SearchResultAdapter(
+            requireContext(),
+            onClickContent = {
+                goLogDetail(it)
+            }
+        )
         viewBinding.searchResultRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.searchResultRecyclerview.adapter = searchResultAdapter
         searchResultAdapter.datas = datas
@@ -83,11 +106,18 @@ class SearchFragment : Fragment() {
     // 데이터 추가
     // tag도 recyclerview로
     // date: String, title: String, tag: String
-    private fun addData(category: String, date: String, title: String, tag: MutableList<String>) {
+    private fun addData(id: Int, category: String, date: String, title: String, tag: MutableList<String>) {
         datas.apply {
             //add(MyContentsListData(category, contents))
-            add(SearchResultData(category, date, title, tag))
+            add(SearchResultData(id, category, date, title, tag))
             searchResultAdapter.notifyDataSetChanged()
         }
+    }
+
+    // 기록 세부 페이지(LogDetail) 열기
+    fun goLogDetail(id: Int) {
+        // 기록 세부 페이지로 이동
+        // 기록 세부 페이지로 기록 id 정보 넘겨주기
+        activity?.sendContentIdFromMyLogDetail(id)
     }
 }

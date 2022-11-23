@@ -1,3 +1,4 @@
+// 기록 편집 페이지
 package com.example.gaebal_saebal_aos_ver2
 
 import android.app.Activity
@@ -17,47 +18,43 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
-import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogWriteBinding
+import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogEditBinding
 import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-// boj 문제 번호, 문제 이름을 저장하는 전역 변수
-var recordBeakjoonNum: Int = -1; // 백준 문제 번호
-var recordBeakjoonName: String = ""; // 백준 문제 이름
 
-// github data을 저장하는 전역 변수
-var recordGithubType: String = "" // 깃허브 타입: issue, commit, Pull request
-var recordGithubDate: String = "" // 깃허브 날짜
-var recordGithubTitle: String = "" // 깃허브 제목
-var recordGithubRepo: String = "" // 깃허브 레포지토리
-
-// 백준 번호 + 이름 TextView 전역변수 선언
-lateinit var logWriteBaekJoonNumber : TextView
-
-// Github api로 받아온 값 저장
-var githubData: MutableList<GithubData> = mutableListOf<GithubData>()
-var githubRepoData: MutableList<GithubRepoData> = mutableListOf<GithubRepoData>()
-
-class LogWriteFragment : Fragment() {
-
-    private lateinit var viewBinding: FragmentLogWriteBinding
+class LogEditFragment : Fragment() {
+    private lateinit var viewBinding: FragmentLogEditBinding
     var activity: LogWriteActivity? = null
     private lateinit var LogWriteCategoryAdapter: LogWriteCategoryAdapter
 
-    // Room DB 세팅
+    // Category DB 세팅
     private var db: AppDatabase? = null
 
-    // 카테고리
     var category: MutableList<CategoryDataEntity> = mutableListOf<CategoryDataEntity>()
     var categorySelectCheck: MutableList<Boolean> = mutableListOf<Boolean>()
 
+    // 내용
+    var recordUid: Int? = null // 기록 id
+    var recordCategoryUid: Int? = null // 카테고리 id
+    var recordContent: String? = null // 기록 내용
+    var recordTag: String? = null  // 태그
+    var recordBeakjoonNum: Int? = null  // 백준 문제 번호
+    var recordBeakjoonName: String? = null  // 백준 문제 이름
+    var recordGithubType: String? = null  // 깃허브 타입: issue, commit, Pull request
+    var recordGithubDate: Date? = null  // 깃허브 날짜
+    var recordGithubTitle: String? = null  // 깃허브 제목
+    var recordGithubRepo: String? = null  // 깃허브 레포지토리
+    var recordImage: Bitmap? = null  // 이미지
+    var recordImageExist: Boolean? = null  // 이미지 존재 유무
+    var recordCode: String? = null  // 코드
+    var recordDate: Date? = null  // 현재 날짜
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = getActivity() as LogWriteActivity
+
     }
 
     override fun onDetach() {
@@ -70,8 +67,7 @@ class LogWriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewBinding = FragmentLogWriteBinding.inflate(layoutInflater)
-        logWriteBaekJoonNumber = viewBinding.logWriteBeakjoonNumber
+        viewBinding = FragmentLogEditBinding.inflate(layoutInflater)
 
         return viewBinding.root
 
@@ -80,20 +76,53 @@ class LogWriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 메인 페이지에서 넘어온 기록 id 데이터 받아오기
+        arguments?.let {
+            recordUid = it.getInt("recordId").toInt()
+        }
+
         // db 세팅
         db = AppDatabase.getInstance(this.requireContext())
 
-        // 빈 이미지 세팅
-        val resources: Resources = this.resources
-        val nullImage: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_image)
+        // 작성되어 있는 내용
+        var mRecord: RecordDataEntity = db!!.recordDataDao().getRecordContent(recordUid!!)
+        recordCategoryUid = mRecord.record_category_uid // 카테고리 id
+        recordContent = mRecord.record_contents // 기록 내용
+        recordTag = mRecord.record_tags  // 태그
+        recordBeakjoonNum = mRecord.record_baekjoon_num  // 백준 문제 번호
+        recordBeakjoonName = mRecord.record_baekjoon_name // 백준 문제 이름
+        recordGithubType = mRecord.record_github_type  // 깃허브 타입: issue, commit, Pull request
+        recordGithubDate = mRecord.record_github_date  // 깃허브 날짜
+        recordGithubTitle = mRecord.record_github_title  // 깃허브 제목
+        recordGithubRepo = mRecord.record_github_repo  // 깃허브 레포지토리
+        recordImage = mRecord.record_image  // 이미지
+        recordImageExist = mRecord.record_image_exist  // 이미지 존재 유무
+        recordCode = mRecord.record_code  // 코드
+        recordDate = mRecord.record_date  // 현재 날짜 - 수정 불가
 
-        // 카테고리 데이터
-        var mCategory = db!!.categoryDataDao().getAllCategoryData()
-        category.addAll(mCategory)
+        // 빈 이미지 세팅
+        //val resources: Resources = this.resources
+        //val nullImage: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_image)
+
+        // ImageView 숨김(공간까지!)
+        viewBinding.addImageView.visibility = View.GONE
+
+        // 이전 내용 보이게 해두기
+        viewBinding.logWriteMainText.setText(recordContent) // 기록 내용 = 본문
+        viewBinding.tagInput.setText(recordTag) // 태그
+        if(recordImageExist!!) { // 이미지 존재 시
+            Log.d("Test Image", "-----------------------------")
+            viewBinding.addImageView.visibility = View.VISIBLE
+            viewBinding.addImageView.setImageBitmap(recordImage)
+        }
+        viewBinding.logWriteCodeText.setText(recordCode) // 코드
+
+        // 카테고리 recyclerview
+        category.addAll(db!!.categoryDataDao().getAllCategoryData())
 
         // 기본 선택된 카테고리
         for(i: Int in (0..category.size - 1)){
-            if(category[i].category_uid == mCategory[0].category_uid)
+            if(category[i].category_uid == recordCategoryUid)
                 categorySelectCheck.add(true)
             else
                 categorySelectCheck.add(false)
@@ -104,27 +133,12 @@ class LogWriteFragment : Fragment() {
             categorySelectCheck
         )
 
-        viewBinding.backBtn.setOnClickListener {
+        viewBinding.backBtn.setOnClickListener{
             activity?.finish()
         }
 
-        // 등록 버튼 클릭 시 DB에 내용 저장
+        // 등록 버튼 클릭 시 DB에 내용 저장 - 수정 완료
         viewBinding.logWriteRegisterBtn.setOnClickListener {
-            // 기본값
-            var recordCategoryUid: Int? = null // 카테고리 id
-            var recordContent: String? = null // 기록 내용
-            var recordTag: String = "" // 태그
-//            var recordBeakjoonNum: Int = -1; // 백준 문제 번호
-//            var recordBeakjoonName: String = ""; // 백준 문제 이름
-//            var recordGithubType: String = "" // 깃허브 타입: issue, commit, Pull request
-//            var recordGithubDate: String = "" // 깃허브 날짜
-//            var recordGithubTitle: String = "" // 깃허브 제목
-//            var recordGithubRepo: String = "" // 깃허브 레포지토리
-            var recordImage: Bitmap = nullImage // 이미지
-            var recordImageExist: Boolean = false // 이미지 존재 유무
-            var recordCode: String = "" // 코드
-            val currentDate: Date = Date() // 현재 날짜
-
             // 사용자 입력값
             recordContent = viewBinding.logWriteMainText.text.toString() // 본문 내용
             recordTag = viewBinding.tagInput.text.toString() // 태그
@@ -144,70 +158,66 @@ class LogWriteFragment : Fragment() {
                 }
             }
 
-            if (recordCategoryUid != null && recordContent != "") {
+            if(recordCategoryUid != null && recordContent != "") {
                 // RecordDataEntity 생성
-                val mRecord = RecordDataEntity(
-                    0,
-                    recordCategoryUid,
-                    recordContent,
-                    recordTag,
-                    recordBeakjoonNum,
-                    recordBeakjoonName,
-                    recordGithubType,
-                    recordGithubDate,
-                    recordGithubTitle,
-                    recordGithubRepo,
-                    recordImage,
-                    recordImageExist,
-                    recordCode,
-                    currentDate
+                val mNewRecord = RecordDataEntity(
+                    recordUid!!,
+                    recordCategoryUid!!,
+                    recordContent!!,
+                    recordTag!!,
+                    recordBeakjoonNum!!,
+                    recordBeakjoonName!!,
+                    recordGithubType!!,
+                    recordGithubDate!!,
+                    recordGithubTitle!!,
+                    recordGithubRepo!!,
+                    recordImage!!,
+                    recordImageExist!!,
+                    recordCode!!,
+                    recordDate!!
                 )
-                db?.recordDataDao()?.insertRecordData(mRecord) // DB에 추가
+                db?.recordDataDao()?.updateRecordData(mNewRecord) // DB 수정
 
                 val recordDatas = db!!.recordDataDao().getAllRecordData()
-                if (recordDatas.isNotEmpty()) {
+                if(recordDatas.isNotEmpty()) {
                     Log.d("Test", "--------------------------------")
                     Log.d("Test", recordDatas.toString())
                 }
 
                 activity?.finish()
-            } else {
+            }
+            else {
                 Toast.makeText(requireActivity(), "본문을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
 
         viewBinding.logWriteCategoryRecyclerview.adapter = LogWriteCategoryAdapter
 
-        // 기본 백준 icon, textview 숨기기
-        viewBinding.logWriteCodeIc.visibility = View.GONE
-        viewBinding.logWriteBeakjoonNumber.visibility = View.GONE
         // 백준에 + 버튼 클릭시 백준 번호를 입력하는 modal 창이 나온다.
         viewBinding.baekjoonBtn.setOnClickListener {
-            // dialog 띄우는 함수 호출
+            //액티비티일 때
+//            val Dialog = BojDialog()
+//            activity.supportFragmentManager
+//                .beginTransaction()
+//                .add(R.id.boj_dialog, Dialog)
+//                .commit()
+            //fragment일 때
+//            val dialog = BojDialog(getContext())
+//            dialog.showDialog()
+//            dialog.setOnClickListener(object: BojDialog.OnDialogClickListener {
+//                override fun onClicked(num: Int) {
+//
+//                }
+//            })
             activity?.onFragmentChange("BojDialog")
-            // + textview 없어지게
-            viewBinding.baekjoonBtn.visibility = View.GONE
-            // boj 아이콘 보이게
-            viewBinding.logWriteCodeIc.visibility = View.VISIBLE
         }
 
         // 깃허브에 + 버튼 클릭시 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
         viewBinding.githubBtn.setOnClickListener {
-            viewBinding.githubPart.visibility = View.GONE
-
-            // bottom sheet 나옴
             activity?.onFragmentChange("GitHubFragment")
-
-            viewBinding.githubPart.visibility = View.VISIBLE
-            viewBinding.githubType.text = recordGithubType
-            viewBinding.githubDate.text = recordGithubDate
-            viewBinding.githubTitle.text = recordGithubTitle
-            viewBinding.githubRepo.text = recordGithubRepo
-
         }
 
-        // 본문 작성
-        viewBinding.logWriteMainText.addTextChangedListener(object : TextWatcher {
+        viewBinding.logWriteMainText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewBinding.charCnt.text = "0/1000"
             }
@@ -230,8 +240,7 @@ class LogWriteFragment : Fragment() {
             }
         })
 
-        // 코드 작성
-        viewBinding.logWriteCodeText.addTextChangedListener(object : TextWatcher {
+        viewBinding.logWriteCodeText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewBinding.codeCharCnt.text = "0/1000"
             }
@@ -253,9 +262,6 @@ class LogWriteFragment : Fragment() {
             }
         })
 
-        // ImageView 숨김(공간까지!)
-        viewBinding.addImageView.visibility = View.GONE
-
         // 사진에서 + 버튼을 누르면
         viewBinding.imageBtn.setOnClickListener {
             activity?.onFragmentChange("GalleryAccess")
@@ -265,25 +271,25 @@ class LogWriteFragment : Fragment() {
         }
     }
 
-    // 사진에 + 버튼 클릭 시, 갤러리를 오픈
+    //
     private fun navigatePhotos() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, 2000)
+        startActivityForResult(intent,2000)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK) {
+        if(resultCode != Activity.RESULT_OK) {
             println("wrong")
             return
         }
-        when (requestCode) {
+        when(requestCode){
             2000 -> {
-                val selectedImageURI: Uri? = data?.data
-                if (selectedImageURI != null) {
+                val selectedImageURI : Uri? = data?.data
+                if( selectedImageURI != null ) {
                     viewBinding.addImageView.setImageURI(selectedImageURI)
-                } else {
+                }else {
                     println("wrong")
                 }
             }
@@ -292,7 +298,7 @@ class LogWriteFragment : Fragment() {
             }
         }
     }
-    // 여기까지 갤러리 기능 구현
+
 }
 
 

@@ -1,21 +1,21 @@
 package com.example.gaebal_saebal_aos_ver2
 
-import android.app.Activity
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.internal.ContextUtils
 import retrofit2.Call
 import retrofit2.Response
 
@@ -46,6 +46,54 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(binding.fragmentLayout.id, MyRecordFragment()).commit()
         // navigationBottomView 등록: 하단바 fragment id(bottom_navigation) 등록
         transitionNavigationBottomView(binding.bottomNavigation, supportFragmentManager)
+    }
+
+    private var doubleBackToExit = false
+    // 이전 버튼 - 폰에 있는 이전 버튼
+    override fun onBackPressed() {
+        //super.onBackPressed()
+
+        if (doubleBackToExit) {
+            finishAffinity()
+        } else {
+            // 현재 액티비티
+            val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val info = manager.getRunningTasks(1)
+            val componentName = info[0].topActivity
+            val ActivityName = componentName!!.shortClassName.substring(1)
+
+            // 메인 액티비티인 경우
+            if(ActivityName == "MainActivity") {
+                var currentFragment: Fragment? = null
+                var cntFragment: Int = 0
+
+                // 현재 프래그먼트 찾기
+                for (fragment: Fragment in supportFragmentManager.fragments) {
+                    if (fragment.isVisible) {
+                        currentFragment = fragment
+                        cntFragment++
+                    }
+                }
+
+                // 현재 프래그먼트가 기록, 검색, 설정 페이지 중 하나가 아닌 경우
+                if (cntFragment > 1) {
+                    // 이전 페이지로 이동
+                    supportFragmentManager.beginTransaction().remove(currentFragment!!).commit()
+                    supportFragmentManager.popBackStack()
+                }
+                // 현재 프래그먼트가 기록, 검색, 설정 페이지 중 하나인 경우
+                else {
+                    Toast.makeText(this, "종료하시려면 뒤로가기를 한번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
+                    doubleBackToExit = true
+                    runDelayed(1500L) {
+                        doubleBackToExit = false
+                    }
+                }
+            }
+        }
+    }
+    fun runDelayed(millis: Long, function: () -> Unit) {
+        Handler(Looper.getMainLooper()).postDelayed(function, millis)
     }
 
     // NavigationBottomView 화면 전환하는 함수.
@@ -102,7 +150,7 @@ class MainActivity : AppCompatActivity() {
         changeFragment(fragment)
     }
 
-    // 기록 리스트 페이지에서 기록 세부페이지로 이동할 때 기록 id 데이터 넘겨줌
+    // 기록 리스트 페이지 or 검색 페이지에서 기록 세부페이지로 이동할 때 기록 id 데이터 넘겨줌
     fun sendContentIdFromMyLogDetail(mContentId: Int) {
         val fragment: Fragment = LogDetailFragment()
 
@@ -116,13 +164,12 @@ class MainActivity : AppCompatActivity() {
         changeFragment(fragment)
     }
 
-    fun sendRepoInfoFromGithub(mRepoId: Int) {
-        val fragment: Fragment = GithubFragment()
-        println("initGithubRecycler----------------------------")
-        // 선택한 repo id 데이터 넘겨줌
-        val bundle = Bundle()
-        bundle.putInt("RepoId", mRepoId)
-        fragment.arguments = bundle
+    fun goLogEditPage(mRecordId: Int) {
+        val intent = Intent(this, LogWriteActivity::class.java)
+        intent.putExtra("mFragment", "Edit") // 어떤 페이지로 전환할지에 대한 값
+        intent.putExtra("mRecordId", mRecordId) // 기록 Id
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
     fun onFragmentChange(index: String) {
@@ -146,6 +193,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun onRemoveOrEditDetail(mFragment: Fragment) {
+        supportFragmentManager.beginTransaction().remove(mFragment).commit()
+        supportFragmentManager.popBackStack()
+
+        var currentFragment: MutableList<Fragment> = mutableListOf<Fragment>()
+
+        // 현재 프래그먼트 찾기
+        for (fragment: Fragment in supportFragmentManager.fragments) {
+            if (fragment.isVisible) {
+                currentFragment.add(fragment)
+            }
+        }
+        currentFragment[currentFragment.size - 2]!!.onResume()
+    }
+    
     fun onFloatingChange(index: String, fragment: Fragment){
         when (index) {
             "FloatingBtn" -> {
@@ -155,6 +218,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    
     fun onRemoveDetail(fragment: Fragment) {
         supportFragmentManager.beginTransaction().remove(fragment).commit()
         supportFragmentManager.popBackStack()

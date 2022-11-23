@@ -63,12 +63,14 @@ class GithubFragment : BottomSheetDialogFragment() {
         )
         viewBinding.githubListRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.githubListRecyclerview.adapter = GithubItemAdapter
+
         GithubItemAdapter.datalist = datas
     }
 
     private fun goRepoDetail(id: Int) {
         // 받은 id를 사용해 해당 repo에 맞는 issue, pr, commit을 불러옴
         receiveRepoInfoFromGithub(id)
+
     }
 
     override fun dismiss() {

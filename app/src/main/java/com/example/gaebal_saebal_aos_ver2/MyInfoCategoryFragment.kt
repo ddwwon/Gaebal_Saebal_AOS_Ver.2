@@ -46,14 +46,9 @@ class MyInfoCategoryFragment : Fragment() {
         // 저장된 카테고리 데이터 불러와서 추가
         val categoryDatas = db!!.categoryDataDao().getAllCategoryData()
         if(categoryDatas.isNotEmpty()) {
-            /*datas.apply{
-                addAll(categoryDatas)
-            }*/
             for(i: Int in 0..(categoryDatas.size - 1)) {
                 addData(categoryDatas[i])
             }
-            Log.d("Test", "--------------------------------")
-            Log.d("Test", categoryDatas.toString())
         }
 
         // 이전 버튼 클릭 시

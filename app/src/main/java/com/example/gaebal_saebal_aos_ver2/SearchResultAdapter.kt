@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaebal_saebal_aos_ver2.databinding.SearchResultItemBinding
 
-class SearchResultAdapter(private val context: Context) :
+class SearchResultAdapter(
+        private val context: Context,
+        val onClickContent: (id: Int) -> Unit
+    ) :
     RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
 
     var datas = mutableListOf<SearchResultData>()
@@ -26,6 +29,9 @@ class SearchResultAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         holder.bind(datas[position])
 
+        holder.itemView.setOnClickListener{
+            onClickContent.invoke(datas[position].contentId) // 기록 세부 페이지 이동 함수 호출 - 기록 id 정보 넘겨줌
+        }
     }
 
     inner class SearchResultViewHolder(private val binding: SearchResultItemBinding) :
