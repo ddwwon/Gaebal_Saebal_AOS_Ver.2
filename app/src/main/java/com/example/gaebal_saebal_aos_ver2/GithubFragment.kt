@@ -47,7 +47,9 @@ class GithubFragment : BottomSheetDialogFragment() {
         // repo 보여주는 recycler 초기화
         initGithubRepoRecycler()
 
-        auth = "token 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"
+        //auth = "token "
+        auth = MyApplication.prefs.getString("auth", "")
+
         // 사용자의 repo를 불러온다.
         gitHubGetRepoClient()
 

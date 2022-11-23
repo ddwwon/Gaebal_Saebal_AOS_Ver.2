@@ -108,6 +108,14 @@ class LogWriteFragment : Fragment() {
         // db 세팅
         db = AppDatabase.getInstance(this.requireContext())
 
+        // 백준, 깃허브 전역변수 초기화
+        recordBeakjoonNum = -1; // 백준 문제 번호
+        recordBeakjoonName = ""; // 백준 문제 이름
+        recordGithubType = "" // 깃허브 타입: issue, commit, Pull request
+        recordGithubDate = "" // 깃허브 날짜
+        recordGithubTitle = "" // 깃허브 제목
+        recordGithubRepo = "" // 깃허브 레포지토리
+
         // 빈 이미지 세팅
         val resources: Resources = this.resources
         val nullImage: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_image)
@@ -115,6 +123,15 @@ class LogWriteFragment : Fragment() {
         // 카테고리 데이터
         var mCategory = db!!.categoryDataDao().getAllCategoryData()
         category.addAll(mCategory)
+        
+        // 카테고리가 없을 경우 - '이름 없음' 카테고리 생성
+        if(category.size == 0) {
+            db?.categoryDataDao()?.insertCategoryData(CategoryDataEntity(0, "이름 없음"))
+            mCategory = db!!.categoryDataDao().getAllCategoryData()
+            category.addAll(mCategory)
+            Toast.makeText(requireActivity(), "카테고리가 존재하지 않아 '이름 없음' 카테고리를 생성했습니다.", Toast.LENGTH_SHORT).show()
+        }
+        
 
         // 기본 선택된 카테고리
         for(i: Int in (0..category.size - 1)){
