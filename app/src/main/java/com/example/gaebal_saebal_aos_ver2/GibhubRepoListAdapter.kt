@@ -5,21 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaebal_saebal_aos_ver2.databinding.FragmentGithubBinding
-import com.example.gaebal_saebal_aos_ver2.databinding.FragmentMyInfoGitBinding
 import com.example.gaebal_saebal_aos_ver2.databinding.GithubItemBinding
-import com.example.gaebal_saebal_aos_ver2.databinding.LogWriteCategoryItemBinding
 
-class GibhubItemAdapter(
+// 레포지토리 목록을 보여줌
+class GibhubRepoListAdapter(
     val context: Context,
     val onClickContent: (id: Int) -> Unit
-):RecyclerView.Adapter<GibhubItemAdapter.ViewHolder>() {
+):RecyclerView.Adapter<GibhubRepoListAdapter.ViewHolder>() {
 
     val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     lateinit var binding: GithubItemBinding
 
     // GithubFragment에 data를 넘겨주기 위해서 여기서 재선언한번 해줘야 함!
-    var datalist = githubRepoData
+    var datalist: MutableList<GithubRepoData> = mutableListOf<GithubRepoData>()
 
     class ViewHolder(private val viewBinding: GithubItemBinding) : RecyclerView.ViewHolder(viewBinding.root){
         fun bind(data: GithubRepoData){
@@ -42,7 +40,7 @@ class GibhubItemAdapter(
 
         viewHolder.itemView.setOnClickListener {
             onClickContent.invoke(position)
-            println("positoin: " + position)
+            println("position: " + position)
         }
 
     }

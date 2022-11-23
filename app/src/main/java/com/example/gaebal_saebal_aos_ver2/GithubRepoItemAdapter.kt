@@ -19,20 +19,19 @@ class GithubRepoItemAdapter(
     var datalist = mutableListOf<GithubData>()
 
     class ViewHolder(private val viewBinding: GithubItemBinding) : RecyclerView.ViewHolder(viewBinding.root){
-        fun bind(data: GithubData){
+        fun bind(data: GithubData, context: Context){
             viewBinding.githubType.visibility = View.VISIBLE
             if (data.record_github_type == "issue") {
-                viewBinding.githubType.text = "issue"
+                viewBinding.githubType.setImageDrawable(context.getResources().getDrawable(R.drawable.issue_icon))
             } else if(data.record_github_type == "pull request") {
-                viewBinding.githubType.text = "pull request"
+                viewBinding.githubType.setImageDrawable(context.getResources().getDrawable(R.drawable.pull_request_icon))
             } else {
-                viewBinding.githubType.text = "commit"
+                viewBinding.githubType.setImageDrawable(context.getResources().getDrawable(R.drawable.commit_icon))
             }
             viewBinding.githubDate.visibility = View.VISIBLE
             viewBinding.githubDate.text = data.record_github_date
             viewBinding.githubTitle.text = data.record_github_title
             viewBinding.githubRepo.text = selectedRepoFullName
-
         }
     }
 
@@ -51,7 +50,7 @@ class GithubRepoItemAdapter(
     override fun getItemCount() = datalist.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(datalist[position])
+        viewHolder.bind(datalist[position], context)
 
         viewHolder.itemView.setOnClickListener {
             onClickContent.invoke(position)

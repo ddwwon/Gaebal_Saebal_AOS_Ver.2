@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.annotation.MainThread
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogWriteBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,7 +21,8 @@ import kotlin.properties.Delegates
 
 //import kotlinx.android.synthetic.main.boj_problem_dialog.*
 
-class BojDialog (context: Context, var viewBinding: FragmentLogWriteBinding) {
+class BojDialog (context: Context, pastFragment: Fragment) {
+    private val pastFragment: Fragment = pastFragment
 
     private val dialog = Dialog(context)
     private lateinit var onClickListener: OnDialogClickListener
@@ -47,18 +49,16 @@ class BojDialog (context: Context, var viewBinding: FragmentLogWriteBinding) {
 
         // dialog에서 확인 버튼을 누르면, dialog dismiss 되고, boj title을 받아옴
         dialog.boj_ok_btn.setOnClickListener{
-            dialog.dismiss()
-
-            // + textview 없어지게
-            viewBinding.baekjoonBtn.visibility = View.GONE
-            // boj 아이콘 보이게
-            viewBinding.logWriteCodeIc.visibility = View.VISIBLE
-
             // boj 문제 번호 database(recordBeakjoonNum)에 저장
             recordBeakjoonNum = Integer.parseInt(dialog.boj_num.text.toString())
             println("recordBeakjoonNum: " + recordBeakjoonNum)
-            //MainActivity.getInstance()?.onFragmentChange("BojNumInput")
             bojClient()
+
+            // 선택한 값이 작성 페이지에 보일 수 있도록
+            pastFragment.onResume()
+
+            // 닫기
+            dialog.dismiss()
         }
     }
 
