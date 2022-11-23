@@ -41,7 +41,7 @@ data class RecordDataEntity (
     @ColumnInfo
     var record_github_type: String, // 깃허브 타입: issue, commit, Pull request
     @ColumnInfo
-    var record_github_date: String?, // 깃허브 날짜
+    var record_github_date: String, // 깃허브 날짜
     @ColumnInfo
     var record_github_title: String, // 깃허브 제목
     @ColumnInfo

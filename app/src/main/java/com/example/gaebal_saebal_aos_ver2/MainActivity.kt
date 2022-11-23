@@ -179,14 +179,14 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().remove(LogDetailFragment()).commit()
                 supportFragmentManager.popBackStack()
            }
-            "BojNumInput" -> {
+            /*"BojNumInput" -> {
                 val dialog = BojDialog(this)
                 dialog.showDialog()
                 dialog.setOnClickListener(object: BojDialog.OnDialogClickListener {
                     override fun onClicked(num: Int) {
                     }
                 })
-            }
+            }*/
             "GitHubFragment" -> {
                 val githubfragment = GithubFragment()
                 githubfragment.show(supportFragmentManager, githubfragment.tag)
@@ -218,9 +218,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }*/
-    
-    fun onRemoveDetail(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().remove(fragment).commit()
-        supportFragmentManager.popBackStack()
-    }
 }

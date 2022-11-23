@@ -170,7 +170,7 @@ class LogWriteFragment : Fragment() {
                     Log.d("Test", recordDatas.toString())
                 }
 
-                activity?.finish()
+                requireActivity().finish()
             } else {
                 Toast.makeText(requireActivity(), "본문을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -181,14 +181,12 @@ class LogWriteFragment : Fragment() {
         // 기본 백준 icon, textview 숨기기
         viewBinding.logWriteCodeIc.visibility = View.GONE
         viewBinding.logWriteBeakjoonNumber.visibility = View.GONE
+
         // 백준에 + 버튼 클릭시 백준 번호를 입력하는 modal 창이 나온다.
         viewBinding.baekjoonBtn.setOnClickListener {
-            // dialog 띄우는 함수 호출
-            activity?.onFragmentChange("BojDialog")
-            // + textview 없어지게
-            viewBinding.baekjoonBtn.visibility = View.GONE
-            // boj 아이콘 보이게
-            viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), viewBinding)
+            dialog.showDialog()
         }
 
         // 깃허브에 + 버튼 클릭시 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다

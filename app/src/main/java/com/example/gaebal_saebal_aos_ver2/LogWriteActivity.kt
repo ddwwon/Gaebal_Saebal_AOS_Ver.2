@@ -47,7 +47,7 @@ class LogWriteActivity : AppCompatActivity() {
 
     fun onFragmentChange(index: String) {
         when(index) {
-            "BojDialog" -> {
+            /*"BojDialog" -> {
                 // 백준 문제 번호를 입력하는 창을 띄우게
                 val dialog = BojDialog(this)
                 dialog.showDialog()
@@ -56,7 +56,7 @@ class LogWriteActivity : AppCompatActivity() {
 
                     }
                 })
-            }
+            }*/
             "GitHubFragment" ->  {
                 // 기록 작성 뷰에서 깃허브 버튼 클릭 시, persistenet bottom sheet로 창을 띄움
                 val githubfragment = GithubFragment()

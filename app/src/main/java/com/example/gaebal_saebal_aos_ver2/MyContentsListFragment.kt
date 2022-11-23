@@ -111,6 +111,17 @@ class MyContentsListFragment : Fragment() {
             // 이전 페이지로 이동
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             requireActivity().supportFragmentManager.popBackStack()
+            
+            // 기록 리스트 페이지에서 기록 삭제/추가/수정을 한 경우 메인 페이지로 돌아갔을 때 바로 적용되도록
+            var currentFragment: MutableList<Fragment> = mutableListOf<Fragment>()
+
+            // 현재 프래그먼트 찾기
+            for (fragment: Fragment in requireActivity().supportFragmentManager.fragments) {
+                if (fragment.isVisible) {
+                    currentFragment.add(fragment)
+                }
+            }
+            currentFragment[currentFragment.size - 2]!!.onResume()
         }
 
         // 기록 작성 버튼 클릭
