@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentManager
 import com.example.gaebal_saebal_aos_ver2.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.ContextUtils
+import retrofit2.Call
+import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
@@ -172,23 +174,11 @@ class MainActivity : AppCompatActivity() {
 
     fun onFragmentChange(index: String) {
         when (index) {
-//            "FloatingBtn" -> {
-//                // 기록 상세 뷰에서 플로팅 버튼 누르면 모달창 뜨게
-//                val dialog = FloatingBtn(this)
-//                dialog.showDialog()
-////                dialog.setOnClickListener(object: FloatingBtn.OnDialogClickListener{
-////                    override fun onClicked(num: Int) {
-////                    }
-////                })
-//            }
             "MyContentsListFragment" -> {
                 // 기록 프레그먼트로 전환
-                println("hiiiii")
                 supportFragmentManager.beginTransaction().remove(LogDetailFragment()).commit()
                 supportFragmentManager.popBackStack()
-//                supportFragmentManager.beginTransaction().replace(R.id.fragment_layout, MyContentsListFragment()).commit()
-            }
-
+           }
             "BojNumInput" -> {
                 val dialog = BojDialog(this)
                 dialog.showDialog()
@@ -196,6 +186,10 @@ class MainActivity : AppCompatActivity() {
                     override fun onClicked(num: Int) {
                     }
                 })
+            }
+            "GitHubFragment" -> {
+                val githubfragment = GithubFragment()
+                githubfragment.show(supportFragmentManager, githubfragment.tag)
             }
         }
     }
@@ -214,33 +208,19 @@ class MainActivity : AppCompatActivity() {
         }
         currentFragment[currentFragment.size - 2]!!.onResume()
     }
-//    private fun navigatePhotos() {
-//        val intent = Intent(Intent.ACTION_GET_CONTENT)
-//        intent.type = "image/*"
-//        startActivityForResult(intent,2000)
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if(resultCode != Activity.RESULT_OK) {
-//            Toast.makeText(this,"잘못된 접근입니다",Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//        when(requestCode){
-//            2000 -> {
-//                val selectedImageURI : Uri? = data?.data
-//                if( selectedImageURI != null ) {
-////                    val imageView = findViewById<ImageView>(R.id.addImageView)
-////                    binding.
-////                    binding..setImageURI(selectedImageURI)
-////                    imageURI = selectedImageURI
-//                }else {
-//                    Toast.makeText(this,"이미지를 가져오지 못했습니다1",Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            else -> {
-//                Toast.makeText(this,"이미지를 가져오지 못했습니다2",Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
+    
+    fun onFloatingChange(index: String, fragment: Fragment){
+        when (index) {
+            "FloatingBtn" -> {
+                // 기록 상세 뷰에서 플로팅 버튼 누르면 모달창 뜨게
+                val dialog = FloatingBtn(this, fragment)
+                dialog.showDialog()
+            }
+        }
+    }
+    
+    fun onRemoveDetail(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().remove(fragment).commit()
+        supportFragmentManager.popBackStack()
+    }
 }

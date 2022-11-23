@@ -148,6 +148,10 @@ class LogDetailFragment : Fragment() {
             viewBinding.logDetailCodeText.text = mContent.record_code
         }
 
+        // boj name을 data에서 불러옴(테스트 필요)
+        var bojNumAndTitle = mContent.record_baekjoon_num.toString() + " - " + mContent.record_baekjoon_name
+        viewBinding.logDetailBeakjoonNumber.setText(bojNumAndTitle)
+
         // 닫기 버튼
         viewBinding.logDetailBackBtn.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
