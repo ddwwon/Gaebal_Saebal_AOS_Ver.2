@@ -131,9 +131,10 @@ class LogDetailFragment : Fragment() {
             }
 
             // 깃허브 날짜
-            var gitDates: MutableList<String> = mContent.record_github_date.toString().split(" ")!!.toMutableList()
-            var setGitDate:String = gitDates[5] + " " + gitDates[1] + " " + gitDates[2]  + " " + gitDates[0] + " " + gitDates[3]
-            viewBinding.githubDate.text = setGitDate
+            //var gitDates: MutableList<String> = mContent.record_github_date.split(" ")!!.toMutableList()
+            //var setGitDate:String = gitDates[5] + " " + gitDates[1] + " " + gitDates[2]  + " " + gitDates[0] + " " + gitDates[3]
+            //viewBinding.githubDate.text = setGitDate
+            viewBinding.githubDate.text = mContent.record_github_date
         }
 
         // 이미지 입력 - 내용이 있을 경우

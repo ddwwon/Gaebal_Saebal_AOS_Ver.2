@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.*
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.gaebal_saebal_aos_ver2.dao.CategoryDataDao
 import com.example.gaebal_saebal_aos_ver2.dao.RecordDataDao
 import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
@@ -38,7 +40,7 @@ abstract class AppDatabase: RoomDatabase() {
         }
         /*private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database : SupportSQLiteDatabase) {
-                database.execSQL("DROP INDEX category_name")
+                database.execSQL("ALTER TABLE RecordDataEntity ADD COLUMN record_github_date String")
             }
         }*/
     }

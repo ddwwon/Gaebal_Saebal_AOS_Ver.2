@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentMyInfoGitBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -45,11 +46,16 @@ class MyInfoGitFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
+        // 저장 버튼 클릭 시
         viewBinding.saveToken.setOnClickListener{
-//            gitHubClient()
-        // token 값 github에 올릴 때는 빼고 올리기, 안그러면 revoke 됨
-        auth = "token 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"
-//        auth = "token " + viewBinding.inputToken.text.toString()
+            // token 값 github에 올릴 때는 빼고 올리기, 안그러면 revoke 됨
+            auth = "token " + viewBinding.inputToken.text.toString()
+            MyApplication.prefs.setString("auth", "token " + viewBinding.inputToken.text.toString())
+            Toast.makeText(requireActivity(), "깃허브 토큰이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+
+            // 이전 페이지로 이동
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 

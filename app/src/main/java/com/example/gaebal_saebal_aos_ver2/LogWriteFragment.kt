@@ -37,10 +37,6 @@ var recordGithubRepo: String = "" // 깃허브 레포지토리
 // 백준 번호 + 이름 TextView 전역변수 선언
 lateinit var logWriteBaekJoonNumber : TextView
 
-// Github api로 받아온 값 저장
-var githubData: MutableList<GithubData> = mutableListOf<GithubData>()
-var githubRepoData: MutableList<GithubRepoData> = mutableListOf<GithubRepoData>()
-
 class LogWriteFragment : Fragment() {
 
     private lateinit var viewBinding: FragmentLogWriteBinding
@@ -54,7 +50,36 @@ class LogWriteFragment : Fragment() {
     var category: MutableList<CategoryDataEntity> = mutableListOf<CategoryDataEntity>()
     var categorySelectCheck: MutableList<Boolean> = mutableListOf<Boolean>()
 
+    override fun onResume() {
+        super.onResume()
 
+        // 백준 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
+        if(recordBeakjoonNum != -1) {
+            // + textview 없어지게
+            viewBinding.baekjoonBtn.visibility = View.GONE
+            // boj 아이콘 보이게
+            viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+        }
+        
+        // 깃허브 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
+        if(recordGithubRepo != "") {
+            viewBinding.githubBtnBack.visibility = View.GONE
+            viewBinding.githubPart.visibility = View.VISIBLE
+
+            viewBinding.githubDate.text = recordGithubDate
+            viewBinding.githubTitle.text = recordGithubTitle
+            viewBinding.githubRepo.text = recordGithubRepo
+
+            if (recordGithubType == "issue") {
+                viewBinding.githubType.setImageDrawable(getResources().getDrawable(R.drawable.issue_icon))
+            } else if (recordGithubType == "pull request") {
+                viewBinding.githubType.setImageDrawable(getResources().getDrawable(R.drawable.pull_request_icon))
+            } else if (recordGithubType == "commit") {
+                viewBinding.githubType.setImageDrawable(getResources().getDrawable(R.drawable.commit_icon))
+            }
+        }
+    }
+    
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = getActivity() as LogWriteActivity
@@ -83,6 +108,14 @@ class LogWriteFragment : Fragment() {
         // db 세팅
         db = AppDatabase.getInstance(this.requireContext())
 
+        // 백준, 깃허브 전역변수 초기화
+        recordBeakjoonNum = -1; // 백준 문제 번호
+        recordBeakjoonName = ""; // 백준 문제 이름
+        recordGithubType = "" // 깃허브 타입: issue, commit, Pull request
+        recordGithubDate = "" // 깃허브 날짜
+        recordGithubTitle = "" // 깃허브 제목
+        recordGithubRepo = "" // 깃허브 레포지토리
+
         // 빈 이미지 세팅
         val resources: Resources = this.resources
         val nullImage: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_image)
@@ -90,6 +123,15 @@ class LogWriteFragment : Fragment() {
         // 카테고리 데이터
         var mCategory = db!!.categoryDataDao().getAllCategoryData()
         category.addAll(mCategory)
+        
+        // 카테고리가 없을 경우 - '이름 없음' 카테고리 생성
+        if(category.size == 0) {
+            db?.categoryDataDao()?.insertCategoryData(CategoryDataEntity(0, "이름 없음"))
+            mCategory = db!!.categoryDataDao().getAllCategoryData()
+            category.addAll(mCategory)
+            Toast.makeText(requireActivity(), "카테고리가 존재하지 않아 '이름 없음' 카테고리를 생성했습니다.", Toast.LENGTH_SHORT).show()
+        }
+        
 
         // 기본 선택된 카테고리
         for(i: Int in (0..category.size - 1)){
@@ -105,7 +147,7 @@ class LogWriteFragment : Fragment() {
         )
 
         viewBinding.backBtn.setOnClickListener {
-            activity?.finish()
+            requireActivity().finish()
         }
 
         // 등록 버튼 클릭 시 DB에 내용 저장
@@ -170,7 +212,7 @@ class LogWriteFragment : Fragment() {
                     Log.d("Test", recordDatas.toString())
                 }
 
-                activity?.finish()
+                requireActivity().finish()
             } else {
                 Toast.makeText(requireActivity(), "본문을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -181,29 +223,23 @@ class LogWriteFragment : Fragment() {
         // 기본 백준 icon, textview 숨기기
         viewBinding.logWriteCodeIc.visibility = View.GONE
         viewBinding.logWriteBeakjoonNumber.visibility = View.GONE
+
         // 백준에 + 버튼 클릭시 백준 번호를 입력하는 modal 창이 나온다.
         viewBinding.baekjoonBtn.setOnClickListener {
-            // dialog 띄우는 함수 호출
-            activity?.onFragmentChange("BojDialog")
-            // + textview 없어지게
-            viewBinding.baekjoonBtn.visibility = View.GONE
-            // boj 아이콘 보이게
-            viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), this)
+            dialog.showDialog()
         }
+
+        viewBinding.githubPart.visibility = View.GONE
 
         // 깃허브에 + 버튼 클릭시 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
         viewBinding.githubBtn.setOnClickListener {
-            viewBinding.githubPart.visibility = View.GONE
-
             // bottom sheet 나옴
-            activity?.onFragmentChange("GitHubFragment")
+            val githubfragment = GithubFragment()
+            githubfragment.show(requireActivity().supportFragmentManager, githubfragment.tag)
 
-            viewBinding.githubPart.visibility = View.VISIBLE
-            viewBinding.githubType.text = recordGithubType
-            viewBinding.githubDate.text = recordGithubDate
-            viewBinding.githubTitle.text = recordGithubTitle
-            viewBinding.githubRepo.text = recordGithubRepo
-
+            // 선택값 반영해서 보여주는 건 onResume()에서
         }
 
         // 본문 작성
