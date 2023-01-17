@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 설정 페이지 > 카테고리 추가/삭제 item -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="20dp"
@@ -8,9 +8,9 @@
     android:layout_marginHorizontal="20dp"
     android:layout_marginVertical="5dp"
     android:background="@drawable/my_record_contents_list_item_border"
-    android:orientation="horizontal"
     android:elevation="10sp">
 
+    <!-- 카테고리명 -->
     <TextView
         android:id="@+id/my_info_category_title"
         android:layout_width="wrap_content"
@@ -18,17 +18,30 @@
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:fontFamily = "@font/imbplexmono_light"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_centerVertical="true"/>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    <!-- 카테고리명 수정 -->
+    <EditText
+        android:id="@+id/my_info_category_title_rename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:fontFamily = "@font/imbplexmono_light"
+        android:textSize="16dp"
+        android:layout_centerVertical="true"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:visibility="gone"/>
 
     <CheckBox
         android:id="@+id/my_info_category_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="#A7A7A7"/>
+        android:buttonTint="#A7A7A7"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
 
-</LinearLayout>
+</RelativeLayout>

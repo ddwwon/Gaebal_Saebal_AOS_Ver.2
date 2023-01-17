@@ -122,7 +122,10 @@ class MyInfoCategoryFragment : Fragment() {
 
     // recyclerview 세팅
     private fun initMyInfoCategoryRecycler() {
-        myInfoCategoryAdapter = MyInfoCategoryAdapter(requireContext())
+        myInfoCategoryAdapter = MyInfoCategoryAdapter(
+            requireContext(),
+            db!!
+        )
         viewBinding.myInfoCategoryRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.myInfoCategoryRecyclerview.adapter = myInfoCategoryAdapter
         myInfoCategoryAdapter.datas = datas
@@ -139,4 +142,5 @@ class MyInfoCategoryFragment : Fragment() {
         }
         myInfoCategoryAdapter.notifyDataSetChanged()
     }
+
 }

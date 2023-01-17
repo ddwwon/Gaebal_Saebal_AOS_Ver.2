@@ -32,4 +32,6 @@ interface CategoryDataDao {
 
     @Query("SELECT category_uid FROM CategoryDataEntity WHERE category_name LIKE :category") // 카테고리명으로 id 값 가져오기
     fun getCategoryUid(category: String): Int
-}
+
+    @Query("UPDATE CategoryDataEntity SET category_name = :rename WHERE category_name = :categoryName") // 카테고리명 수정
+    fun renameCategory(categoryName: String, rename: String)}
