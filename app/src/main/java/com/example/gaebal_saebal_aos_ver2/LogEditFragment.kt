@@ -68,14 +68,27 @@ class LogEditFragment : Fragment() {
             viewBinding.logWriteBeakjoonNumber.setText(bojNumAndTitle)
         }
 
+        // 깃허즈 Dialog에서 선택한 값 받아오기 - 깃허브 타입
+        val mGithubType = arguments?.getString("githubType").toString()
+
         // 깃허브 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
-        if(recordGithubRepo != "") {
+        if(mGithubType != "null") {
+            // 선택된 값 저장
+            recordGithubType = mGithubType
+            recordGithubDate = arguments?.getString("githubDate").toString()
+            recordGithubTitle = arguments?.getString("githubTitle").toString()
+            recordGithubRepo = arguments?.getString("githubRepo").toString()
+
+            // 깃허브 추가 버튼 감추기, 깃허브 정보 보여주기
+            viewBinding.githubBtnBack.visibility = View.GONE
             viewBinding.githubPart.visibility = View.VISIBLE
 
+            // 선택된 깃허브 정보 입력
             viewBinding.githubDate.text = recordGithubDate
             viewBinding.githubTitle.text = recordGithubTitle
             viewBinding.githubRepo.text = recordGithubRepo
 
+            // 깃허브 타입 아이콘 지정
             if (recordGithubType == "issue") {
                 viewBinding.githubType.setImageDrawable(getResources().getDrawable(R.drawable.issue_icon))
             } else if (recordGithubType == "pull request") {
@@ -195,12 +208,10 @@ class LogEditFragment : Fragment() {
         })
 
         // 깃허브 내용 숨겨두기
-        viewBinding.githubStart.visibility = View.GONE
         viewBinding.githubPart.visibility = View.GONE
 
-        // 깃허브
+        // 깃허브 이전에 입력된 값이 있는 경우 보여주기
         if(recordGithubRepo != "") {
-            viewBinding.githubStart.visibility = View.VISIBLE
             viewBinding.githubPart.visibility = View.VISIBLE
 
             viewBinding.githubDate.text = recordGithubDate
@@ -216,6 +227,23 @@ class LogEditFragment : Fragment() {
             }
         }
 
+        // 깃허브에 + 버튼 클릭시 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
+        viewBinding.githubBtn.setOnClickListener ( View.OnClickListener {
+            // bottom sheet 나옴
+            val githubfragment = GithubFragment()
+            githubfragment.show(requireActivity().supportFragmentManager, githubfragment.tag)
+
+            // 선택값 반영해서 보여주는 건 onResume()에서
+        })
+
+        // 깃허브 내용 클릭 시 변경 가능. 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
+        viewBinding.githubPart.setOnClickListener {
+            // bottom sheet 나옴
+            val githubfragment = GithubFragment()
+            githubfragment.show(requireActivity().supportFragmentManager, githubfragment.tag)
+
+            // 선택값 반영해서 보여주는 건 onResume()에서
+        }
 
         // 카테고리 recyclerview
         category.addAll(db!!.categoryDataDao().getAllCategoryData())

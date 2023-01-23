@@ -132,22 +132,31 @@ class GithubFragment : BottomSheetDialogFragment() {
         super.dismiss()
     }
 
+    // 값 선택 시 호출되는 함수
     private fun dataSaveAndDismiss(id: Int) {
         // 선택한 값
-        recordGithubType = githubData[id].record_github_type
-        recordGithubDate = githubData[id].record_github_date
-        recordGithubTitle = githubData[id].record_github_title
-        recordGithubRepo = selectedRepo!!
-
-        // 선택한 값이 작성 페이지에 보일 수 있도록
-        var currentFragment: MutableList<Fragment> = mutableListOf<Fragment>()
+        var githubType = githubData[id].record_github_type
+        var githubDate = githubData[id].record_github_date
+        var githubTitle = githubData[id].record_github_title
+        var githubRepo = selectedRepo!!
 
         // 현재 프래그먼트 찾기
+        var currentFragment: MutableList<Fragment> = mutableListOf<Fragment>()
         for (fragment: Fragment in requireActivity().supportFragmentManager.fragments) {
             if (fragment.isVisible) {
                 currentFragment.add(fragment)
             }
         }
+
+        // 선택 값을 작성 페이지로 전달하기
+        val bundle = Bundle()
+        bundle.putString("githubType", githubType)
+        bundle.putString("githubDate", githubDate)
+        bundle.putString("githubTitle", githubTitle)
+        bundle.putString("githubRepo", githubRepo)
+        currentFragment[currentFragment.size - 2]!!.arguments = bundle
+
+        // 선택한 값을 작성 페이지에 보여주기 위해 Resume
         currentFragment[currentFragment.size - 2]!!.onResume()
 
         // 창 닫기

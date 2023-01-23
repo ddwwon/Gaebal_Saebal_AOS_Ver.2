@@ -215,7 +215,7 @@
                     android:textStyle="bold" />
 
                 <!-- 깃허브 추가 버튼 -->
-                <!--<androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/github_btn_back"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>-->
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/github_part"
