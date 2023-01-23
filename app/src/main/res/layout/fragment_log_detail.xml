@@ -62,6 +62,7 @@
                     android:id="@+id/beakjoon_number_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:textColor="@color/black"
                     app:layout_constraintLeft_toRightOf="@id/code_ic"
                     app:layout_constraintTop_toTopOf="parent"

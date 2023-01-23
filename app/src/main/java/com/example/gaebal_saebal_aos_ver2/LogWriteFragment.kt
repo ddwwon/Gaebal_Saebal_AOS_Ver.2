@@ -25,17 +25,14 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 // boj 문제 번호, 문제 이름을 저장하는 전역 변수
-var recordBeakjoonNum: Int = -1; // 백준 문제 번호
-var recordBeakjoonName: String = ""; // 백준 문제 이름
+//var recordBeakjoonNum: Int = -1; // 백준 문제 번호
+//var recordBeakjoonName: String = ""; // 백준 문제 이름
 
 // github data을 저장하는 전역 변수
 var recordGithubType: String = "" // 깃허브 타입: issue, commit, Pull request
 var recordGithubDate: String = "" // 깃허브 날짜
 var recordGithubTitle: String = "" // 깃허브 제목
 var recordGithubRepo: String = "" // 깃허브 레포지토리
-
-// 백준 번호 + 이름 TextView 전역변수 선언
-lateinit var logWriteBaekJoonNumber : TextView
 
 class LogWriteFragment : Fragment() {
 
@@ -50,15 +47,25 @@ class LogWriteFragment : Fragment() {
     var category: MutableList<CategoryDataEntity> = mutableListOf<CategoryDataEntity>()
     var categorySelectCheck: MutableList<Boolean> = mutableListOf<Boolean>()
 
+    // boj 문제 번호, 문제 이름을 저장하는 변수
+    var recordBaekjoonNum: Int = -1      // 백준 문제 번호
+    var recordBaekjoonName: String = ""  // 백준 문제 이름
+
     override fun onResume() {
         super.onResume()
 
         // 백준 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
-        if(recordBeakjoonNum != -1) {
+        if(recordBaekjoonNum != -1) {
             // + textview 없어지게
             viewBinding.baekjoonBtn.visibility = View.GONE
             // boj 아이콘 보이게
             viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+
+            // boj 문제 번호 + 문제 이름을 bojNumAndTitle에 저장
+            var bojNumAndTitle = recordBaekjoonNum.toString() + " - " + recordBaekjoonName
+            // boj 문제 번호 보이게
+            viewBinding.logWriteBeakjoonNumber.visibility = View.VISIBLE
+            viewBinding.logWriteBeakjoonNumber.setText(bojNumAndTitle)
         }
         
         // 깃허브 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
@@ -96,7 +103,6 @@ class LogWriteFragment : Fragment() {
     ): View? {
 
         viewBinding = FragmentLogWriteBinding.inflate(layoutInflater)
-        logWriteBaekJoonNumber = viewBinding.logWriteBeakjoonNumber
 
         return viewBinding.root
 
@@ -108,9 +114,7 @@ class LogWriteFragment : Fragment() {
         // db 세팅
         db = AppDatabase.getInstance(this.requireContext())
 
-        // 백준, 깃허브 전역변수 초기화
-        recordBeakjoonNum = -1; // 백준 문제 번호
-        recordBeakjoonName = ""; // 백준 문제 이름
+        // 깃허브 변수 초기화
         recordGithubType = "" // 깃허브 타입: issue, commit, Pull request
         recordGithubDate = "" // 깃허브 날짜
         recordGithubTitle = "" // 깃허브 제목
@@ -193,8 +197,8 @@ class LogWriteFragment : Fragment() {
                     recordCategoryUid,
                     recordContent,
                     recordTag,
-                    recordBeakjoonNum,
-                    recordBeakjoonName,
+                    recordBaekjoonNum,
+                    recordBaekjoonName,
                     recordGithubType,
                     recordGithubDate,
                     recordGithubTitle,
@@ -229,7 +233,34 @@ class LogWriteFragment : Fragment() {
             // dialog 띄우기
             val dialog = BojDialog(requireActivity(), this)
             dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
         }
+
+        // 백준 입력창 선택 시 백준 번호를 입력하는 modal 창이 나온다.
+        viewBinding.baekjoonBtnBack.setOnClickListener ( View.OnClickListener {
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), this)
+            dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
+        })
 
         viewBinding.githubPart.visibility = View.GONE
 

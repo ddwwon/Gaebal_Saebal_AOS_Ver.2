@@ -55,9 +55,17 @@ class LogEditFragment : Fragment() {
         super.onResume()
 
         // 백준 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
-        if(recordBeakjoonNum != -1) {
+        if(recordBaekjoonNum != -1) {
+            // + textview 없어지게
+            viewBinding.baekjoonBtn.visibility = View.GONE
             // boj 아이콘 보이게
             viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+
+            // boj 문제 번호 + 문제 이름을 bojNumAndTitle에 저장
+            var bojNumAndTitle = recordBaekjoonNum.toString() + " - " + recordBaekjoonName
+            // boj 문제 번호 보이게
+            viewBinding.logWriteBeakjoonNumber.visibility = View.VISIBLE
+            viewBinding.logWriteBeakjoonNumber.setText(bojNumAndTitle)
         }
 
         // 깃허브 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
@@ -141,15 +149,50 @@ class LogEditFragment : Fragment() {
         viewBinding.logWriteCodeText.setText(recordCode) // 코드
 
         // 기본 백준 icon, textview 숨기기
-        viewBinding.baekjoonStart.visibility = View.GONE
-        viewBinding.baekjoonInfo.visibility = View.GONE
+        viewBinding.logWriteCodeIc.visibility = View.GONE
+        viewBinding.logWriteBeakjoonNumber.visibility = View.GONE
 
         // 백준
         if(recordBaekjoonName != "") {
-            viewBinding.baekjoonStart.visibility = View.VISIBLE
-            viewBinding.baekjoonInfo.visibility = View.VISIBLE
+            viewBinding.baekjoonBtn.visibility = View.GONE
+            viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+            viewBinding.logWriteBeakjoonNumber.visibility = View.VISIBLE
             viewBinding.logWriteBeakjoonNumber.text = recordBaekjoonNum.toString() + " - " + recordBaekjoonName
         }
+
+        // 백준에 + 버튼 클릭시 백준 번호를 입력하는 modal 창이 나온다.
+        viewBinding.baekjoonBtn.setOnClickListener {
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), this)
+            dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
+        }
+
+        // 백준 입력창 선택 시 백준 번호를 입력하는 modal 창이 나온다.
+        viewBinding.baekjoonInfo.setOnClickListener ( View.OnClickListener {
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), this)
+            dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
+        })
 
         // 깃허브 내용 숨겨두기
         viewBinding.githubStart.visibility = View.GONE

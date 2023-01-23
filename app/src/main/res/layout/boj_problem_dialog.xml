@@ -38,7 +38,7 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/boj_cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:fontFamily = "@font/imbplexmono_light"
             android:text="취소" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/boj_ok_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
