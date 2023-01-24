@@ -20,22 +20,7 @@ import androidx.fragment.app.Fragment
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentLogWriteBinding
 import com.example.gaebal_saebal_aos_ver2.db_entity.CategoryDataEntity
 import com.example.gaebal_saebal_aos_ver2.db_entity.RecordDataEntity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.util.*
-
-// boj 문제 번호, 문제 이름을 저장하는 전역 변수
-var recordBeakjoonNum: Int = -1; // 백준 문제 번호
-var recordBeakjoonName: String = ""; // 백준 문제 이름
-
-// github data을 저장하는 전역 변수
-var recordGithubType: String = "" // 깃허브 타입: issue, commit, Pull request
-var recordGithubDate: String = "" // 깃허브 날짜
-var recordGithubTitle: String = "" // 깃허브 제목
-var recordGithubRepo: String = "" // 깃허브 레포지토리
-
-// 백준 번호 + 이름 TextView 전역변수 선언
-lateinit var logWriteBaekJoonNumber : TextView
 
 class LogWriteFragment : Fragment() {
 
@@ -50,26 +35,54 @@ class LogWriteFragment : Fragment() {
     var category: MutableList<CategoryDataEntity> = mutableListOf<CategoryDataEntity>()
     var categorySelectCheck: MutableList<Boolean> = mutableListOf<Boolean>()
 
+    // boj 문제 번호, 문제 이름을 저장하는 변수
+    var recordBaekjoonNum: Int = -1      // 백준 문제 번호
+    var recordBaekjoonName: String = ""  // 백준 문제 이름
+
+    // github data을 저장하는 변수
+    var recordGithubType: String = "" // 깃허브 타입: issue, commit, Pull request
+    var recordGithubDate: String = "" // 깃허브 날짜
+    var recordGithubTitle: String = "" // 깃허브 제목
+    var recordGithubRepo: String = "" // 깃허브 레포지토리
+
     override fun onResume() {
         super.onResume()
 
         // 백준 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
-        if(recordBeakjoonNum != -1) {
+        if(recordBaekjoonNum != -1) {
             // + textview 없어지게
             viewBinding.baekjoonBtn.visibility = View.GONE
             // boj 아이콘 보이게
             viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+
+            // boj 문제 번호 + 문제 이름을 bojNumAndTitle에 저장
+            var bojNumAndTitle = recordBaekjoonNum.toString() + " - " + recordBaekjoonName
+            // boj 문제 번호 보이게
+            viewBinding.logWriteBeakjoonNumber.visibility = View.VISIBLE
+            viewBinding.logWriteBeakjoonNumber.setText(bojNumAndTitle)
         }
+
+        // 깃허즈 Dialog에서 선택한 값 받아오기 - 깃허브 타입
+        val mGithubType = arguments?.getString("githubType").toString()
         
         // 깃허브 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
-        if(recordGithubRepo != "") {
+        if(mGithubType != "null") {
+            // 선택된 값 저장
+            recordGithubType = mGithubType
+            recordGithubDate = arguments?.getString("githubDate").toString()
+            recordGithubTitle = arguments?.getString("githubTitle").toString()
+            recordGithubRepo = arguments?.getString("githubRepo").toString()
+
+            // 깃허브 추가 버튼 감추기, 깃허브 정보 보여주기
             viewBinding.githubBtnBack.visibility = View.GONE
             viewBinding.githubPart.visibility = View.VISIBLE
 
+            // 선택된 깃허브 정보 입력
             viewBinding.githubDate.text = recordGithubDate
             viewBinding.githubTitle.text = recordGithubTitle
             viewBinding.githubRepo.text = recordGithubRepo
 
+            // 깃허브 타입 아이콘 지정
             if (recordGithubType == "issue") {
                 viewBinding.githubType.setImageDrawable(getResources().getDrawable(R.drawable.issue_icon))
             } else if (recordGithubType == "pull request") {
@@ -96,7 +109,6 @@ class LogWriteFragment : Fragment() {
     ): View? {
 
         viewBinding = FragmentLogWriteBinding.inflate(layoutInflater)
-        logWriteBaekJoonNumber = viewBinding.logWriteBeakjoonNumber
 
         return viewBinding.root
 
@@ -108,9 +120,7 @@ class LogWriteFragment : Fragment() {
         // db 세팅
         db = AppDatabase.getInstance(this.requireContext())
 
-        // 백준, 깃허브 전역변수 초기화
-        recordBeakjoonNum = -1; // 백준 문제 번호
-        recordBeakjoonName = ""; // 백준 문제 이름
+        // 깃허브 변수 초기화
         recordGithubType = "" // 깃허브 타입: issue, commit, Pull request
         recordGithubDate = "" // 깃허브 날짜
         recordGithubTitle = "" // 깃허브 제목
@@ -131,7 +141,6 @@ class LogWriteFragment : Fragment() {
             category.addAll(mCategory)
             Toast.makeText(requireActivity(), "카테고리가 존재하지 않아 '이름 없음' 카테고리를 생성했습니다.", Toast.LENGTH_SHORT).show()
         }
-        
 
         // 기본 선택된 카테고리
         for(i: Int in (0..category.size - 1)){
@@ -193,8 +202,8 @@ class LogWriteFragment : Fragment() {
                     recordCategoryUid,
                     recordContent,
                     recordTag,
-                    recordBeakjoonNum,
-                    recordBeakjoonName,
+                    recordBaekjoonNum,
+                    recordBaekjoonName,
                     recordGithubType,
                     recordGithubDate,
                     recordGithubTitle,
@@ -229,12 +238,52 @@ class LogWriteFragment : Fragment() {
             // dialog 띄우기
             val dialog = BojDialog(requireActivity(), this)
             dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
+
+            // 선택값 반영해서 보여주는 건 onResume()에서
         }
+
+        // 백준 입력창 선택 시 백준 번호를 입력하는 modal 창이 나온다.
+        viewBinding.baekjoonBtnBack.setOnClickListener ( View.OnClickListener {
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), this)
+            dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
+
+            // 선택값 반영해서 보여주는 건 onResume()에서
+        })
 
         viewBinding.githubPart.visibility = View.GONE
 
         // 깃허브에 + 버튼 클릭시 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
-        viewBinding.githubBtn.setOnClickListener {
+        viewBinding.githubBtn.setOnClickListener ( View.OnClickListener {
+            // bottom sheet 나옴
+            val githubfragment = GithubFragment()
+            githubfragment.show(requireActivity().supportFragmentManager, githubfragment.tag)
+
+            // 선택값 반영해서 보여주는 건 onResume()에서
+        })
+
+        // 깃허브 내용 클릭 시 변경 가능. 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
+        viewBinding.githubPart.setOnClickListener {
             // bottom sheet 나옴
             val githubfragment = GithubFragment()
             githubfragment.show(requireActivity().supportFragmentManager, githubfragment.tag)

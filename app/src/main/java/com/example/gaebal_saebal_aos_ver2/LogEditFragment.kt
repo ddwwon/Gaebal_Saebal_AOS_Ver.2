@@ -55,19 +55,40 @@ class LogEditFragment : Fragment() {
         super.onResume()
 
         // 백준 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
-        if(recordBeakjoonNum != -1) {
+        if(recordBaekjoonNum != -1) {
+            // + textview 없어지게
+            viewBinding.baekjoonBtn.visibility = View.GONE
             // boj 아이콘 보이게
             viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+
+            // boj 문제 번호 + 문제 이름을 bojNumAndTitle에 저장
+            var bojNumAndTitle = recordBaekjoonNum.toString() + " - " + recordBaekjoonName
+            // boj 문제 번호 보이게
+            viewBinding.logWriteBeakjoonNumber.visibility = View.VISIBLE
+            viewBinding.logWriteBeakjoonNumber.setText(bojNumAndTitle)
         }
 
+        // 깃허즈 Dialog에서 선택한 값 받아오기 - 깃허브 타입
+        val mGithubType = arguments?.getString("githubType").toString()
+
         // 깃허브 선택된 경우 - 내용 보여주기, 추가 버튼 숨기기
-        if(recordGithubRepo != "") {
+        if(mGithubType != "null") {
+            // 선택된 값 저장
+            recordGithubType = mGithubType
+            recordGithubDate = arguments?.getString("githubDate").toString()
+            recordGithubTitle = arguments?.getString("githubTitle").toString()
+            recordGithubRepo = arguments?.getString("githubRepo").toString()
+
+            // 깃허브 추가 버튼 감추기, 깃허브 정보 보여주기
+            viewBinding.githubBtnBack.visibility = View.GONE
             viewBinding.githubPart.visibility = View.VISIBLE
 
+            // 선택된 깃허브 정보 입력
             viewBinding.githubDate.text = recordGithubDate
             viewBinding.githubTitle.text = recordGithubTitle
             viewBinding.githubRepo.text = recordGithubRepo
 
+            // 깃허브 타입 아이콘 지정
             if (recordGithubType == "issue") {
                 viewBinding.githubType.setImageDrawable(getResources().getDrawable(R.drawable.issue_icon))
             } else if (recordGithubType == "pull request") {
@@ -141,23 +162,56 @@ class LogEditFragment : Fragment() {
         viewBinding.logWriteCodeText.setText(recordCode) // 코드
 
         // 기본 백준 icon, textview 숨기기
-        viewBinding.baekjoonStart.visibility = View.GONE
-        viewBinding.baekjoonInfo.visibility = View.GONE
+        viewBinding.logWriteCodeIc.visibility = View.GONE
+        viewBinding.logWriteBeakjoonNumber.visibility = View.GONE
 
         // 백준
         if(recordBaekjoonName != "") {
-            viewBinding.baekjoonStart.visibility = View.VISIBLE
-            viewBinding.baekjoonInfo.visibility = View.VISIBLE
+            viewBinding.baekjoonBtn.visibility = View.GONE
+            viewBinding.logWriteCodeIc.visibility = View.VISIBLE
+            viewBinding.logWriteBeakjoonNumber.visibility = View.VISIBLE
             viewBinding.logWriteBeakjoonNumber.text = recordBaekjoonNum.toString() + " - " + recordBaekjoonName
         }
 
+        // 백준에 + 버튼 클릭시 백준 번호를 입력하는 modal 창이 나온다.
+        viewBinding.baekjoonBtn.setOnClickListener {
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), this)
+            dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
+        }
+
+        // 백준 입력창 선택 시 백준 번호를 입력하는 modal 창이 나온다.
+        viewBinding.baekjoonInfo.setOnClickListener ( View.OnClickListener {
+            // dialog 띄우기
+            val dialog = BojDialog(requireActivity(), this)
+            dialog.showDialog()
+
+            // 백준 Dialog에서 문제 번호, 이름 값 받아오기
+            dialog.setOnClickListener(object: BojDialog.ButtonClickListener {
+                override fun onClicked(mBaekjoonNum: Int, mBaekjoonName: String) {
+                    //Toast.makeText(context, mBaekjoonName, Toast.LENGTH_SHORT).show()
+                    // 문제 번호, 이름 데이터 저장
+                    recordBaekjoonNum = mBaekjoonNum
+                    recordBaekjoonName = mBaekjoonName
+                }
+            })
+        })
+
         // 깃허브 내용 숨겨두기
-        viewBinding.githubStart.visibility = View.GONE
         viewBinding.githubPart.visibility = View.GONE
 
-        // 깃허브
+        // 깃허브 이전에 입력된 값이 있는 경우 보여주기
         if(recordGithubRepo != "") {
-            viewBinding.githubStart.visibility = View.VISIBLE
             viewBinding.githubPart.visibility = View.VISIBLE
 
             viewBinding.githubDate.text = recordGithubDate
@@ -173,6 +227,23 @@ class LogEditFragment : Fragment() {
             }
         }
 
+        // 깃허브에 + 버튼 클릭시 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
+        viewBinding.githubBtn.setOnClickListener ( View.OnClickListener {
+            // bottom sheet 나옴
+            val githubfragment = GithubFragment()
+            githubfragment.show(requireActivity().supportFragmentManager, githubfragment.tag)
+
+            // 선택값 반영해서 보여주는 건 onResume()에서
+        })
+
+        // 깃허브 내용 클릭 시 변경 가능. 하단에서 bottom sheet이 나오면서 최근 이슈, 풀, 커밋 리스트가 나온다
+        viewBinding.githubPart.setOnClickListener {
+            // bottom sheet 나옴
+            val githubfragment = GithubFragment()
+            githubfragment.show(requireActivity().supportFragmentManager, githubfragment.tag)
+
+            // 선택값 반영해서 보여주는 건 onResume()에서
+        }
 
         // 카테고리 recyclerview
         category.addAll(db!!.categoryDataDao().getAllCategoryData())
