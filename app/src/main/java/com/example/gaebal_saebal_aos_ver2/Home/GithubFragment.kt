@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gaebal_saebal_aos_ver2.MyInfomation.MyInfoGitClient
-import com.example.gaebal_saebal_aos_ver2.MyInfomation.auth
+//import com.example.gaebal_saebal_aos_ver2.MyInfomation.MyInfoGitClient
+//import com.example.gaebal_saebal_aos_ver2.MyInfomation.auth
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentGithubBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
