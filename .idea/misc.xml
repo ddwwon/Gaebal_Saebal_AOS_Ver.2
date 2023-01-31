@@ -46,8 +46,11 @@
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/my_information_btn_border.xml" value="0.1545" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/drawable/my_record_contents_list_item_border.xml" value="0.1555" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/font/imp.xml" value="0.2838541666666667" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/activity_loading.xml" value="0.13125" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/activity_log_write.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/anim_spash_imageview_center.xml" value="0.13125" />
+        <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/anim_splash_center.xml" value="0.1" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/boj_problem_dialog.xml" value="0.25364583333333335" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/category_change_item.xml" value="0.14583333333333334" />
         <entry key="..\:/android/Gaebal_Saebal_AOS_Ver.2/app/src/main/res/layout/fragment_category_change.xml" value="0.13177083333333334" />
