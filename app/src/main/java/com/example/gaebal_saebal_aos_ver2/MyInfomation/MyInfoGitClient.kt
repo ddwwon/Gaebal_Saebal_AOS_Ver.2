@@ -1,4 +1,4 @@
-package com.example.gaebal_saebal_aos_ver2
+    package com.example.gaebal_saebal_aos_ver2
 
 import com.google.gson.annotations.SerializedName
 import io.reactivex.Single

@@ -49,7 +49,7 @@ class FloatingBtn(context: Context, fragment: Fragment, recordId: Int, db: AppDa
         // 기록 삭제 버튼
         dialog.log_detail_delete.setOnClickListener{
             // 데이터 베이스에서 기록 삭제
-            db?.recordDataDao().deleteRecordFromUid(recordId)
+            db?.recordDataDao()?.deleteRecordFromUid(recordId)
 
             // 페이지 닫기
             dialog.dismiss()

@@ -1,12 +1,16 @@
 package com.example.gaebal_saebal_aos_ver2
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gaebal_saebal_aos_ver2.MyInfomation.MyInfoGitClient
+import com.example.gaebal_saebal_aos_ver2.MyInfomation.auth
 import com.example.gaebal_saebal_aos_ver2.databinding.FragmentGithubBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +20,7 @@ lateinit var selectedRepoFullName: String
 
 class GithubFragment : BottomSheetDialogFragment() {
     private lateinit var viewBinding: FragmentGithubBinding
-    private lateinit var GithubRepoListAdapter: GibhubRepoListAdapter
+    lateinit var GithubRepoListAdapter: GibhubRepoListAdapter
     private lateinit var GithubRepoItemAdapter: GithubRepoItemAdapter
 
     // Github api로 받아온 값 저장
@@ -165,6 +169,7 @@ class GithubFragment : BottomSheetDialogFragment() {
 
     // 사용자의 repo 목록 불러옴
     fun gitHubGetRepoClient() {
+        println("githubrepoclient")
         MyInfoGitClient.getApi().getRepos(auth)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -173,14 +178,20 @@ class GithubFragment : BottomSheetDialogFragment() {
                     githubRepoData.add(GithubRepoData(it.name, it.full_name, it.owner.login))
                     GithubRepoListAdapter.notifyDataSetChanged()
                 }
+                println("token right")
+                Toast.makeText(requireActivity(), "Token이 등록되었습니다.", Toast.LENGTH_SHORT).show()
             }, {e ->
-                println("getReposerror: " + e.toString())
+                Log.d(TAG, e.toString())
+                println("token error")
+                val dialog = BojDialog(requireActivity(), this)
+                dialog.showDialog()
             })
     }
 
     // 사용자가 선택한 repo의 issue, pr, commit 목록 불러옴
     fun gitHubRepoInfoClient() {
-        MyInfoGitClient.getApi().getIssues(auth,
+        MyInfoGitClient.getApi().getIssues(
+            auth,
             selectedRepoOwner,
             selectedRepo)
             .subscribeOn(Schedulers.io())
@@ -196,7 +207,8 @@ class GithubFragment : BottomSheetDialogFragment() {
                 println("getIssueserror: " + e.toString())
             })
 
-        MyInfoGitClient.getApi().getPRs(auth,
+        MyInfoGitClient.getApi().getPRs(
+            auth,
             selectedRepoOwner,
             selectedRepo)
             .subscribeOn(Schedulers.io())
@@ -212,7 +224,8 @@ class GithubFragment : BottomSheetDialogFragment() {
                 println("getPRserror: " +e.toString())
             })
 
-        MyInfoGitClient.getApi().getCommits(auth,
+        MyInfoGitClient.getApi().getCommits(
+            auth,
             selectedRepoOwner,
             selectedRepo)
             .subscribeOn(Schedulers.io())
