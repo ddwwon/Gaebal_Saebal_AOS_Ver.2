@@ -19,6 +19,14 @@ class LogWriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val defaultCategory = intent.getStringExtra("category").toString()
+        var logWriteFragment = LogWriteFragment()
+        var bundle = Bundle()
+
+        //현재 카테고리 번호를 LogWriteFragment로 전달
+        bundle.putString("category", defaultCategory)
+        logWriteFragment.arguments = bundle
+
         binding = ActivityLogWriteBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -27,7 +35,7 @@ class LogWriteActivity : AppCompatActivity() {
 
         // 기록 작성
         if(mFragment == "Write") {
-            supportFragmentManager.beginTransaction().replace(binding.logWriteFrame.id, LogWriteFragment()).commit()
+            supportFragmentManager.beginTransaction().replace(binding.logWriteFrame.id, logWriteFragment).commit()
         }
         // 기록 수정
         else if(mFragment == "Edit") {
