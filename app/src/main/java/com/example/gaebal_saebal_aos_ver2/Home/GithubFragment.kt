@@ -183,8 +183,7 @@ class GithubFragment : BottomSheetDialogFragment() {
             }, {e ->
                 Log.d(TAG, e.toString())
                 println("token error")
-                val dialog = BojDialog(requireActivity(), this)
-                dialog.showDialog()
+
             })
     }
 
