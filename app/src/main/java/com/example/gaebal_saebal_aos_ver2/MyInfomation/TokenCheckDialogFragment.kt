@@ -20,10 +20,15 @@ class TokenCheckDialogFragment(context: Context, pastFragment: Fragment) {
 
     private val pastFragment: Fragment = pastFragment
     private val dialog = Dialog(context)
-    private lateinit var onClickListener: BojDialog.ButtonClickListener
+    private lateinit var onClickListener: ButtonClickListener
+
     var activity: MainActivity ?= null
 
-    fun setOnClickListener(listener: BojDialog.ButtonClickListener)
+    interface ButtonClickListener {
+        fun onClicked()
+    }
+
+    fun setOnClickListener(listener: ButtonClickListener)
     {
         onClickListener = listener
     }
