@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
-        android:fontFamily = "@font/imbplexmono_light"
+        android:fontFamily="@font/imbplexmono_light"
         android:textSize="16dp"
         android:layout_centerVertical="true"
         android:imeOptions="actionDone"
