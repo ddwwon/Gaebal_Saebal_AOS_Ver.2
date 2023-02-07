@@ -142,9 +142,12 @@ class LogWriteFragment : Fragment() {
             Toast.makeText(requireActivity(), "카테고리가 존재하지 않아 '이름 없음' 카테고리를 생성했습니다.", Toast.LENGTH_SHORT).show()
         }
 
+        //카테고리 데이터
+        val defaultCategory = arguments?.getString("category").toString()
+        var defaultCategoryNum = db!!.categoryDataDao().getCategoryUid(defaultCategory)
         // 기본 선택된 카테고리
         for(i: Int in (0..category.size - 1)){
-            if(category[i].category_uid == mCategory[0].category_uid)
+            if(category[i].category_uid == defaultCategoryNum)
                 categorySelectCheck.add(true)
             else
                 categorySelectCheck.add(false)
