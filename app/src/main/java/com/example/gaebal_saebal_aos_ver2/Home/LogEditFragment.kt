@@ -285,7 +285,7 @@ class LogEditFragment : Fragment() {
                 }
             }
 
-            if(recordCategoryUid != null && recordContent != "") {
+            if(recordCategoryUid != null && recordContent != " ") {
                 // RecordDataEntity 생성
                 val mNewRecord = RecordDataEntity(
                     recordUid!!,
@@ -312,6 +312,9 @@ class LogEditFragment : Fragment() {
                 }
 
                 activity?.finish()
+            }
+            else if(recordCategoryUid == null) {
+                Toast.makeText(requireActivity(), "태그를 선택해주세요.", Toast.LENGTH_SHORT).show()
             }
             else {
                 Toast.makeText(requireActivity(), "본문을 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -369,22 +372,20 @@ class LogEditFragment : Fragment() {
         viewBinding.imageBtn.setOnClickListener {
             activity?.onFragmentChange("GalleryAccess")
             navigatePhotos()
-            // ImageView 보임
-            viewBinding.addImageView.visibility = View.VISIBLE
         }
     }
 
-    //
     private fun navigatePhotos() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent,2000)
     }
 
+    // 갤러리에서 호출한 액티비티 결과 반환
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode != Activity.RESULT_OK) {
-            println("wrong")
+            Log.d("msg", "gallery error")
             return
         }
         when(requestCode){
@@ -392,12 +393,14 @@ class LogEditFragment : Fragment() {
                 val selectedImageURI : Uri? = data?.data
                 if( selectedImageURI != null ) {
                     viewBinding.addImageView.setImageURI(selectedImageURI)
+                    // ImageView 보임
+                    viewBinding.addImageView.visibility = View.VISIBLE
                 }else {
-                    println("wrong")
+                    Log.d("msg", "gallery error")
                 }
             }
             else -> {
-                println("wrong")
+                Log.d("msg", "gallery error")
             }
         }
     }

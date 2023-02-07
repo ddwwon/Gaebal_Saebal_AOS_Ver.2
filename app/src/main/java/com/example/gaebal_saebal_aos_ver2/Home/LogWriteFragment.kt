@@ -225,7 +225,11 @@ class LogWriteFragment : Fragment() {
                 }
 
                 requireActivity().finish()
-            } else {
+            }
+            else if(recordCategoryUid == null) {
+                Toast.makeText(requireActivity(), "태그를 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            else {
                 Toast.makeText(requireActivity(), "본문을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -349,7 +353,7 @@ class LogWriteFragment : Fragment() {
             activity?.onFragmentChange("GalleryAccess")
             navigatePhotos()
             // ImageView 보임
-            viewBinding.addImageView.visibility = View.VISIBLE
+//            viewBinding.addImageView.visibility = View.VISIBLE
         }
     }
 
@@ -360,10 +364,11 @@ class LogWriteFragment : Fragment() {
         startActivityForResult(intent, 2000)
     }
 
+    // 갤러리에서 호출한 액티비티 결과 반환
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
-            println("wrong")
+            Log.d("msg", "gallery error")
             return
         }
         when (requestCode) {
@@ -371,12 +376,14 @@ class LogWriteFragment : Fragment() {
                 val selectedImageURI: Uri? = data?.data
                 if (selectedImageURI != null) {
                     viewBinding.addImageView.setImageURI(selectedImageURI)
+                    // ImageView 보임
+                    viewBinding.addImageView.visibility = View.VISIBLE
                 } else {
-                    println("wrong")
+                    Log.d("msg", "gallery error")
                 }
             }
             else -> {
-                println("wrong")
+                Log.d("msg", "gallery error")
             }
         }
     }
