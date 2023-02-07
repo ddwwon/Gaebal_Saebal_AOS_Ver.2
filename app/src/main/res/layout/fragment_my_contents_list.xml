@@ -8,9 +8,11 @@
     tools:context=".MyContentsListFragment">
 
     <LinearLayout
+        android:id="@+id/contents_list_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_alignParentTop="true"
         android:layout_above="@+id/contents_list_btns"
         tools:ignore="UselessParent">
 
