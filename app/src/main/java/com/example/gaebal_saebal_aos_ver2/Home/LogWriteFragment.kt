@@ -145,13 +145,27 @@ class LogWriteFragment : Fragment() {
         //카테고리 데이터
         val defaultCategory = arguments?.getString("category").toString()
         var defaultCategoryNum = db!!.categoryDataDao().getCategoryUid(defaultCategory)
+        Log.d("test", defaultCategory)
         // 기본 선택된 카테고리
-        for(i: Int in (0..category.size - 1)){
-            if(category[i].category_uid == defaultCategoryNum)
-                categorySelectCheck.add(true)
-            else
-                categorySelectCheck.add(false)
+        // 기본 선택된 카테고리가 없을 때는 처음 카테고리를 선택한 상태로 함
+        if(defaultCategoryNum.toString() == "0"){
+            for(i: Int in (0..category.size - 1)){
+                if(i == 0)
+                    categorySelectCheck.add(true)
+                else
+                    categorySelectCheck.add(false)
+            }
         }
+        // 기본 선택된 카테고리가 있을 때
+        else {
+            for(i: Int in (0..category.size - 1)){
+                if(category[i].category_uid == defaultCategoryNum)
+                    categorySelectCheck.add(true)
+                else
+                    categorySelectCheck.add(false)
+            }
+        }
+
 
         LogWriteCategoryAdapter = LogWriteCategoryAdapter(
             this.category,
