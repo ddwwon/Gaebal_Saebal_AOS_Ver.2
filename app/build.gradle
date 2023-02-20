@@ -9,7 +9,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.gaebal_saebal_aos_ver2"
+        applicationId "com.gaebalsaebal.gaebal_saebal_aos_ver2"
         minSdk 21
         targetSdk 32
         versionCode 1
