@@ -2,7 +2,7 @@
   <a
     target="_blank"
     href="https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2">
-    <img alt="Linkive logo" src="https://user-images.githubusercontent.com/76805879/236076468-4d48157f-cb22-4819-b7c9-190ed72f560c.png" width="200px"/>
+    <img alt="Gaebal_Saebal logo" src="https://user-images.githubusercontent.com/76805879/236076468-4d48157f-cb22-4819-b7c9-190ed72f560c.png" width="200px"/>
   </a><br/>
   개발새발 AOS<br/>
   
