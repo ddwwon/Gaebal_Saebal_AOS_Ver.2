@@ -9,9 +9,12 @@
   [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fddwwon%2FGaebal_Saebal_AOS_Ver.2&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 </h1>
 
-<p align="center">👩🏻‍💻 <b>개발자를 위한 기록 앱</b><br/>
-🏢 경상대학교 소프트웨어 전시회<br/>
-📅 개발기간: 2022.11 ~ 2023.01<br/></p>
+```
+👩🏻‍💻 개발자를 위한 기록 앱
+📅 2022.11 ~ 2023.01 (3개월)
+🏢 2022 경상대학교 소프트웨어 전시회 출품
+✅️ Google PlayStore 출시
+```
 
 ## ✨ Play Store
 [https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2](https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2)
@@ -48,6 +51,11 @@
 ## 🛠️ Stack
 ![Kotlin](https://img.shields.io/badge/Kotlin-A333F1??style=plastic&logo=kotlin&logoColor=white)
 ![AndroidStudio](https://img.shields.io/badge/Android_Studio-3DDC84??style=plastic&logo=android&logoColor=white)
+```
+📌 RoomDB, SharedPreferences를 이용하여 local DB에 데이터 저장
+📌 Github API로 Github Repository 및 issue/commit/pull request 기록 접근
+```
+
 
 <br/>
 
