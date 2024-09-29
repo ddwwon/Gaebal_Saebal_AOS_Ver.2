@@ -1,20 +1,22 @@
-<h1 align="center">
-  <a
-    target="_blank"
-    href="https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2">
-    <img alt="Gaebal_Saebal logo" src="https://user-images.githubusercontent.com/76805879/236076468-4d48157f-cb22-4819-b7c9-190ed72f560c.png" width="200px"/>
-  </a><br/>
-  개발새발 AOS<br/>
-  
-  [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fddwwon%2FGaebal_Saebal_AOS_Ver.2&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
-</h1>
+# 개발새발 Android
 
-```
-👩🏻‍💻 개발자를 위한 기록 앱
-📅 2022.11 ~ 2023.01 (3개월)
-🏢 2022 경상대학교 소프트웨어 전시회 출품
-✅️ Google PlayStore 출시
-```
+<a
+  target="_blank"
+  href="https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2">
+  <img alt="Gaebal_Saebal" src="https://github.com/user-attachments/assets/fd7823c3-cdce-4b49-9fe1-b935a5564687"/>
+</a>
+
+<div align="center">
+  
+  [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fddwwon%2FGaebal_Saebal_AOS_Ver.2&count_bg=%23C067EC&title_bg=%238F3985&icon=&icon_color=%23E7E7E7&title=개발새발&edge_flat=false)](https://hits.seeyoufarm.com)
+
+</div>
+
+> [!note]
+> 👩🏻‍💻 개발자를 위한 기록 앱  
+> 📅 2022.11 ~ 2023.01 (3개월)  
+> 🏢 2022 경상대학교 소프트웨어 전시회 출품  
+> ✅️ Google PlayStore 출시  
 
 ## ✨ Play Store
 [https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2](https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2)
