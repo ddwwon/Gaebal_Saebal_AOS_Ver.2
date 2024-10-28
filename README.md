@@ -3,7 +3,7 @@
 <a
   target="_blank"
   href="https://play.google.com/store/apps/details?id=com.gaebalsaebal.gaebal_saebal_aos_ver2">
-  <img alt="Gaebal_Saebal" src="https://github.com/user-attachments/assets/fd7823c3-cdce-4b49-9fe1-b935a5564687"/>
+  <img alt="Gaebal_Saebal" src="https://github.com/user-attachments/assets/c97fe103-8469-47d9-9ae8-5ddd4f3785d5"/>
 </a>
 
 <div align="center">
